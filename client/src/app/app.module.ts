@@ -4,8 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RouterModule, provideRouter } from '@angular/router';
-import routeConfig from './routes';
 
 @NgModule({
   declarations: [
@@ -14,10 +12,9 @@ import routeConfig from './routes';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule,
     HttpClientModule
   ],
-  providers: [provideRouter(routeConfig)],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
