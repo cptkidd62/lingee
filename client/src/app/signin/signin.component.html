@@ -1,1 +1,7 @@
-<p>signin works!</p>
+<form [formGroup]="signinForm">
+    <label for="login">Login: </label>
+    <input id="login" type="text" formControlName="login">
+    <br>
+    <label for="pwd">Password: </label>
+    <input id="pwd" type="password" formControlName="pwd">
+</form>
