@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserAccount } from '../useraccount';
-import { UserService } from '../user.service';
+import { UserService } from '../_services/user.service';
 
 @Component({
   selector: 'app-myaccount',

@@ -1,7 +1,9 @@
-<form [formGroup]="signinForm">
+<form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
     <label for="login">Login: </label>
     <input id="login" type="text" formControlName="login">
     <br>
     <label for="pwd">Password: </label>
     <input id="pwd" type="password" formControlName="pwd">
+    <br>
+    <button type="submit" [disabled]="!signinForm.valid">Sign in</button>
 </form>
