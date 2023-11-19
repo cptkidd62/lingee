@@ -1,4 +1,4 @@
-<form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="signinForm" (ngSubmit)="signinSubmit()">
     <label for="login">Login: </label>
     <input id="login" type="text" formControlName="login">
     <br>
@@ -6,4 +6,8 @@
     <input id="pwd" type="password" formControlName="pwd">
     <br>
     <button type="submit" [disabled]="!signinForm.valid">Sign in</button>
+</form>
+
+<form [formGroup]="signoutForm" (ngSubmit)="signoutSubmit()">
+    <button type="submit">Sign out</button>
 </form>

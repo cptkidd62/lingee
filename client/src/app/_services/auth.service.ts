@@ -16,6 +16,10 @@ export class AuthService {
   };
 
   signin(login: string, password: string): Observable<any> {
-    return this.http.post(this.url + '/signin', { login, password }, this.httpOptions);
+    return this.http.post(this.url + '/signin', { login, password }, { responseType: "text", withCredentials: true });
+  }
+
+  signout(): Observable<any> {
+    return this.http.get<any>(this.url + "/signout", { withCredentials: true });
   }
 }

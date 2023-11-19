@@ -18,12 +18,21 @@ export class SigninComponent {
     pwd: new FormControl('', Validators.required),
   })
 
-  onSubmit() {
+  signoutForm = new FormGroup({});
+
+  signinSubmit() {
     const { login, pwd } = this.signinForm.value;
     console.log(login, pwd);
     this.authService.signin(login!, pwd!).subscribe({
       complete: () => { console.log("hurra") },
-      next: data => { console.log("hurra") },
+      error: data => { console.log("sad...") }
+    });
+  }
+
+  signoutSubmit() {
+    console.log("signout attempt");
+    this.authService.signout().subscribe({
+      complete: () => { console.log("hurra") },
       error: data => { console.log("sad...") }
     });
   }
