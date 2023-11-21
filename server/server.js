@@ -3,6 +3,11 @@ const cors = require("cors");
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 
+const jwt = require("jsonwebtoken");
+const fs = require("fs");
+
+const RSA_PRIVATE_KEY = fs.readFileSync('./keys/jwtRS256.key');
+
 const app = express();
 
 app.use(cors({
@@ -23,14 +28,15 @@ app.get("/user", async (req, res) => {
 app.post("/auth/signin", (req, res) => {
     console.log("login attempt");
     console.log(req.body.login, req.body.password);
-    res.cookie("user", { displayname: "Lucy Logan", login: req.body.login },
-        { maxAge: 5 * 60 * 1000, signed: true, httpOnly: true, sameSite: "lax" });
-    res.status(200).send(msg = "success");
+    const jwtBearer = jwt.sign({ login: req.body.login }, RSA_PRIVATE_KEY, {
+        algorithm: 'RS256',
+        expiresIn: 1200
+    })
+    res.status(200).json({ idToken: jwtBearer, expiresIn: 1200 }).send(msg = "success");
 });
 
 app.get("/auth/signout", (req, res) => {
     console.log("signout attempt");
-    res.clearCookie("user", { domain: "localhost", path: "/", signed: true, httpOnly: true, sameSite: "lax" }).status(200).send("done");
 });
 
 app.listen(3000, () => {
