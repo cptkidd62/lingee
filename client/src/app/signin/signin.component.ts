@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
-import * as moment from 'moment';
+import { Jwtoken } from '../jwtoken';
 
 @Component({
   selector: 'app-signin',
@@ -25,16 +25,13 @@ export class SigninComponent {
     const { login, pwd } = this.signinForm.value;
     console.log(login, pwd);
     this.authService.signin(login!, pwd!).subscribe({
-      complete: () => { console.log("hurra") },
-      error: data => { console.log("sad...") }
+      next: data => { this.authService.setSession(data as Jwtoken) }
     });
+    console.log("done");
   }
 
   signoutSubmit() {
     console.log("signout attempt");
-    this.authService.signout().subscribe({
-      complete: () => { console.log("hurra") },
-      error: data => { console.log("sad...") }
-    });
+    this.authService.signout();
   }
 }

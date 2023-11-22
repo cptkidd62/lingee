@@ -32,11 +32,7 @@ app.post("/auth/signin", (req, res) => {
         algorithm: 'RS256',
         expiresIn: 1200
     })
-    res.status(200).json({ idToken: jwtBearer, expiresIn: 1200 }).send(msg = "success");
-});
-
-app.get("/auth/signout", (req, res) => {
-    console.log("signout attempt");
+    res.json({ idToken: jwtBearer, expiresIn: 1200 });
 });
 
 app.listen(3000, () => {
