@@ -4,11 +4,15 @@ const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 
 const jwt = require("jsonwebtoken");
+const { expressjwt: ejwt } = require("express-jwt");
 const fs = require("fs");
 
 const RSA_PRIVATE_KEY = fs.readFileSync('./keys/jwtRS256.key');
+const RSA_PUBLIC_KEY = fs.readFileSync('./keys/jwtRS256.key.pub');
 
 const app = express();
+
+const verifyAuthenticated = ejwt({ secret: RSA_PUBLIC_KEY, algorithms: ["RS256"] });
 
 app.use(cors({
     origin: 'http://localhost:4200',
@@ -19,6 +23,17 @@ app.use(cors({
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser('1QVIQ7F7tJNa2fGwORfvl6bf6dfYoj63'));
+
+app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin'] }));
+
+app.use((err, req, res, next) => {
+    if (err.name === 'UnauthorizedError') {
+        return res.status(403).send({
+            success: false,
+            message: 'No token provided.'
+        });
+    }
+});
 
 app.get("/user", async (req, res) => {
     console.log("Got request");

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserAccount } from '../useraccount';
 import { UserService } from '../_services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-myaccount',
@@ -11,10 +12,13 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./myaccount.component.css']
 })
 export class MyaccountComponent {
-  myaccount: UserAccount = {displayname:"", login:""};
+  myaccount: UserAccount = { displayname: "", login: "" };
   userService: UserService = inject(UserService);
 
-  constructor() {
-    this.userService.getUser().subscribe(account => this.myaccount = account);
+  constructor(private router: Router) {
+    this.userService.getUser().subscribe({
+      next: account => this.myaccount = account,
+      error: err => this.router.navigate(['/'])
+    });
   }
 }
