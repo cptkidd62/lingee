@@ -5,6 +5,7 @@
     <label for="pwd">Password: </label>
     <input id="pwd" type="password" formControlName="pwd">
     <br>
+    <div *ngIf="errMsg != ''">{{errMsg}}</div>
     <button type="submit" [disabled]="!signinForm.valid">Sign in</button>
 </form>
 

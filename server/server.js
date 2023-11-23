@@ -7,6 +7,9 @@ const jwt = require("jsonwebtoken");
 const { expressjwt: ejwt } = require("express-jwt");
 const fs = require("fs");
 
+const dbrepo = require("./db");
+var repo;
+
 const RSA_PRIVATE_KEY = fs.readFileSync('./keys/jwtRS256.key');
 const RSA_PUBLIC_KEY = fs.readFileSync('./keys/jwtRS256.key.pub');
 
@@ -24,6 +27,11 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser('1QVIQ7F7tJNa2fGwORfvl6bf6dfYoj63'));
 
+app.use((req, res, next) => {
+    repo = new dbrepo.Repository();
+    next();
+});
+
 app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin'] }));
 
 app.use((err, req, res, next) => {
@@ -40,14 +48,29 @@ app.get("/user", async (req, res) => {
     res.json({ displayname: "Lindy C", login: "lindy221" })
 });
 
-app.post("/auth/signin", (req, res) => {
+app.post("/auth/signin", async (req, res) => {
     console.log("login attempt");
     console.log(req.body.login, req.body.password);
-    const jwtBearer = jwt.sign({ login: req.body.login }, RSA_PRIVATE_KEY, {
-        algorithm: 'RS256',
-        expiresIn: 1200
-    })
-    res.json({ idToken: jwtBearer, expiresIn: 1200 });
+    let login = req.body.login;
+    let pwd = req.body.password;
+    let pwdHsh = await repo.getPasswordForUsr(login);
+    if (pwdHsh == null) {
+        return res.status(403).send({
+            success: false,
+            message: 'Incorrect login'
+        });
+    } else if (pwd == pwdHsh) {
+        const jwtBearer = jwt.sign({ login: req.body.login }, RSA_PRIVATE_KEY, {
+            algorithm: 'RS256',
+            expiresIn: 1200
+        })
+        res.json({ idToken: jwtBearer, expiresIn: 1200 });
+    } else {
+        return res.status(403).send({
+            success: false,
+            message: 'Incorrect password'
+        });
+    }
 });
 
 app.listen(3000, () => {

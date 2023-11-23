@@ -12,6 +12,8 @@ import { Jwtoken } from '../jwtoken';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
+  errMsg: string = "";
+
   authService: AuthService = inject(AuthService);
 
   signinForm = new FormGroup({
@@ -25,7 +27,8 @@ export class SigninComponent {
     const { login, pwd } = this.signinForm.value;
     console.log(login, pwd);
     this.authService.signin(login!, pwd!).subscribe({
-      next: data => { this.authService.setSession(data as Jwtoken) }
+      next: data => { this.authService.setSession(data as Jwtoken); this.errMsg = "" },
+      error: err => { console.log(err); this.errMsg = err.error.message }
     });
     console.log("done");
   }
