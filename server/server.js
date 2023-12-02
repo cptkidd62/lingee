@@ -45,7 +45,9 @@ app.use((err, req, res, next) => {
 
 app.get("/user", async (req, res) => {
     console.log("Got request");
-    res.json({ displayname: "Lindy C", login: "lindy221" })
+    let login = req.auth.login;
+    let usr = await repo.getAccountForUsr(login);
+    res.json(usr)
 });
 
 app.post("/auth/signin", async (req, res) => {
