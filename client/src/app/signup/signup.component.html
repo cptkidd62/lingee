@@ -1,0 +1,19 @@
+<form [formGroup]="signupForm" (ngSubmit)="signupSubmit()">
+    <label for="name">Name: </label>
+    <input id="name" type="text" formControlName="name">
+    <br>
+    <label for="login">Login: </label>
+    <input id="login" type="text" formControlName="login">
+    <br>
+    <label for="email">Email: </label>
+    <input id="email" type="text" formControlName="email">
+    <br>
+    <label for="pwd">Password: </label>
+    <input id="pwd" type="password" formControlName="pwd">
+    <br>
+    <label for="rpwd">Repeat password: </label>
+    <input id="rpwd" type="password" formControlName="rpwd">
+    <br>
+    <div *ngIf="errMsg != ''">{{errMsg}}</div>
+    <button type="submit" [disabled]="!signupForm.valid">Sign up</button>
+</form>

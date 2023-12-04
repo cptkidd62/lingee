@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as moment from 'moment';
+import { SignupData } from '../signupdata';
 import { Jwtoken } from '../jwtoken';
 
 @Injectable({
@@ -19,6 +20,10 @@ export class AuthService {
 
   signin(login: string, password: string) {
     return this.http.post(this.url + '/signin', { login, password }, { responseType: 'json', withCredentials: true });
+  }
+
+  signup(sdata: SignupData) {
+    return this.http.post(this.url + '/signup', { sdata }, { responseType: 'json', withCredentials: true })
   }
 
   setSession(authResult: Jwtoken) {

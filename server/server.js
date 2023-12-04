@@ -32,7 +32,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin'] }));
+app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin', '/auth/signup'] }));
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
@@ -72,6 +72,30 @@ app.post("/auth/signin", async (req, res) => {
             success: false,
             message: 'Incorrect password'
         });
+    }
+});
+
+app.post("/auth/signup", async (req, res) => {
+    console.log("login attempt");
+    let sdata = req.body.sdata;
+    console.log(sdata);
+    if (await repo.loginExists(sdata.login)) {
+        return res.status(403).send({
+            success: false,
+            message: 'Login already exists'
+        });
+    } else if (await repo.emailExists(sdata.email)) {
+        return res.status(403).send({
+            success: false,
+            message: 'Email already exists'
+        });
+    } else {
+        await repo.addUsr(sdata);
+        const jwtBearer = jwt.sign({ login: sdata.login }, RSA_PRIVATE_KEY, {
+            algorithm: 'RS256',
+            expiresIn: 1200
+        })
+        res.json({ idToken: jwtBearer, expiresIn: 1200 });
     }
 });
 
