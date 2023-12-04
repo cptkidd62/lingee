@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule, Validators, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
 import { SignupData } from '../signupdata';
 import { Jwtoken } from '../jwtoken';
@@ -23,7 +23,20 @@ export class SignupComponent {
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
     pwd: new FormControl('', Validators.required),
     rpwd: new FormControl('', Validators.required),
-  })
+  }, [this.passwordEqualityValidator()])
+
+  passwordEqualityValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const group = control as FormGroup;
+      const pwd = group.controls['pwd'];
+      const rpwd = group.controls['rpwd'];
+      if (pwd.value != rpwd.value) {
+        return { notEqual: true };
+      } else {
+        return null;
+      }
+    }
+  }
 
   signupSubmit() {
     const sdata: SignupData = {
