@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
+const bcrypt = require("bcrypt");
 
 const jwt = require("jsonwebtoken");
 const { expressjwt: ejwt } = require("express-jwt");
@@ -55,13 +56,13 @@ app.post("/auth/signin", async (req, res) => {
     console.log(req.body.login, req.body.password);
     let login = req.body.login;
     let pwd = req.body.password;
-    let {id, pwdHsh} = await repo.getPasswordForUsr(login);
+    let { id, pwdHsh } = await repo.getPasswordForUsr(login);
     if (pwdHsh == null) {
         return res.status(403).send({
             success: false,
             message: 'Incorrect login'
         });
-    } else if (pwd == pwdHsh) {
+    } else if (await bcrypt.compare(pwd, pwdHsh)) {
         const jwtBearer = jwt.sign({ id: id }, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
             expiresIn: 1200
@@ -90,6 +91,8 @@ app.post("/auth/signup", async (req, res) => {
             message: 'Email already exists'
         });
     } else {
+        let hash = await bcrypt.hash(sdata.password, 12);
+        sdata.password = hash;
         await repo.addUsr(sdata);
         const jwtBearer = jwt.sign({ id: sdata.id }, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',

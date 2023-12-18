@@ -4,21 +4,21 @@ var users = [
         displayname: "Lucy Stilman",
         login: "lucy00",
         email: "lucys@mail.com",
-        password: "pass"
+        password: "$2a$12$/sAcmjwfy0agTumH9B4MpeVHKunNJenzg51Ph59x4xspdSMpvwMc." // pass
     },
     {
         id: 1,
         displayname: "Adam Erkek",
         login: "adam",
         email: "erad@ben.tr",
-        password: "abc"
+        password: "$2a$12$DxLwm3b3ckIGauOk9F/Xp.Jlo145Qxq03Z/uXCkOurlpMmK7J7GLy" // abc
     },
     {
         id: 2,
         displayname: "Tina T",
         login: "tina12",
         email: "tina@mail.com",
-        password: "pas"
+        password: "$2a$12$v08dv5EKmtIy4jaTQgJVC.56n4mJ.1FILxPaCnkABAcpCqhk7BoxW" // pas
     },
 ]
 
@@ -51,7 +51,7 @@ exports.Repository = class Repository {
     async getPasswordForUsr(usrlogin) {
         let usr = users.find(({ login }) => login === usrlogin);
         if (usr) {
-            return {id: usr.id, pwdHsh: usr.password};
+            return { id: usr.id, pwdHsh: usr.password };
         }
         else {
             return null;
