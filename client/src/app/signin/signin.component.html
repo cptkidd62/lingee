@@ -14,7 +14,3 @@
     <div *ngIf="errMsg != ''" class="form-alert-msg">{{errMsg}}</div>
     <button type="submit" [disabled]="!signinForm.valid">Sign in</button>
 </form>
-
-<form [formGroup]="signoutForm" (ngSubmit)="signoutSubmit()">
-    <button type="submit">Sign out</button>
-</form>

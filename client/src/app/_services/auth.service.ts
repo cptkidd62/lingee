@@ -26,6 +26,11 @@ export class AuthService {
     return this.http.post(this.url + '/signup', { sdata }, { responseType: 'json', withCredentials: true })
   }
 
+  isSignedIn() {
+    let res = localStorage.getItem('idToken');
+    return res != null;
+  }
+
   setSession(authResult: Jwtoken) {
     const expiresAt = moment().add(authResult.expiresIn, 'second');
 

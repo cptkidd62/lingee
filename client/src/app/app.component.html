@@ -1,5 +1,5 @@
 <main>
-    <header class="toolbar"><a routerLink="/"><span>Lingee</span></a></header>
+    <header class="toolbar"><a routerLink="/"><span>Lingee</span></a><span *ngIf="this.authService.isSignedIn()"><button (click)="this.authService.signout()">Sign out</button></span></header>
     <section class="content">
         <router-outlet></router-outlet>
     </section>
