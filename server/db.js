@@ -1,17 +1,20 @@
 var users = [
     {
+        id: 0,
         displayname: "Lucy Stilman",
         login: "lucy00",
         email: "lucys@mail.com",
         password: "pass"
     },
     {
+        id: 1,
         displayname: "Adam Erkek",
         login: "adam",
         email: "erad@ben.tr",
         password: "abc"
     },
     {
+        id: 2,
         displayname: "Tina T",
         login: "tina12",
         email: "tina@mail.com",
@@ -46,21 +49,19 @@ exports.Repository = class Repository {
     }
 
     async getPasswordForUsr(usrlogin) {
-        console.log(users);
         let usr = users.find(({ login }) => login === usrlogin);
         if (usr) {
-            return usr.password;
+            return {id: usr.id, pwdHsh: usr.password};
         }
         else {
             return null;
         }
     }
 
-    async getAccountForUsr(usrlogin) {
-        console.log(users);
-        let usr = users.find(({ login }) => login === usrlogin);
+    async getAccountForUsr(usrid) {
+        let usr = users.find(({ id }) => id === usrid);
         if (usr) {
-            return { displayname: usr.displayname, login: usr.login };
+            return { id: usr.id, displayname: usr.displayname, login: usr.login };
         }
         else {
             return null;

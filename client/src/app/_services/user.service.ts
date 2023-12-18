@@ -11,11 +11,6 @@ export class UserService {
   constructor(
     private http: HttpClient) { }
 
-  myaccount: UserAccount = {
-    displayname: "Lindy B",
-    login: "lindy222"
-  }
-
   url = 'http://localhost:3000/user';
 
   getUser(): Observable<UserAccount> {

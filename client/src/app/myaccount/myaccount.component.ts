@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./myaccount.component.css']
 })
 export class MyaccountComponent {
-  myaccount: UserAccount = { displayname: "", login: "" };
+  myaccount: UserAccount = { id: -1, displayname: "", login: "" };
   userService: UserService = inject(UserService);
 
   constructor(private router: Router) {

@@ -45,8 +45,8 @@ app.use((err, req, res, next) => {
 
 app.get("/user", async (req, res) => {
     console.log("Got request");
-    let login = req.auth.login;
-    let usr = await repo.getAccountForUsr(login);
+    let id = req.auth.id;
+    let usr = await repo.getAccountForUsr(id);
     res.json(usr)
 });
 
@@ -55,14 +55,14 @@ app.post("/auth/signin", async (req, res) => {
     console.log(req.body.login, req.body.password);
     let login = req.body.login;
     let pwd = req.body.password;
-    let pwdHsh = await repo.getPasswordForUsr(login);
+    let {id, pwdHsh} = await repo.getPasswordForUsr(login);
     if (pwdHsh == null) {
         return res.status(403).send({
             success: false,
             message: 'Incorrect login'
         });
     } else if (pwd == pwdHsh) {
-        const jwtBearer = jwt.sign({ login: req.body.login }, RSA_PRIVATE_KEY, {
+        const jwtBearer = jwt.sign({ id: id }, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
             expiresIn: 1200
         })
@@ -91,7 +91,7 @@ app.post("/auth/signup", async (req, res) => {
         });
     } else {
         await repo.addUsr(sdata);
-        const jwtBearer = jwt.sign({ login: sdata.login }, RSA_PRIVATE_KEY, {
+        const jwtBearer = jwt.sign({ id: sdata.id }, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
             expiresIn: 1200
         })
