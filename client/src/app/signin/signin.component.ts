@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
 import { Jwtoken } from '../jwtoken';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -12,6 +13,8 @@ import { Jwtoken } from '../jwtoken';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
+  constructor(private router: Router) { };
+
   errMsg: string = "";
 
   authService: AuthService = inject(AuthService);
@@ -27,6 +30,7 @@ export class SigninComponent {
     const { login, pwd } = this.signinForm.value;
     console.log(login, pwd);
     this.authService.signin(login!, pwd!).subscribe({
+      complete: () => { this.router.navigate(['']) },
       next: data => { this.authService.setSession(data as Jwtoken); this.errMsg = "" },
       error: err => { console.log(err); this.errMsg = err.error.message }
     });

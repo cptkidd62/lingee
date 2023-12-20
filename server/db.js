@@ -54,7 +54,7 @@ exports.Repository = class Repository {
             return { id: usr.id, pwdHsh: usr.password };
         }
         else {
-            return null;
+            return { id: null, pwdHsh: null };
         }
     }
 

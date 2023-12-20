@@ -4,6 +4,7 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators, ValidatorFn, V
 import { AuthService } from '../_services/auth.service';
 import { SignupData } from '../signupdata';
 import { Jwtoken } from '../jwtoken';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -13,6 +14,8 @@ import { Jwtoken } from '../jwtoken';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
+  constructor(private router: Router) { };
+
   errMsg: string = "";
 
   authService: AuthService = inject(AuthService);
@@ -47,6 +50,7 @@ export class SignupComponent {
     };
     console.log(sdata);
     this.authService.signup(sdata).subscribe({
+      complete: () => { this.router.navigate(['']) },
       next: data => { this.authService.setSession(data as Jwtoken); this.errMsg = "" },
       error: err => { console.log(err); this.errMsg = err.error.message }
     });
