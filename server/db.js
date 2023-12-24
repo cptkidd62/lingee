@@ -1,38 +1,24 @@
-var users = [
-    {
-        id: 0,
-        displayname: "Lucy Stilman",
-        login: "lucy00",
-        email: "lucys@mail.com",
-        password: "$2a$12$/sAcmjwfy0agTumH9B4MpeVHKunNJenzg51Ph59x4xspdSMpvwMc." // pass
-    },
-    {
-        id: 1,
-        displayname: "Adam Erkek",
-        login: "adam",
-        email: "erad@ben.tr",
-        password: "$2a$12$DxLwm3b3ckIGauOk9F/Xp.Jlo145Qxq03Z/uXCkOurlpMmK7J7GLy" // abc
-    },
-    {
-        id: 2,
-        displayname: "Tina T",
-        login: "tina12",
-        email: "tina@mail.com",
-        password: "$2a$12$v08dv5EKmtIy4jaTQgJVC.56n4mJ.1FILxPaCnkABAcpCqhk7BoxW" // pas
-    },
-]
+const { Pool } = require("pg");
 
 exports.Repository = class Repository {
-    constructor() { }
+    pool = null;
+    constructor() {
+        this.pool = new Pool({
+            user: "cptkidd",
+            host: "localhost",
+            database: "lingeedb",
+            port: 5432,
+        });
+    }
 
     async addUsr(usr) {
-        users.push(usr);
-        console.log(users);
+        await this.pool.query("INSERT INTO users (u_login, u_displayname, u_email, u_password) VALUES ($1, $2, $3, $4)",
+            [usr.login, usr.displayname, usr.email, usr.password]);
     }
 
     async loginExists(usrlogin) {
-        let res = users.find(({ login }) => login === usrlogin);
-        if (res) {
+        let data = await this.pool.query("SELECT u_id FROM users WHERE u_email = $1", [usrlogin]);
+        if (data.rows.length != 0) {
             return true;
         } else {
             return false;
@@ -40,8 +26,8 @@ exports.Repository = class Repository {
     }
 
     async emailExists(usremail) {
-        let res = users.find(({ email }) => email === usremail);
-        if (res) {
+        let data = await this.pool.query("SELECT u_id FROM users WHERE u_email = $1", [usremail]);
+        if (data.rows.length != 0) {
             return true;
         } else {
             return false;
@@ -49,9 +35,10 @@ exports.Repository = class Repository {
     }
 
     async getPasswordForUsr(usrlogin) {
-        let usr = users.find(({ login }) => login === usrlogin);
-        if (usr) {
-            return { id: usr.id, pwdHsh: usr.password };
+        let data = await this.pool.query("SELECT u_id, u_password FROM users WHERE u_login = $1", [usrlogin]);
+        console.log(data.rows);
+        if (data.rows.length != 0) {
+            return { id: data.rows[0].u_id, pwdHsh: data.rows[0].u_password };
         }
         else {
             return { id: null, pwdHsh: null };
@@ -59,9 +46,9 @@ exports.Repository = class Repository {
     }
 
     async getAccountForUsr(usrid) {
-        let usr = users.find(({ id }) => id === usrid);
-        if (usr) {
-            return { id: usr.id, displayname: usr.displayname, login: usr.login };
+        let data = await this.pool.query("SELECT u_displayname, u_login FROM users WHERE u_id = $1", [usrid]);
+        if (data.rows.length != 0) {
+            return { id: usrid, displayname: data.rows[0].u_displayname, login: data.rows[0].u_login };
         }
         else {
             return null;
