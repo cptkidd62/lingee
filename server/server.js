@@ -10,6 +10,8 @@ const fs = require("fs");
 
 const dbrepo = require("./db");
 var repo;
+const sentgen = require("./sentgen");
+var sgen;
 
 const RSA_PRIVATE_KEY = fs.readFileSync('./keys/jwtRS256.key');
 const RSA_PUBLIC_KEY = fs.readFileSync('./keys/jwtRS256.key.pub');
@@ -30,10 +32,11 @@ app.use(cookieParser('1QVIQ7F7tJNa2fGwORfvl6bf6dfYoj63'));
 
 app.use((req, res, next) => {
     repo = new dbrepo.Repository();
+    sgen = new sentgen.Generator();
     next();
 });
 
-app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin', '/auth/signup'] }));
+app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin', '/auth/signup', '/random'] }));
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
@@ -100,6 +103,10 @@ app.post("/auth/signup", async (req, res) => {
         })
         res.json({ idToken: jwtBearer, expiresIn: 1200 });
     }
+});
+
+app.get("/random", (req, res) => {
+    res.json({ 0: sgen.getRandomSentence() });
 });
 
 app.listen(3000, () => {
