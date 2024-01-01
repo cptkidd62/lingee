@@ -240,15 +240,22 @@ let trverbneg = function (word) {
 let traddadjectives = function (adjlst, noun) {
     return adjlst.join(' ') + ' ' + noun;
 }
-// constructions
-let trtohave = function () {
-    let w = getRandomElement(trnouns);
-    return trnounaddposs(w, 3, true) + ' var.'
+
+let trdescribenoun = function (descriptions, noun) { // ex. [trnounplural, trnounaccus], 'erkek'
+    return descriptions.reduce((acc, foo) => { console.log(acc, foo); return foo(acc) }, noun);
 }
-let trdosth = function () {
-    let n = getRandomElement(trnouns);
-    let v = getRandomElement(trverbs);
-    return traddadjectives(['yeni'], trnoundative(n)) + ' ' + trverbconj(trverbfuture(trverbneg(v)), getRandomNum(1, 4), true);
+
+let trconjugateverb = function (descriptions, verb, p, sing) {
+    return descriptions.reduce((acc, foo) => { console.log(acc, foo, p, sing); return foo(acc, p, sing) }, verb);
+}
+// constructions
+let trtohave = function (n, p, s) {
+    return trnounaddposs(trdescribenoun(...n), p, s) + ' var.'
+}
+let trdosth = function (n, v) {
+    let rn = trdescribenoun(...n);
+    let rv = trconjugateverb(...v);
+    return rn + ' ' + rv;
 }
 
 // english
@@ -327,5 +334,10 @@ let enlikesth = function () {
 }
 
 exports.Generator = class Generator {
-    getRandomSentence() { let s = entohave(); console.log(s); return s }
+    // getRandomSentence() { let s = entohave(); console.log(s); return s }
+    pattern1 = [trdosth, [[[trnounplural, trnounaccus], 'erkek'], [[trverbneg, trverbfuture, trverbconj], 'sev', 2, true]]]
+    pattern2 = [trtohave, [[[trnounplural], 'gomlek'], 1, true]]
+    getFromPattern(pattern) {
+        return pattern[0].apply(this, pattern[1])
+    }
 }
