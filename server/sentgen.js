@@ -314,18 +314,26 @@ let enaddadjectives = function (adjlst, noun) {
     return adjlst.join(' ') + ' ' + noun;
 }
 
-let entohave = function () {
-    let p = getRandomNum(1, 4);
-    let sing = true;
-    let verb = ' have '
-    if (sing && p == 3) {
-        verb = ' has '
-    }
-    return engetpronoun(p, sing) + verb + ennounplural(getRandomElement(ennounsl)) + ' ' + ennounwith(getRandomElement(ennounsl));
+let endescribenoun = function (descriptions, noun) { // ex. [trnounplural, trnounaccus], 'erkek'
+    return descriptions.reduce((acc, foo) => { console.log(acc, foo); return foo(acc) }, noun);
 }
 
-let endosth = function () {
+let enconjugateverb = function (descriptions, verb, p, sing) {
+    return descriptions.reduce((acc, foo) => { console.log(acc, foo, p, sing); return foo(acc, p, sing) }, verb);
+}
 
+let entohave = function (n, p, s) {
+    let verb = ' have '
+    if (s && p == 3) {
+        verb = ' has '
+    }
+    return engetpronoun(p, s) + verb + endescribenoun(...n);
+}
+
+let endosth = function (n, v) {
+    let rn = endescribenoun(...n);
+    let rv = enconjugateverb(...v);
+    return rv + ' ' + rn;
 }
 
 let enlikesth = function () {
@@ -336,7 +344,9 @@ let enlikesth = function () {
 exports.Generator = class Generator {
     // getRandomSentence() { let s = entohave(); console.log(s); return s }
     pattern1 = [trdosth, [[[trnounplural, trnounaccus], 'erkek'], [[trverbneg, trverbfuture, trverbconj], 'sev', 2, true]]]
+    pattern1e = [endosth, [[[ennounplural], 'man'], [[enfuture], 'like', 2, true]]]
     pattern2 = [trtohave, [[[trnounplural], 'gomlek'], 1, true]]
+    pattern2e = [entohave, [[[ennounplural], 'school'], 1, true]]
     getFromPattern(pattern) {
         return pattern[0].apply(this, pattern[1])
     }
