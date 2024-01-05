@@ -157,10 +157,6 @@ let trnounwith = function (word) {
     }
     return res + 'l' + v;
 }
-let trnounplural = function (word) {
-    let v = tr2vowel(word);
-    return word + 'l' + v + 'r';
-}
 // verb forms
 let trverbcont = function (word) {
     let res = word
@@ -240,14 +236,6 @@ let trverbneg = function (word) {
 let traddadjectives = function (adjlst, noun) {
     return adjlst.join(' ') + ' ' + noun;
 }
-
-let trdescribenoun = function (descriptions, noun) { // ex. [trnounplural, trnounaccus], 'erkek'
-    return descriptions.reduce((acc, foo) => { console.log(acc, foo); return foo(acc) }, noun);
-}
-
-let trconjugateverb = function (descriptions, verb, p, sing) {
-    return descriptions.reduce((acc, foo) => { console.log(acc, foo, p, sing); return foo(acc, p, sing) }, verb);
-}
 // constructions
 let trtohave = function (n, p, s) {
     return trnounaddposs(trdescribenoun(...n), p, s) + ' var.'
@@ -260,14 +248,6 @@ let trdosth = function (n, v) {
 
 // english
 // noun forms
-let ennounplural = function (word) {
-    let res = ennouns[word].plural;
-    if (res) {
-        return res;
-    } else {
-        return word;
-    }
-}
 
 let ennounwith = function (word) {
     return 'with ' + word;
@@ -314,14 +294,6 @@ let enaddadjectives = function (adjlst, noun) {
     return adjlst.join(' ') + ' ' + noun;
 }
 
-let endescribenoun = function (descriptions, noun) { // ex. [trnounplural, trnounaccus], 'erkek'
-    return descriptions.reduce((acc, foo) => { console.log(acc, foo); return foo(acc) }, noun);
-}
-
-let enconjugateverb = function (descriptions, verb, p, sing) {
-    return descriptions.reduce((acc, foo) => { console.log(acc, foo, p, sing); return foo(acc, p, sing) }, verb);
-}
-
 let entohave = function (n, p, s) {
     let verb = ' have '
     if (s && p == 3) {
@@ -341,13 +313,54 @@ let enlikesth = function () {
     return enfuture('like', p, true) + ' ' + enaddadjectives(enadj, ennounplural(getRandomElement(ennounsl)))
 }
 
+class Turkish {
+    nounplural(word) {
+        let v = tr2vowel(word);
+        return word + 'l' + v + 'r';
+    }
+    tohave(n, p, s) {
+        return trnounaddposs(this.describenoun(...n), p, s) + ' var.'
+    }
+    describenoun(descriptions, noun) { // ex. [trnounplural, trnounaccus], 'erkek'
+        return descriptions.reduce((acc, foo) => { return this[foo](acc) }, noun);
+    }
+    conjugateverb(descriptions, verb, p, sing) {
+        return descriptions.reduce((acc, foo) => { return this[foo](acc, p, sing) }, verb);
+    }
+}
+
+class English {
+    nounplural(word) {
+        let res = ennouns[word].plural;
+        if (res) {
+            return res;
+        } else {
+            return word;
+        }
+    };
+    tohave(n, p, s) {
+        let verb = ' have '
+        if (s && p == 3) {
+            verb = ' has '
+        }
+        return engetpronoun(p, s) + verb + this.describenoun(...n);
+    };
+    describenoun(descriptions, noun) {
+        return descriptions.reduce((acc, foo) => { return this[foo](acc) }, noun);
+    };
+    conjugateverb(descriptions, verb, p, sing) {
+        return descriptions.reduce((acc, foo) => { return this[foo](acc, p, sing) }, verb);
+    }
+}
+
 exports.Generator = class Generator {
     // getRandomSentence() { let s = entohave(); console.log(s); return s }
-    pattern1 = [trdosth, [[[trnounplural, trnounaccus], 'erkek'], [[trverbneg, trverbfuture, trverbconj], 'sev', 2, true]]]
-    pattern1e = [endosth, [[[ennounplural], 'man'], [[enfuture], 'like', 2, true]]]
-    pattern2 = [trtohave, [[[trnounplural], 'gomlek'], 1, true]]
-    pattern2e = [entohave, [[[ennounplural], 'school'], 1, true]]
+    pattern1 = [trdosth, [[['nounplural', trnounaccus], 'erkek'], [[trverbneg, trverbfuture, trverbconj], 'sev', 2, true]]]
+    pattern1e = [endosth, [[['nounplural'], 'man'], [[enfuture], 'like', 2, true]]]
+    pattern2 = [Turkish, 'tohave', [[['nounplural'], 'gomlek'], 1, true]]
+    pattern2e = [English, 'tohave', [[['nounplural'], 'school'], 1, true]]
     getFromPattern(pattern) {
-        return pattern[0].apply(this, pattern[1])
+        let x = new pattern[0]();
+        return x[pattern[1]](...pattern[2])
     }
 }
