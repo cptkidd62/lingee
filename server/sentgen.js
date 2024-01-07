@@ -22,7 +22,8 @@ const enverbs = {
     'see': { present: 'see', third: 'sees', cont: 'seeing', past: 'saw' },
     'listen': { present: 'listen', third: 'listens', cont: 'listening', past: 'listened' },
     'hear': { present: 'hear', third: 'hears', cont: 'hearing', past: 'heard' },
-    'go': { present: 'go', third: 'goes', cont: 'going', past: 'went' }
+    'go': { present: 'go', third: 'goes', cont: 'going', past: 'went' },
+    'have': { present: 'have', third: 'has', cont: 'having', past: 'had' }
 }
 const enadj = ['beautiful', 'good', 'bad', 'long']
 
@@ -38,8 +39,8 @@ class Turkish {
         let v = this.tr2vowel(word);
         return word + 'l' + v + 'r';
     }
-    tohave(n, p, s) {
-        return this.nounaddposs(this.describenoun(...n), p, s) + ' var.'
+    tohave(n, p, s, vdesc) {
+        return this.nounaddposs(this.describenoun(...n), p, s) + ' ' + this.conjugateverb(vdesc, 'var', 3, true) // ???
     }
     dosth(n, v) {
         let rn = this.describenoun(...n);
@@ -52,6 +53,9 @@ class Turkish {
     }
     conjugateverb(descriptions, verb, p, sing) {
         return descriptions.reduce((acc, foo) => { return this[foo](acc, p, sing) }, verb);
+    }
+    verbpastsimple(word, p, sing) {
+        return this.verbpastconj(word, p, sing)
     }
     verbcont(word) {
         let res = word
@@ -264,12 +268,8 @@ class English {
             return word;
         }
     };
-    tohave(n, p, s) {
-        let verb = ' have '
-        if (s && p == 3) {
-            verb = ' has '
-        }
-        return this.getpronoun(p, s) + verb + this.describenoun(...n);
+    tohave(n, p, s, vdesc) {
+        return this.conjugateverb(vdesc, 'have', p, s) + ' ' + this.describenoun(...n);
     };
     dosth(n, v) {
         let rn = this.describenoun(...n);
@@ -307,20 +307,20 @@ class English {
         }
     }
     conjugateverb(descriptions, verb, p, sing) {
-        return descriptions.reduce((acc, foo) => { return this[foo](acc, p, sing) }, verb);
+        return this.getpronoun(p, sing) + ' ' + descriptions.reduce((acc, foo) => { return this[foo](acc, p, sing) }, verb);
     }
     verbpressimple(word, p, sing) {
         if (sing && p == 3) {
-            return 'he ' + enverbs[word].third;
+            return enverbs[word].third;
         } else {
-            return this.getpronoun(p, sing) + ' ' + enverbs[word].present;
+            return enverbs[word].present;
         }
     }
     verbpastsimple(word, p, sing) {
-        return this.getpronoun(p, sing) + ' ' + enverbs[word].past;
+        return enverbs[word].past;
     }
     verbfuture(word, p, sing) {
-        return this.getpronoun(p, sing) + ' will ' + enverbs[word].present;
+        return enverbs[word].present;
     }
     addadjectives(adjlst, noun) {
         return adjlst.join(' ') + ' ' + noun;
@@ -331,7 +331,7 @@ exports.Generator = class Generator {
     // getRandomSentence() { let s = entohave(); console.log(s); return s }
     turkish = Turkish
     english = English
-    pattern1 = ['tohave', [[['nounplural'], 2], 1, true]]
+    pattern1 = ['tohave', [[['nounplural'], 2], 1, true, ['verbpastsimple']]]
     getFromPattern(lang, pattern) {
         let x = new lang();
         return x[pattern[0]](...pattern[1])
