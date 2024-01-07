@@ -16,7 +16,22 @@ exports.Generator = class Generator {
             en: new engen.English(),
         }
     }
-    pattern1 = ['tohave', [[['nounplural'], 2], 1, true, ['verbpastsimple']]]
+    pattern1 = ['tohave', [[['nounplural'], 2], 1, true, {
+        tense: 'pastsimple',
+        negation: false,
+    }]]
+    pattern2 = ['dosth', [[[], 6], 1, {
+        tense: 'pastsimple',
+        negation: false,
+        person: 1,
+        singular: true,
+    }]]
+    pattern3 = ['dosth', [[[], 6], 1, {
+        tense: 'pressimple',
+        negation: false,
+        person: 3,
+        singular: true,
+    }]]
     getFromPattern(lang, pattern) {
         return this.langs[lang][pattern[0]](...pattern[1])
     }

@@ -20,7 +20,24 @@ const enverbs = {
 }
 const enadj = ['beautiful', 'good', 'bad', 'long']
 
+const conj_tobe = function (p, sing, past) {
+    if (sing && p == 1) {
+        return past ? 'was' : 'am'
+    } else if (sing && p == 3) {
+        return past ? 'was' : 'is'
+    } else {
+        return past ? 'were' : 'are'
+    }
+}
+
 exports.English = class English {
+    tenses = {
+        pastsimple: this.verbpastsimple,
+        pastcont: this.verbpastcont,
+        pressimple: this.verbpressimple,
+        prescont: this.verbprescont,
+        futuresimple: this.verbfuturesimple
+    }
     nounplural(word) {
         let res = ennouns[word].plural;
         if (res) {
@@ -32,13 +49,13 @@ exports.English = class English {
     tohave(n, p, s, vdesc) {
         return this.conjugateverb(vdesc, 'have', p, s) + ' ' + this.describenoun(...n);
     };
-    dosth(n, v) {
+    dosth(n, v, vd) {
+        let nv = enverbsl[v]
         let rn = this.describenoun(...n);
-        let rv = this.conjugateverb(...v);
+        let rv = this.conjugateverb(vd, nv, vd.person, vd.singular);
         return rv + ' ' + rn;
     }
     likesth() {
-        let p = getRandomNum(1, 4);
         return this.verbfuture('like', p, true) + ' ' + this.addadjectives(enadj, this.nounplural(getRandomElement(ennounsl)))
     }
     describenoun(descriptions, nounId) {
@@ -68,7 +85,12 @@ exports.English = class English {
         }
     }
     conjugateverb(descriptions, verb, p, sing) {
-        return this.getpronoun(p, sing) + ' ' + descriptions.reduce((acc, foo) => { return this[foo](acc, p, sing) }, verb);
+        let nv = verb
+        if (descriptions.negation) {
+            nv = verbneg(nv)
+        }
+        nv = this.tenses[descriptions.tense](nv, p, sing)
+        return this.getpronoun(p, sing) + ' ' + nv
     }
     verbpressimple(word, p, sing) {
         if (sing && p == 3) {
@@ -77,10 +99,16 @@ exports.English = class English {
             return enverbs[word].present;
         }
     }
+    verbprescont(word, p, sing) {
+        return conj_tobe(p, sing, false) + ' ' + enverbs[word].cont
+    }
     verbpastsimple(word, p, sing) {
         return enverbs[word].past;
     }
-    verbfuture(word, p, sing) {
+    verbpastcont(word, p, sing) {
+        return conj_tobe(p, sing, true) + ' ' + enverbs[word].cont
+    }
+    verbfuturesimple(word, p, sing) {
         return enverbs[word].present;
     }
     addadjectives(adjlst, noun) {

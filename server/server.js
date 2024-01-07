@@ -108,7 +108,11 @@ app.post("/auth/signup", async (req, res) => {
 app.get("/random", (req, res) => {
     res.json({
         0: sgen.getFromPattern('tr', sgen.pattern1),
-        1: sgen.getFromPattern('en', sgen.pattern1)
+        1: sgen.getFromPattern('en', sgen.pattern1),
+        2: sgen.getFromPattern('tr', sgen.pattern2),
+        3: sgen.getFromPattern('en', sgen.pattern2),
+        4: sgen.getFromPattern('tr', sgen.pattern3),
+        5: sgen.getFromPattern('en', sgen.pattern3)
     });
 });
 

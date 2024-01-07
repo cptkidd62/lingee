@@ -1,5 +1,13 @@
 const trnouns = ['kadın', 'erkek', 'okul', 'gün', 'para', 'renk', 'kitap', 'baba', 'anne']
-const trverbs = ['sev', 'al', 'gör', 'dinle', 'duy', 'git']
+const trverbsl = ['sev', 'al', 'gör', 'dinle', 'duy', 'git']
+const trverbs = {
+    'sev': { case: 'acc', aor: 'e' },
+    'al': { case: 'acc', aor: 'ı' },
+    'gör': { case: 'acc', aor: 'ü' },
+    'dinle': { case: 'acc', aor: 'e' },
+    'duy': { case: 'acc', aor: 'a' },
+    'git': { case: 'dat', aor: 'e' }
+}
 const tradj = ['gözel', 'iyi', 'kötü', 'uzun']
 const tradv = ['çabuk']
 const vowels = ['a', 'e', 'i', 'ı', 'o', 'ö', 'u', 'ü']
@@ -197,12 +205,31 @@ const verbconj = function (word, p, sing) {
         }
     }
 }
+const verbaorist = function (word) {
+    let res = word
+    if (vowels.includes(word.slice(-1))) {
+        res = word.slice(0, -1)
+    }
+    return res + trverbs[word].aor + 'r'
+}
 const verbneg = function (word) {
     let v = tr2vowel(word);
     return word + 'm' + v;
 }
 
 exports.Turkish = class Turkish {
+    tenses = {
+        pastsimple: this.verbpastsimple,
+        pastcont: this.verbpastcont,
+        pressimple: this.verbpressimple,
+        prescont: this.verbprescont,
+        futuresimple: this.verbfuturesimple
+    }
+    cases = {
+        acc: nounaccus,
+        loc: nounlocative,
+        dat: noundative
+    }
     nounplural(word) {
         let v = tr2vowel(word);
         return word + 'l' + v + 'r';
@@ -210,9 +237,10 @@ exports.Turkish = class Turkish {
     tohave(n, p, s, vdesc) {
         return nounaddposs(this.describenoun(...n), p, s) + ' ' + this.conjugateverb(vdesc, 'var', 3, true) // ???
     }
-    dosth(n, v) {
-        let rn = this.describenoun(...n);
-        let rv = this.conjugateverb(...v);
+    dosth(n, v, vd) {
+        let nv = trverbsl[v]
+        let rn = this.cases[trverbs[nv].case](this.describenoun(...n));
+        let rv = this.conjugateverb(vd, nv, vd.person, vd.singular);
         return rn + ' ' + rv;
     }
     describenoun(descriptions, nounId) { // ex. [trnounplural, trnounaccus], 'erkek'
@@ -220,10 +248,27 @@ exports.Turkish = class Turkish {
         return descriptions.reduce((acc, foo) => { return this[foo](acc) }, noun);
     }
     conjugateverb(descriptions, verb, p, sing) {
-        return descriptions.reduce((acc, foo) => { return this[foo](acc, p, sing) }, verb);
+        let nv = verb
+        if (descriptions.negation) {
+            nv = verbneg(nv)
+        }
+        nv = this.tenses[descriptions.tense](nv, p, sing)
+        return nv;
+    }
+    verbpressimple(word, p, sing) {
+        return verbconj(verbaorist(word), p, sing)
+    }
+    verbprescont(word, p, sing) {
+        return verbconj(verbcont(word), p, sing)
     }
     verbpastsimple(word, p, sing) {
         return verbpastconj(word, p, sing)
+    }
+    verbpastcont(word, p, sing) {
+        return verbpastconj(verbcont(word), p, sing)
+    }
+    verbfuturesimple(word, p, sing) {
+        return verbconj(verbcont(word), p, sing)
     }
     addadjectives(adjlst, noun) {
         return adjlst.join(' ') + ' ' + noun;
