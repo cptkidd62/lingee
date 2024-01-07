@@ -109,7 +109,7 @@ exports.English = class English {
         return conj_tobe(p, sing, true) + ' ' + enverbs[word].cont
     }
     verbfuturesimple(word, p, sing) {
-        return enverbs[word].present;
+        return 'will ' + word;
     }
     addadjectives(adjlst, noun) {
         return adjlst.join(' ') + ' ' + noun;
