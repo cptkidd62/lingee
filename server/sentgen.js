@@ -32,300 +32,226 @@ function getRandomElement(array) {
 function getRandomNum(b, e) {
     return b + Math.floor(Math.random() * (e - b))
 }
-// turkish
-// vowel & consonant harmonies
-let tr4vowel = function (word) {
-    let idx = Math.max(...(vowels.map(x => word.lastIndexOf(x))));
-    let l = word[idx];
-    switch (l) {
-        case 'a':
-        case 'ı':
-            return 'ı';
-        case 'e':
-        case 'i':
-            return 'i';
-        case 'o':
-        case 'u':
-            return 'u';
-        case 'ö':
-        case 'ü':
-            return 'ü';
-    }
-}
-let tr2vowel = function (word) {
-    let idx = Math.max(...(vowels.map(x => word.lastIndexOf(x))));
-    let l = word[idx];
-    switch (l) {
-        case 'a':
-        case 'ı':
-        case 'o':
-        case 'u':
-            return 'a';
-        case 'e':
-        case 'i':
-        case 'ö':
-        case 'ü':
-            return 'e';
-    }
-}
-let trchnglast = function (word) {
-    let res = word.slice(0, -1);
-    let last = word.slice(-1);
-    if (last == 'p') {
-        return res + 'b';
-    } else if (last == 'ç') {
-        return res + 'c';
-    } else if (last == 't') {
-        return res + 'd';
-    } else if (last == 'k') {
-        if (vowels.includes(res.slice(-1))) {
-            return res + 'ğ';
-        } else {
-            return res + 'g';
-        }
-    }
-    return word;
-}
-// noun forms
-let trnounaddposs = function (word, p, sing) {
-    let v = tr4vowel(word);
-    let res = word;
-    if (!vowels.includes(word.slice(-1))) {
-        res = trchnglast(res);
-        res += v;
-    }
-    if (sing) {
-        switch (p) {
-            case 1:
-                return res + 'm';
-            case 2:
-                return res + 'n';
-            case 3:
-                if (vowels.includes(word.slice(-1))) {
-                    res = word + 's' + v;
-                }
-                return res;
-        }
-    } else {
-        switch (p) {
-            case 1:
-                return res + 'm' + v + 'z';
-            case 2:
-                return res + 'n' + v + 'z';
-            case 3:
-                let v1 = tr2vowel(word);
-                let v2 = tr4vowel(v1);
-                return word + 'l' + v1 + 'r' + v2;
-        }
-    }
-}
-let trnounaccus = function (word) {
-    let v = tr4vowel(word);
-    let res = word;
-    if (vowels.includes(word.slice(-1))) {
-        res += 'y';
-    } else {
-        res = trchnglast(res);
-    }
-    return res + v;
-}
-let trnounlocative = function (word) {
-    let v = tr2vowel(word);
-    let res = word;
-    if (softcons.includes(word.slice(-1))) {
-        res += 't';
-    } else {
-        res += 'd'
-    }
-    return res + v;
-}
-let trnoundative = function (word) {
-    let v = tr2vowel(word);
-    let res = word;
-    if (vowels.includes(word.slice(-1))) {
-        res += 'y';
-    } else {
-        res = trchnglast(res);
-    }
-    return res + v;
-}
-let trnounwith = function (word) {
-    let v = tr2vowel(word);
-    let res = word;
-    if (vowels.includes(word.slice(-1))) {
-        res += 'y';
-    }
-    return res + 'l' + v;
-}
-// verb forms
-let trverbcont = function (word) {
-    let res = word
-    if (vowels.includes(word.slice(-1))) {
-        res = word.slice(0, -1);
-    }
-    res += tr4vowel(res);
-    return res + 'yor';
-}
-let trverbfuture = function (word) {
-    let v = tr2vowel(word);
-    let res = word
-    if (vowels.includes(word.slice(-1))) {
-        res += 'y';
-    }
-    return res + v + 'c' + v + 'k';
-}
-let trverbpastconj = function (word, p, sing) {
-    let v = tr4vowel(word);
-    let res = word;
-    if (sing) {
-        switch (p) {
-            case 1:
-                return res + 'd' + v + 'm';
-            case 2:
-                return res + 'd' + v + 'n';
-            case 3:
-                return res + 'd' + v;
-        }
-    } else {
-        switch (p) {
-            case 1:
-                return res + 'd' + v + 'k';
-            case 2:
-                return res + 'd' + v + 'n' + v + 'z';
-            case 3:
-                if (word.slice(-3) == 'yor') {
-                    return res + 'lardı';
-                } else {
-                    let v1 = tr2vowel(v);
-                    return res + 'd' + v + 'l' + v1 + 'r';
-                }
-        }
-    }
-}
-let trverbconj = function (word, p, sing) {
-    let v = tr4vowel(word);
-    let res = word;
-    if (sing) {
-        switch (p) {
-            case 1:
-                res = trchnglast(res);
-                return res + v + 'm';
-            case 2:
-                return res + 's' + v + 'n';
-            case 3:
-                return res;
-        }
-    } else {
-        switch (p) {
-            case 1:
-                res = trchnglast(res);
-                return res + v + 'z';
-            case 2:
-                return res + 's' + v + 'n' + v + 'z';
-            case 3:
-                let v1 = tr2vowel(word);
-                return res + 'l' + v1 + 'r';
-        }
-    }
-}
-let trverbneg = function (word) {
-    let v = tr2vowel(word);
-    return word + 'm' + v;
-}
-// adjectives
-let traddadjectives = function (adjlst, noun) {
-    return adjlst.join(' ') + ' ' + noun;
-}
-// constructions
-let trtohave = function (n, p, s) {
-    return trnounaddposs(trdescribenoun(...n), p, s) + ' var.'
-}
-let trdosth = function (n, v) {
-    let rn = trdescribenoun(...n);
-    let rv = trconjugateverb(...v);
-    return rn + ' ' + rv;
-}
-
-// english
-// noun forms
-
-let ennounwith = function (word) {
-    return 'with ' + word;
-}
-
-let engetpronoun = function (p, sing) {
-    if (sing) {
-        if (p == 1) {
-            return 'I';
-        } else if (p == 2) {
-            return 'you';
-        } else {
-            return 'he'
-        }
-    } else {
-        if (p == 1) {
-            return 'we';
-        } else if (p == 2) {
-            return 'you';
-        } else {
-            return 'they'
-        }
-    }
-}
-// verb forms
-let enpressimple = function (word, p, sing) {
-    if (sing && p == 3) {
-        return 'he ' + enverbs[word].third;
-    } else {
-        return engetpronoun(p, sing) + ' ' + enverbs[word].present;
-    }
-}
-
-let enpastsimple = function (word, p, sing) {
-    return engetpronoun(p, sing) + ' ' + enverbs[word].past;
-}
-
-let enfuture = function (word, p, sing) {
-    return engetpronoun(p, sing) + ' will ' + enverbs[word].present;
-}
-
-// adjectives
-let enaddadjectives = function (adjlst, noun) {
-    return adjlst.join(' ') + ' ' + noun;
-}
-
-let entohave = function (n, p, s) {
-    let verb = ' have '
-    if (s && p == 3) {
-        verb = ' has '
-    }
-    return engetpronoun(p, s) + verb + endescribenoun(...n);
-}
-
-let endosth = function (n, v) {
-    let rn = endescribenoun(...n);
-    let rv = enconjugateverb(...v);
-    return rv + ' ' + rn;
-}
-
-let enlikesth = function () {
-    let p = getRandomNum(1, 4);
-    return enfuture('like', p, true) + ' ' + enaddadjectives(enadj, ennounplural(getRandomElement(ennounsl)))
-}
 
 class Turkish {
     nounplural(word) {
-        let v = tr2vowel(word);
+        let v = this.tr2vowel(word);
         return word + 'l' + v + 'r';
     }
     tohave(n, p, s) {
-        return trnounaddposs(this.describenoun(...n), p, s) + ' var.'
+        return this.nounaddposs(this.describenoun(...n), p, s) + ' var.'
     }
-    describenoun(descriptions, noun) { // ex. [trnounplural, trnounaccus], 'erkek'
+    dosth(n, v) {
+        let rn = this.describenoun(...n);
+        let rv = this.conjugateverb(...v);
+        return rn + ' ' + rv;
+    }
+    describenoun(descriptions, nounId) { // ex. [trnounplural, trnounaccus], 'erkek'
+        let noun = trnouns[nounId];
         return descriptions.reduce((acc, foo) => { return this[foo](acc) }, noun);
     }
     conjugateverb(descriptions, verb, p, sing) {
         return descriptions.reduce((acc, foo) => { return this[foo](acc, p, sing) }, verb);
+    }
+    verbcont(word) {
+        let res = word
+        if (vowels.includes(word.slice(-1))) {
+            res = word.slice(0, -1);
+        }
+        res += this.tr4vowel(res);
+        return res + 'yor';
+    }
+    verbfuture(word) {
+        let v = this.tr2vowel(word);
+        let res = word
+        if (vowels.includes(word.slice(-1))) {
+            res += 'y';
+        }
+        return res + v + 'c' + v + 'k';
+    }
+    verbpastconj(word, p, sing) {
+        let v = this.tr4vowel(word);
+        let res = word;
+        if (sing) {
+            switch (p) {
+                case 1:
+                    return res + 'd' + v + 'm';
+                case 2:
+                    return res + 'd' + v + 'n';
+                case 3:
+                    return res + 'd' + v;
+            }
+        } else {
+            switch (p) {
+                case 1:
+                    return res + 'd' + v + 'k';
+                case 2:
+                    return res + 'd' + v + 'n' + v + 'z';
+                case 3:
+                    if (word.slice(-3) == 'yor') {
+                        return res + 'lardı';
+                    } else {
+                        let v1 = this.tr2vowel(v);
+                        return res + 'd' + v + 'l' + v1 + 'r';
+                    }
+            }
+        }
+    }
+    verbconj(word, p, sing) {
+        let v = this.tr4vowel(word);
+        let res = word;
+        if (sing) {
+            switch (p) {
+                case 1:
+                    res = this.trchnglast(res);
+                    return res + v + 'm';
+                case 2:
+                    return res + 's' + v + 'n';
+                case 3:
+                    return res;
+            }
+        } else {
+            switch (p) {
+                case 1:
+                    res = this.trchnglast(res);
+                    return res + v + 'z';
+                case 2:
+                    return res + 's' + v + 'n' + v + 'z';
+                case 3:
+                    let v1 = this.tr2vowel(word);
+                    return res + 'l' + v1 + 'r';
+            }
+        }
+    }
+    verbneg(word) {
+        let v = this.tr2vowel(word);
+        return word + 'm' + v;
+    }
+    addadjectives(adjlst, noun) {
+        return adjlst.join(' ') + ' ' + noun;
+    }
+    nounaddposs(word, p, sing) {
+        let v = this.tr4vowel(word);
+        let res = word;
+        if (!vowels.includes(word.slice(-1))) {
+            res = this.trchnglast(res);
+            res += v;
+        }
+        if (sing) {
+            switch (p) {
+                case 1:
+                    return res + 'm';
+                case 2:
+                    return res + 'n';
+                case 3:
+                    if (vowels.includes(word.slice(-1))) {
+                        res = word + 's' + v;
+                    }
+                    return res;
+            }
+        } else {
+            switch (p) {
+                case 1:
+                    return res + 'm' + v + 'z';
+                case 2:
+                    return res + 'n' + v + 'z';
+                case 3:
+                    let v1 = this.tr2vowel(word);
+                    let v2 = this.tr4vowel(v1);
+                    return word + 'l' + v1 + 'r' + v2;
+            }
+        }
+    }
+    nounaccus(word) {
+        let v = this.tr4vowel(word);
+        let res = word;
+        if (vowels.includes(word.slice(-1))) {
+            res += 'y';
+        } else {
+            res = this.trchnglast(res);
+        }
+        return res + v;
+    }
+    nounlocative(word) {
+        let v = this.tr2vowel(word);
+        let res = word;
+        if (softcons.includes(word.slice(-1))) {
+            res += 't';
+        } else {
+            res += 'd'
+        }
+        return res + v;
+    }
+    noundative(word) {
+        let v = this.tr2vowel(word);
+        let res = word;
+        if (vowels.includes(word.slice(-1))) {
+            res += 'y';
+        } else {
+            res = this.trchnglast(res);
+        }
+        return res + v;
+    }
+    nounwith(word) {
+        let v = this.tr2vowel(word);
+        let res = word;
+        if (vowels.includes(word.slice(-1))) {
+            res += 'y';
+        }
+        return res + 'l' + v;
+    }
+    // helper methods
+    tr4vowel(word) {
+        let idx = Math.max(...(vowels.map(x => word.lastIndexOf(x))));
+        let l = word[idx];
+        switch (l) {
+            case 'a':
+            case 'ı':
+                return 'ı';
+            case 'e':
+            case 'i':
+                return 'i';
+            case 'o':
+            case 'u':
+                return 'u';
+            case 'ö':
+            case 'ü':
+                return 'ü';
+        }
+    }
+    tr2vowel(word) {
+        let idx = Math.max(...(vowels.map(x => word.lastIndexOf(x))));
+        let l = word[idx];
+        switch (l) {
+            case 'a':
+            case 'ı':
+            case 'o':
+            case 'u':
+                return 'a';
+            case 'e':
+            case 'i':
+            case 'ö':
+            case 'ü':
+                return 'e';
+        }
+    }
+    trchnglast(word) {
+        let res = word.slice(0, -1);
+        let last = word.slice(-1);
+        if (last == 'p') {
+            return res + 'b';
+        } else if (last == 'ç') {
+            return res + 'c';
+        } else if (last == 't') {
+            return res + 'd';
+        } else if (last == 'k') {
+            if (vowels.includes(res.slice(-1))) {
+                return res + 'ğ';
+            } else {
+                return res + 'g';
+            }
+        }
+        return word;
     }
 }
 
@@ -343,24 +269,71 @@ class English {
         if (s && p == 3) {
             verb = ' has '
         }
-        return engetpronoun(p, s) + verb + this.describenoun(...n);
+        return this.getpronoun(p, s) + verb + this.describenoun(...n);
     };
-    describenoun(descriptions, noun) {
+    dosth(n, v) {
+        let rn = this.describenoun(...n);
+        let rv = this.conjugateverb(...v);
+        return rv + ' ' + rn;
+    }
+    likesth() {
+        let p = getRandomNum(1, 4);
+        return this.verbfuture('like', p, true) + ' ' + this.addadjectives(enadj, this.nounplural(getRandomElement(ennounsl)))
+    }
+    describenoun(descriptions, nounId) {
+        let noun = ennounsl[nounId];
         return descriptions.reduce((acc, foo) => { return this[foo](acc) }, noun);
     };
+    nounwith(word) {
+        return 'with ' + word;
+    }
+    getpronoun(p, sing) {
+        if (sing) {
+            if (p == 1) {
+                return 'I';
+            } else if (p == 2) {
+                return 'you';
+            } else {
+                return 'he'
+            }
+        } else {
+            if (p == 1) {
+                return 'we';
+            } else if (p == 2) {
+                return 'you';
+            } else {
+                return 'they'
+            }
+        }
+    }
     conjugateverb(descriptions, verb, p, sing) {
         return descriptions.reduce((acc, foo) => { return this[foo](acc, p, sing) }, verb);
+    }
+    verbpressimple(word, p, sing) {
+        if (sing && p == 3) {
+            return 'he ' + enverbs[word].third;
+        } else {
+            return this.getpronoun(p, sing) + ' ' + enverbs[word].present;
+        }
+    }
+    verbpastsimple(word, p, sing) {
+        return this.getpronoun(p, sing) + ' ' + enverbs[word].past;
+    }
+    verbfuture(word, p, sing) {
+        return this.getpronoun(p, sing) + ' will ' + enverbs[word].present;
+    }
+    addadjectives(adjlst, noun) {
+        return adjlst.join(' ') + ' ' + noun;
     }
 }
 
 exports.Generator = class Generator {
     // getRandomSentence() { let s = entohave(); console.log(s); return s }
-    pattern1 = [trdosth, [[['nounplural', trnounaccus], 'erkek'], [[trverbneg, trverbfuture, trverbconj], 'sev', 2, true]]]
-    pattern1e = [endosth, [[['nounplural'], 'man'], [[enfuture], 'like', 2, true]]]
-    pattern2 = [Turkish, 'tohave', [[['nounplural'], 'gomlek'], 1, true]]
-    pattern2e = [English, 'tohave', [[['nounplural'], 'school'], 1, true]]
-    getFromPattern(pattern) {
-        let x = new pattern[0]();
-        return x[pattern[1]](...pattern[2])
+    turkish = Turkish
+    english = English
+    pattern1 = ['tohave', [[['nounplural'], 2], 1, true]]
+    getFromPattern(lang, pattern) {
+        let x = new lang();
+        return x[pattern[0]](...pattern[1])
     }
 }
