@@ -257,7 +257,7 @@ exports.Turkish = class Turkish {
     }
     tobe(n, vdesc) {
         let rn = n[1]
-        if (n[1] != 'var') {
+        if (n[1] != 'var' && n[1] != '') {
             rn = this.describenoun(...n)
         }
         if (vdesc.tense.slice(0, 4) == 'pres') {
