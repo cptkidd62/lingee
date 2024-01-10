@@ -46,6 +46,11 @@ exports.English = class English {
             return word;
         }
     };
+    run(pattern) {
+        let n = pattern[1]
+        n = [n[0], ennounsl[n[1]]]
+        return this[pattern[0]](n, ...(pattern[2]))
+    }
     tohave(n, p, s, vdesc) {
         return this.conjugateverb(vdesc, 'have', p, s) + ' ' + this.describenoun(...n);
     };
@@ -58,8 +63,7 @@ exports.English = class English {
     likesth() {
         return this.verbfuture('like', p, true) + ' ' + this.addadjectives(enadj, this.nounplural(getRandomElement(ennounsl)))
     }
-    describenoun(descriptions, nounId) {
-        let noun = ennounsl[nounId];
+    describenoun(descriptions, noun) {
         return descriptions.reduce((acc, foo) => { return this[foo](acc) }, noun);
     };
     nounwith(word) {

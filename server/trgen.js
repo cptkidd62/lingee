@@ -244,30 +244,36 @@ exports.Turkish = class Turkish {
         let v = tr2vowel(word);
         return word + 'l' + v + 'r';
     }
+    run(pattern) {
+        let n = pattern[1]
+        n = [n[0], trnouns[n[1]]]
+        return this[pattern[0]](n, ...(pattern[2]))
+    }
     tobe(n, p, s, ts) {
+        let rn = this.describenoun(...n)
         if (ts == 'pres') {
-            return verbconj(n, p, s)
+            return verbconj(rn, p, s)
         } else if (ts == 'past') {
-            return verbpastconj(n, p, s)
+            return verbpastconj(rn, p, s)
         } else if (ts == 'future') {
-            let pr = n
-            if (n != '') {
+            let pr = rn
+            if (pr != '') {
                 pr += ' '
             }
             return pr + verbconj(verbfuture('ol'), p, s)
         } else {
-            return n
+            return rn
         }
     }
     tohave(n, p, s, vdesc) {
         let c = 'var'
         let t = vdesc.tense
         if (t == 'pastsimple') {
-            c = this.tobe(c, 3, true, 'past')
+            c = this.tobe([[], c], 3, true, 'past')
         } else if (t == 'pressimple') {
-            c = this.tobe(c, 3, true, 'pres')
+            c = this.tobe([[], c], 3, true, 'pres')
         } else if (t == 'futuresimple') {
-            c = this.tobe('', 3, true, 'future')
+            c = this.tobe([[], ''], 3, true, 'future')
         }
         return nounaddposs(this.describenoun(...n), p, s) + ' ' + c
     }
@@ -277,8 +283,7 @@ exports.Turkish = class Turkish {
         let rv = this.conjugateverb(vd, nv, vd.person, vd.singular);
         return rn + ' ' + rv;
     }
-    describenoun(descriptions, nounId) { // ex. [trnounplural, trnounaccus], 'erkek'
-        let noun = trnouns[nounId];
+    describenoun(descriptions, noun) { // ex. [trnounplural, trnounaccus], 'erkek'
         return descriptions.reduce((acc, foo) => { return this[foo](acc) }, noun);
     }
     conjugateverb(descriptions, verb, p, sing) {
@@ -302,7 +307,7 @@ exports.Turkish = class Turkish {
         return verbpastconj(verbcont(word), p, sing)
     }
     verbfuturesimple(word, p, sing) {
-        return verbconj(verbcont(word), p, sing)
+        return verbconj(verbfuture(word), p, sing)
     }
     addadjectives(adjlst, noun) {
         return adjlst.join(' ') + ' ' + noun;
