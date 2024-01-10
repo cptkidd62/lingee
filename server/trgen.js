@@ -265,7 +265,7 @@ exports.Turkish = class Turkish {
         } else if (t == 'futuresimple') {
             c = this.tobe('', 3, true, 'future')
         }
-        return nounaddposs(this.describenoun(...n), p, s) + ' ' + this.conjugateverb(vdesc, 'var', 3, true) // ???
+        return nounaddposs(this.describenoun(...n), p, s) + ' ' + c
     }
     dosth(n, v, vd) {
         let nv = trverbsl[v]
