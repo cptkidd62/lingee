@@ -48,7 +48,9 @@ exports.English = class English {
     };
     run(pattern) {
         let n = pattern[1]
-        n = [n[0], ennounsl[n[1]]]
+        let d = JSON.parse(JSON.stringify(n[0])) // need to deep-copy the array
+        d.adjectives = d.adjectives.map((x) => enadj[x])
+        n = [d, ennounsl[n[1]]]
         return this[pattern[0]](n, ...(pattern[2]))
     }
     tohave(n, p, s, vdesc) {
@@ -64,7 +66,26 @@ exports.English = class English {
         return this.verbfuture('like', p, true) + ' ' + this.addadjectives(enadj, this.nounplural(getRandomElement(ennounsl)))
     }
     describenoun(descriptions, noun) {
-        return descriptions.reduce((acc, foo) => { return this[foo](acc) }, noun);
+        let n = noun
+        if (descriptions.plural) {
+            n = this.nounplural(n)
+        }
+        if (descriptions.adjectives && descriptions.adjectives.length > 0) {
+            n = this.addadjectives(descriptions.adjectives, n)
+        }
+        if (!descriptions.definite && !descriptions.count) {
+            n = 'a ' + n
+        }
+        if (descriptions.count) {
+            // todo
+        }
+        if (descriptions.possession) {
+            // todo
+        }
+        if (descriptions.definite) {
+            n = 'the ' + n
+        }
+        return n
     };
     nounwith(word) {
         return 'with ' + word;

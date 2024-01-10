@@ -17,12 +17,26 @@ function genRandomPattern() {
     let p = getRandomElement(patterns)
     switch (p) {
         case 'tohave':
-            return [p, [[], getRandomNum(0, 7)], [getRandomNum(1, 4), getRandomNum(0, 2), {
+            return [p, [{
+                plural: getRandomNum(0, 2),
+                adjectives: [],
+                count: -1,
+                definite: getRandomNum(0, 2),
+                possession: undefined,
+                case: undefined
+            }, getRandomNum(0, 7)], [getRandomNum(1, 4), getRandomNum(0, 2), {
                 tense: getRandomElement(tensessimple),
                 negation: getRandomNum(0, 1)
             }]]
         case 'dosth':
-            return [p, [[], getRandomNum(0, 7)], [getRandomNum(0, 6), {
+            return [p, [{
+                plural: getRandomNum(0, 2),
+                adjectives: [],
+                count: -1,
+                definite: getRandomNum(0, 2),
+                possession: undefined,
+                case: undefined
+            }, getRandomNum(0, 7)], [getRandomNum(0, 6), {
                 tense: getRandomElement(tenses),
                 negation: getRandomNum(0, 1),
                 person: getRandomNum(1, 4),
@@ -38,17 +52,38 @@ exports.Generator = class Generator {
             en: new engen.English(),
         }
     }
-    pattern1 = ['tohave', [['nounplural'], 2], [1, true, {
+    pattern1 = ['tohave', [{
+        plural: true,
+        adjectives: [],
+        count: undefined,
+        definite: false,
+        possession: undefined,
+        case: undefined
+    }, 2], [1, true, {
         tense: 'pastsimple',
         negation: false,
     }]]
-    pattern2 = ['dosth', [[], 6], [1, {
+    pattern2 = ['dosth', [{
+        plural: true,
+        adjectives: [],
+        count: undefined,
+        definite: true,
+        possession: undefined,
+        case: undefined
+    }, 6], [1, {
         tense: 'pastsimple',
         negation: false,
         person: 1,
         singular: true,
     }]]
-    pattern3 = ['dosth', [[], 6], [1, {
+    pattern3 = ['dosth', [{
+        plural: false,
+        adjectives: [1],
+        count: undefined,
+        definite: false,
+        possession: [1, false],
+        case: undefined
+    }, 6], [1, {
         tense: 'pressimple',
         negation: false,
         person: 3,

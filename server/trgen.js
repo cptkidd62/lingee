@@ -246,11 +246,16 @@ exports.Turkish = class Turkish {
     }
     run(pattern) {
         let n = pattern[1]
-        n = [n[0], trnouns[n[1]]]
+        let d = JSON.parse(JSON.stringify(n[0])) // need to deep-copy the array
+        d.adjectives = d.adjectives.map((x) => tradj[x])
+        n = [d, trnouns[n[1]]]
         return this[pattern[0]](n, ...(pattern[2]))
     }
     tobe(n, p, s, ts) {
-        let rn = this.describenoun(...n)
+        let rn = n[1]
+        if (n[1] != 'var') {
+            rn = this.describenoun(...n)
+        }
         if (ts == 'pres') {
             return verbconj(rn, p, s)
         } else if (ts == 'past') {
@@ -269,11 +274,11 @@ exports.Turkish = class Turkish {
         let c = 'var'
         let t = vdesc.tense
         if (t == 'pastsimple') {
-            c = this.tobe([[], c], 3, true, 'past')
+            c = this.tobe([{}, c], 3, true, 'past')
         } else if (t == 'pressimple') {
-            c = this.tobe([[], c], 3, true, 'pres')
+            c = this.tobe([{}, c], 3, true, 'pres')
         } else if (t == 'futuresimple') {
-            c = this.tobe([[], ''], 3, true, 'future')
+            c = this.tobe([{}, ''], 3, true, 'future')
         }
         return nounaddposs(this.describenoun(...n), p, s) + ' ' + c
     }
@@ -284,7 +289,26 @@ exports.Turkish = class Turkish {
         return rn + ' ' + rv;
     }
     describenoun(descriptions, noun) { // ex. [trnounplural, trnounaccus], 'erkek'
-        return descriptions.reduce((acc, foo) => { return this[foo](acc) }, noun);
+        let n = noun
+        if (descriptions.plural) {
+            n = this.nounplural(n)
+        }
+        if (descriptions.possession) {
+            n = nounaddposs(n, ...(descriptions.possession))
+        }
+        if (descriptions.case) {
+            n = this.cases[descriptions.case](n)
+        }
+        if (!descriptions.definite && (!descriptions.count || descriptions.count == 1)) {
+            n = 'bir ' + n
+        }
+        if (descriptions.adjectives && descriptions.adjectives.length > 0) {
+            n = this.addadjectives(descriptions.adjectives, n)
+        }
+        if (descriptions.count && descriptions.count != 1) {
+            // todo
+        }
+        return n
     }
     conjugateverb(descriptions, verb, p, sing) {
         let nv = verb
