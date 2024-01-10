@@ -186,6 +186,9 @@ const verbconj = function (word, p, sing) {
         switch (p) {
             case 1:
                 res = trchnglast(res);
+                if (vowels.includes(res.slice(-1))) {
+                    res += 'y'
+                }
                 return res + v + 'm';
             case 2:
                 return res + 's' + v + 'n';
@@ -196,6 +199,9 @@ const verbconj = function (word, p, sing) {
         switch (p) {
             case 1:
                 res = trchnglast(res);
+                if (vowels.includes(res.slice(-1))) {
+                    res += 'y'
+                }
                 return res + v + 'z';
             case 2:
                 return res + 's' + v + 'n' + v + 'z';
@@ -234,7 +240,31 @@ exports.Turkish = class Turkish {
         let v = tr2vowel(word);
         return word + 'l' + v + 'r';
     }
+    tobe(n, p, s, ts) {
+        if (ts == 'pres') {
+            return verbconj(n, p, s)
+        } else if (ts == 'past') {
+            return verbpastconj(n, p, s)
+        } else if (ts == 'future') {
+            let pr = n
+            if (n != '') {
+                pr += ' '
+            }
+            return pr + verbconj(verbfuture('ol'), p, s)
+        } else {
+            return n
+        }
+    }
     tohave(n, p, s, vdesc) {
+        let c = 'var'
+        let t = vdesc.tense
+        if (t == 'pastsimple') {
+            c = this.tobe(c, 3, true, 'past')
+        } else if (t == 'pressimple') {
+            c = this.tobe(c, 3, true, 'pres')
+        } else if (t == 'futuresimple') {
+            c = this.tobe('', 3, true, 'future')
+        }
         return nounaddposs(this.describenoun(...n), p, s) + ' ' + this.conjugateverb(vdesc, 'var', 3, true) // ???
     }
     dosth(n, v, vd) {

@@ -2,7 +2,8 @@ const trgen = require('./trgen')
 const engen = require('./engen')
 
 patterns = ['tohave', 'dosth']
-tenses = ['pastsimple', 'pastcont', 'pressimple', 'prescont', 'futuresimple']
+tensessimple = ['pastsimple', 'pressimple', 'futuresimple']
+tensescont = ['pastcont', 'prescont']
 
 function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
@@ -16,12 +17,12 @@ function genRandomPattern() {
     switch (p) {
         case 'tohave':
             return [p, [[[], getRandomNum(0, 7)], getRandomNum(1, 4), getRandomNum(0, 2), {
-                tense: getRandomElement(tenses),
+                tense: getRandomElement(tensessimple),
                 negation: getRandomNum(0, 1)
             }]]
         case 'dosth':
             return [p, [[[], getRandomNum(0, 7)], getRandomNum(0, 6), {
-                tense: getRandomElement(tenses),
+                tense: getRandomElement(tensessimple + tensescont),
                 negation: getRandomNum(0, 1),
                 person: getRandomNum(1, 4),
                 singular: getRandomNum(0, 2)
