@@ -9,7 +9,9 @@ const trverbs = {
     'git': { case: 'dat', aor: 'e' }
 }
 const tradj = ['gözel', 'iyi', 'kötü', 'uzun']
-const tradv = ['çabuk']
+const tradv = ['çabuk', 'yavaş yavaş']
+const trnums = ['sıfır', 'bir', 'iki', 'üç', 'dört',
+    'beş', 'altı', 'yedi', 'sekiz', 'dokuz', 'on']
 const vowels = ['a', 'e', 'i', 'ı', 'o', 'ö', 'u', 'ü']
 const softcons = ['p', 'ç', 't', 'k']
 
@@ -290,7 +292,7 @@ exports.Turkish = class Turkish {
     }
     describenoun(descriptions, noun) { // ex. [trnounplural, trnounaccus], 'erkek'
         let n = noun
-        if (descriptions.plural) {
+        if (descriptions.plural && !descriptions.count) {
             n = this.nounplural(n)
         }
         if (descriptions.possession) {
@@ -306,7 +308,7 @@ exports.Turkish = class Turkish {
             n = this.addadjectives(descriptions.adjectives, n)
         }
         if (descriptions.count && descriptions.count != 1) {
-            // todo
+            n = trnums[descriptions.count] + ' ' + n
         }
         return n
     }

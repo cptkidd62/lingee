@@ -19,6 +19,9 @@ const enverbs = {
     'have': { present: 'have', third: 'has', cont: 'having', past: 'had' }
 }
 const enadj = ['beautiful', 'good', 'bad', 'long']
+const enadv = ['quickly', 'slowly']
+const ennums = ['zero', 'one', 'two', 'three', 'four',
+    'five', 'six', 'seven', 'eight', 'nine', 'ten']
 
 const conj_tobe = function (p, sing, past) {
     if (sing && p == 1) {
@@ -27,6 +30,28 @@ const conj_tobe = function (p, sing, past) {
         return past ? 'was' : 'is'
     } else {
         return past ? 'were' : 'are'
+    }
+}
+
+const poss_pronouns = function (p, s) {
+    if (s) {
+        switch (p) {
+            case 1:
+                return 'my';
+            case 2:
+                return 'your';
+            case 3:
+                return 'his';
+        }
+    } else {
+        switch (p) {
+            case 1:
+                return 'our';
+            case 2:
+                return 'your';
+            case 3:
+                return 'their';
+        }
     }
 }
 
@@ -73,14 +98,14 @@ exports.English = class English {
         if (descriptions.adjectives && descriptions.adjectives.length > 0) {
             n = this.addadjectives(descriptions.adjectives, n)
         }
-        if (!descriptions.definite && !descriptions.count) {
+        if (!descriptions.definite && !descriptions.count && !descriptions.plural) {
             n = 'a ' + n
         }
         if (descriptions.count) {
-            // todo
+            n = ennums[descriptions.count] + ' ' + n
         }
         if (descriptions.possession) {
-            // todo
+            n = poss_pronouns(...(descriptions.possession)) + ' ' + n
         }
         if (descriptions.definite) {
             n = 'the ' + n

@@ -20,7 +20,7 @@ function genRandomPattern() {
             return [p, [{
                 plural: getRandomNum(0, 2),
                 adjectives: [],
-                count: -1,
+                count: undefined,
                 definite: getRandomNum(0, 2),
                 possession: undefined,
                 case: undefined
@@ -32,7 +32,7 @@ function genRandomPattern() {
             return [p, [{
                 plural: getRandomNum(0, 2),
                 adjectives: [],
-                count: -1,
+                count: undefined,
                 definite: getRandomNum(0, 2),
                 possession: undefined,
                 case: undefined
@@ -55,7 +55,7 @@ exports.Generator = class Generator {
     pattern1 = ['tohave', [{
         plural: true,
         adjectives: [],
-        count: undefined,
+        count: 4,
         definite: false,
         possession: undefined,
         case: undefined
