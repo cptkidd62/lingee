@@ -4,6 +4,7 @@ const engen = require('./engen')
 patterns = ['tohave', 'dosth']
 tensessimple = ['pastsimple', 'pressimple', 'futuresimple']
 tensescont = ['pastcont', 'prescont']
+tenses = tensessimple.concat(tensescont)
 
 function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
@@ -22,7 +23,7 @@ function genRandomPattern() {
             }]]
         case 'dosth':
             return [p, [[[], getRandomNum(0, 7)], getRandomNum(0, 6), {
-                tense: getRandomElement(tensessimple + tensescont),
+                tense: getRandomElement(tenses),
                 negation: getRandomNum(0, 1),
                 person: getRandomNum(1, 4),
                 singular: getRandomNum(0, 2)

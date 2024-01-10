@@ -154,27 +154,31 @@ const verbfuture = function (word) {
 const verbpastconj = function (word, p, sing) {
     let v = tr4vowel(word);
     let res = word;
+    let d = 'd'
+    if (softcons.includes(res.slice(-1))) {
+        d = 't'
+    }
     if (sing) {
         switch (p) {
             case 1:
-                return res + 'd' + v + 'm';
+                return res + d + v + 'm';
             case 2:
-                return res + 'd' + v + 'n';
+                return res + d + v + 'n';
             case 3:
-                return res + 'd' + v;
+                return res + d + v;
         }
     } else {
         switch (p) {
             case 1:
-                return res + 'd' + v + 'k';
+                return res + d + v + 'k';
             case 2:
-                return res + 'd' + v + 'n' + v + 'z';
+                return res + d + v + 'n' + v + 'z';
             case 3:
                 if (word.slice(-3) == 'yor') {
                     return res + 'lardı';
                 } else {
                     let v1 = tr2vowel(v);
-                    return res + 'd' + v + 'l' + v1 + 'r';
+                    return res + d + v + 'l' + v1 + 'r';
                 }
         }
     }
