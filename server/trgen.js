@@ -9,7 +9,7 @@ const trverbs = {
     'git': { case: 'dat', aor: 'e' }
 }
 const tradj = ['gözel', 'iyi', 'kötü', 'uzun']
-const tradv = ['çabuk', 'yavaş yavaş']
+const tradv = ['çabuk', 'yavaşça']
 const trnums = ['sıfır', 'bir', 'iki', 'üç', 'dört',
     'beş', 'altı', 'yedi', 'sekiz', 'dokuz', 'on']
 const vowels = ['a', 'e', 'i', 'ı', 'o', 'ö', 'u', 'ü']
@@ -251,43 +251,45 @@ exports.Turkish = class Turkish {
         let d = JSON.parse(JSON.stringify(n[0])) // need to deep-copy the array
         d.adjectives = d.adjectives.map((x) => tradj[x])
         n = [d, trnouns[n[1]]]
-        return this[pattern[0]](n, ...(pattern[2]))
+        let v = JSON.parse(JSON.stringify(pattern[2])) // need to deep-copy the object
+        v.adverbs = v.adverbs.map((x) => tradv[x])
+        return this[pattern[0]](n, v, ...(pattern[3]))
     }
-    tobe(n, p, s, ts) {
+    tobe(n, vdesc) {
         let rn = n[1]
         if (n[1] != 'var') {
             rn = this.describenoun(...n)
         }
-        if (ts == 'pres') {
-            return verbconj(rn, p, s)
-        } else if (ts == 'past') {
-            return verbpastconj(rn, p, s)
-        } else if (ts == 'future') {
+        if (vdesc.tense.slice(0, 4) == 'pres') {
+            return verbconj(rn, vdesc.person, vdesc.singular)
+        } else if (vdesc.tense.slice(0, 4) == 'past') {
+            return verbpastconj(rn, vdesc.person, vdesc.singular)
+        } else if (vdesc.tense.slice(0, 6) == 'future') {
             let pr = rn
             if (pr != '') {
                 pr += ' '
             }
-            return pr + verbconj(verbfuture('ol'), p, s)
+            return pr + verbconj(verbfuture('ol'), vdesc.person, vdesc.singular)
         } else {
             return rn
         }
     }
-    tohave(n, p, s, vdesc) {
+    tohave(n, vdesc, p, s) {
         let c = 'var'
         let t = vdesc.tense
         if (t == 'pastsimple') {
-            c = this.tobe([{}, c], 3, true, 'past')
+            c = this.tobe([{}, c], { person: 3, singular: true, tense: 'past' })
         } else if (t == 'pressimple') {
-            c = this.tobe([{}, c], 3, true, 'pres')
+            c = this.tobe([{}, c], { person: 3, singular: true, tense: 'pres' })
         } else if (t == 'futuresimple') {
-            c = this.tobe([{}, ''], 3, true, 'future')
+            c = this.tobe([{}, ''], { person: 3, singular: true, tense: 'future' })
         }
         return nounaddposs(this.describenoun(...n), p, s) + ' ' + c
     }
-    dosth(n, v, vd) {
+    dosth(n, vdesc, v) {
         let nv = trverbsl[v]
         let rn = this.cases[trverbs[nv].case](this.describenoun(...n));
-        let rv = this.conjugateverb(vd, nv, vd.person, vd.singular);
+        let rv = this.conjugateverb(vdesc, nv, vdesc.person, vdesc.singular);
         return rn + ' ' + rv;
     }
     describenoun(descriptions, noun) { // ex. [trnounplural, trnounaccus], 'erkek'
@@ -301,7 +303,8 @@ exports.Turkish = class Turkish {
         if (descriptions.case) {
             n = this.cases[descriptions.case](n)
         }
-        if (!descriptions.definite && (!descriptions.count || descriptions.count == 1)) {
+        if (!descriptions.definite && !descriptions.plural
+            && (!descriptions.count || descriptions.count == 1)) {
             n = 'bir ' + n
         }
         if (descriptions.adjectives && descriptions.adjectives.length > 0) {
@@ -318,6 +321,9 @@ exports.Turkish = class Turkish {
             nv = verbneg(nv)
         }
         nv = this.tenses[descriptions.tense](nv, p, sing)
+        if (descriptions.adverbs && descriptions.adverbs.length > 0) {
+            nv = this.addadverbs(descriptions.adverbs) + ' ' + nv
+        }
         return nv;
     }
     verbpressimple(word, p, sing) {
@@ -337,5 +343,8 @@ exports.Turkish = class Turkish {
     }
     addadjectives(adjlst, noun) {
         return adjlst.join(' ') + ' ' + noun;
+    }
+    addadverbs(advlst) {
+        return advlst.join(' ');
     }
 }

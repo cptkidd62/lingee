@@ -76,16 +76,22 @@ exports.English = class English {
         let d = JSON.parse(JSON.stringify(n[0])) // need to deep-copy the array
         d.adjectives = d.adjectives.map((x) => enadj[x])
         n = [d, ennounsl[n[1]]]
-        return this[pattern[0]](n, ...(pattern[2]))
+        let v = JSON.parse(JSON.stringify(pattern[2])) // need to deep-copy the object
+        v.adverbs = v.adverbs.map((x) => enadv[x])
+        return this[pattern[0]](n, v, ...(pattern[3]))
     }
-    tohave(n, p, s, vdesc) {
+    tohave(n, vdesc, p, s) {
         return this.conjugateverb(vdesc, 'have', p, s) + ' ' + this.describenoun(...n);
     };
-    dosth(n, v, vd) {
+    dosth(n, vdesc, v) {
         let nv = enverbsl[v]
         let rn = this.describenoun(...n);
-        let rv = this.conjugateverb(vd, nv, vd.person, vd.singular);
-        return rv + ' ' + rn;
+        let rv = this.conjugateverb(vdesc, nv, vdesc.person, vdesc.singular);
+        let advs = ''
+        if (vdesc.adverbs && vdesc.adverbs.length > 0) {
+            advs = ' ' + this.addadverbs(vdesc.adverbs)
+        }
+        return rv + ' ' + rn + advs;
     }
     likesth() {
         return this.verbfuture('like', p, true) + ' ' + this.addadjectives(enadj, this.nounplural(getRandomElement(ennounsl)))
@@ -152,16 +158,19 @@ exports.English = class English {
     verbprescont(word, p, sing) {
         return conj_tobe(p, sing, false) + ' ' + enverbs[word].cont
     }
-    verbpastsimple(word, p, sing) {
+    verbpastsimple(word) {
         return enverbs[word].past;
     }
     verbpastcont(word, p, sing) {
         return conj_tobe(p, sing, true) + ' ' + enverbs[word].cont
     }
-    verbfuturesimple(word, p, sing) {
+    verbfuturesimple(word) {
         return 'will ' + word;
     }
     addadjectives(adjlst, noun) {
         return adjlst.join(' ') + ' ' + noun;
+    }
+    addadverbs(advlst) {
+        return advlst.join(' ');
     }
 }
