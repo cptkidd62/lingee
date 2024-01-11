@@ -23,7 +23,11 @@ const enadv = ['quickly', 'slowly']
 const ennums = ['zero', 'one', 'two', 'three', 'four',
     'five', 'six', 'seven', 'eight', 'nine', 'ten']
 
-const conj_tobe = function (p, sing, past) {
+const conj_tobe = function (p, sing, tense) {
+    if (tense == 'futuresimple') {
+        return 'will be'
+    }
+    let past = tense == 'pastsimple'
     if (sing && p == 1) {
         return past ? 'was' : 'am'
     } else if (sing && p == 3) {
@@ -89,7 +93,7 @@ exports.English = class English {
     }
     tobe(n, vdesc) {
         let rn = this.describenoun(...n)
-        let rv = conj_tobe(vdesc.person, vdesc.singular, (vdesc.tense.slice(0, 4) == 'past'))
+        let rv = conj_tobe(vdesc.person, vdesc.singular, vdesc.tense)
         return this.getpronoun(vdesc.person, vdesc.singular) + ' ' + rv + ' ' + rn
     }
     tohave(n, vdesc, p, s) {

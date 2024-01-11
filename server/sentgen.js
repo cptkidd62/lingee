@@ -1,7 +1,7 @@
 const trgen = require('./trgen')
 const engen = require('./engen')
 
-patterns = ['tohave', 'dosth']
+patterns = ['tobe', 'tohave', 'dosth']
 tensessimple = ['pastsimple', 'pressimple', 'futuresimple']
 tensescont = ['pastcont', 'prescont']
 tenses = tensessimple.concat(tensescont)
@@ -16,6 +16,21 @@ function getRandomNum(b, e) {
 function genRandomPattern() {
     let p = getRandomElement(patterns)
     switch (p) {
+        case 'tobe':
+            return [p, [{
+                plural: false,
+                adjectives: [getRandomNum(0, 4)],
+                count: undefined,
+                definite: getRandomNum(0, 2),
+                possession: undefined,
+                case: undefined
+            }, getRandomNum(0, 7)], {
+                    tense: getRandomElement(tensessimple),
+                    negation: getRandomNum(0, 1),
+                    person: getRandomNum(1, 4),
+                    singular: getRandomNum(0, 2),
+                    adverbs: []
+                }, []]
         case 'tohave':
             return [p, [{
                 plural: getRandomNum(0, 2),
