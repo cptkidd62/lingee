@@ -8,7 +8,7 @@ const trverbs = {
     'duy': { case: 'acc', aor: 'a' },
     'git': { case: 'dat', aor: 'e' }
 }
-const tradj = ['gözel', 'iyi', 'kötü', 'uzun']
+const tradj = ['güzel', 'iyi', 'kötü', 'uzun']
 const tradv = ['çabuk', 'yavaşça']
 const trnums = ['sıfır', 'bir', 'iki', 'üç', 'dört',
     'beş', 'altı', 'yedi', 'sekiz', 'dokuz', 'on']
@@ -263,6 +263,9 @@ exports.Turkish = class Turkish {
         if (vdesc.tense.slice(0, 4) == 'pres') {
             return verbconj(rn, vdesc.person, vdesc.singular)
         } else if (vdesc.tense.slice(0, 4) == 'past') {
+            if (vowels.includes(rn.slice(-1))) {
+                rn += 'y'
+            }
             return verbpastconj(rn, vdesc.person, vdesc.singular)
         } else if (vdesc.tense.slice(0, 6) == 'future') {
             let pr = rn
@@ -304,7 +307,7 @@ exports.Turkish = class Turkish {
             n = this.cases[descriptions.case](n)
         }
         if (!descriptions.definite && !descriptions.plural
-            && (!descriptions.count || descriptions.count == 1)) {
+            && (!descriptions.count && !descriptions.possession || descriptions.count == 1)) {
             n = 'bir ' + n
         }
         if (descriptions.adjectives && descriptions.adjectives.length > 0) {

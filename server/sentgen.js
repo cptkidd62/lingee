@@ -25,10 +25,10 @@ function genRandomPattern() {
                 possession: undefined,
                 case: undefined
             }, getRandomNum(0, 7)], {
-                tense: getRandomElement(tensessimple),
-                negation: getRandomNum(0, 1),
-                adverbs: []
-            }, [getRandomNum(1, 4), getRandomNum(0, 2)]]
+                    tense: getRandomElement(tensessimple),
+                    negation: getRandomNum(0, 1),
+                    adverbs: []
+                }, [getRandomNum(1, 4), getRandomNum(0, 2)]]
         case 'dosth':
             return [p, [{
                 plural: getRandomNum(0, 2),
@@ -38,12 +38,12 @@ function genRandomPattern() {
                 possession: undefined,
                 case: undefined
             }, getRandomNum(0, 7)], {
-                tense: getRandomElement(tenses),
-                negation: getRandomNum(0, 1),
-                person: getRandomNum(1, 4),
-                singular: getRandomNum(0, 2),
-                adverbs: []
-            }, [getRandomNum(0, 6)]]
+                    tense: getRandomElement(tenses),
+                    negation: getRandomNum(0, 1),
+                    person: getRandomNum(1, 4),
+                    singular: getRandomNum(0, 2),
+                    adverbs: []
+                }, [getRandomNum(0, 6)]]
     }
 }
 
@@ -62,10 +62,10 @@ exports.Generator = class Generator {
         possession: undefined,
         case: undefined
     }, 2], {
-        tense: 'pastsimple',
-        negation: false,
-        adverbs: []
-    }, [1, true]]
+            tense: 'pastsimple',
+            negation: false,
+            adverbs: []
+        }, [1, true]]
     pattern2 = ['dosth', [{
         plural: true,
         adjectives: [],
@@ -74,12 +74,12 @@ exports.Generator = class Generator {
         possession: undefined,
         case: undefined
     }, 6], {
-        tense: 'pastsimple',
-        negation: false,
-        person: 1,
-        singular: true,
-        adverbs: [1]
-    }, [1]]
+            tense: 'pastsimple',
+            negation: false,
+            person: 1,
+            singular: true,
+            adverbs: [1]
+        }, [1]]
     pattern3 = ['dosth', [{
         plural: false,
         adjectives: [1],
@@ -88,12 +88,40 @@ exports.Generator = class Generator {
         possession: [1, false],
         case: undefined
     }, 6], {
-        tense: 'pressimple',
-        negation: false,
-        person: 3,
-        singular: true,
-        adverbs: []
-    }, [1]]
+            tense: 'pressimple',
+            negation: false,
+            person: 3,
+            singular: true,
+            adverbs: []
+        }, [1]]
+    pattern4 = ['tobe', [{
+        plural: false,
+        adjectives: [0],
+        count: undefined,
+        definite: true,
+        possession: [1, true],
+        case: undefined
+    }, 0], {
+            tense: 'pressimple',
+            negation: false,
+            person: 2,
+            singular: true,
+            adverbs: []
+        }, []]
+    pattern5 = ['tobe', [{
+        plural: false,
+        adjectives: [],
+        count: undefined,
+        definite: false,
+        possession: undefined,
+        case: 'loc'
+    }, 2], {
+            tense: 'pastsimple',
+            negation: false,
+            person: 3,
+            singular: false,
+            adverbs: []
+        }, []]
     getFromPattern(lang, pattern) {
         return this.langs[lang].run(pattern)
     }

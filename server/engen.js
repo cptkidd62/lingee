@@ -13,9 +13,9 @@ const enverbs = {
     'like': { present: 'like', third: 'likes', cont: 'liking', past: 'liked' },
     'take': { present: 'take', third: 'takes', cont: 'taking', past: 'took' },
     'see': { present: 'see', third: 'sees', cont: 'seeing', past: 'saw' },
-    'listen': { present: 'listen', third: 'listens', cont: 'listening', past: 'listened' },
+    'listen': { present: 'listen', third: 'listens', cont: 'listening', past: 'listened', prep: 'to' },
     'hear': { present: 'hear', third: 'hears', cont: 'hearing', past: 'heard' },
-    'go': { present: 'go', third: 'goes', cont: 'going', past: 'went' },
+    'go': { present: 'go', third: 'goes', cont: 'going', past: 'went', prep: 'to' },
     'have': { present: 'have', third: 'has', cont: 'having', past: 'had' }
 }
 const enadj = ['beautiful', 'good', 'bad', 'long']
@@ -55,6 +55,10 @@ const poss_pronouns = function (p, s) {
     }
 }
 
+const noun_location = function (noun) {
+    return ennouns[noun].loc
+}
+
 exports.English = class English {
     tenses = {
         pastsimple: this.verbpastsimple,
@@ -62,6 +66,9 @@ exports.English = class English {
         pressimple: this.verbpressimple,
         prescont: this.verbprescont,
         futuresimple: this.verbfuturesimple
+    }
+    cases = {
+        loc: noun_location,
     }
     nounplural(word) {
         let res = ennouns[word].plural;
@@ -79,6 +86,11 @@ exports.English = class English {
         let v = JSON.parse(JSON.stringify(pattern[2])) // need to deep-copy the object
         v.adverbs = v.adverbs.map((x) => enadv[x])
         return this[pattern[0]](n, v, ...(pattern[3]))
+    }
+    tobe(n, vdesc) {
+        let rn = this.describenoun(...n)
+        let rv = conj_tobe(vdesc.person, vdesc.singular, (vdesc.tense.slice(0, 4) == 'past'))
+        return this.getpronoun(vdesc.person, vdesc.singular) + ' ' + rv + ' ' + rn
     }
     tohave(n, vdesc, p, s) {
         return this.conjugateverb(vdesc, 'have', p, s) + ' ' + this.describenoun(...n);
@@ -104,7 +116,8 @@ exports.English = class English {
         if (descriptions.adjectives && descriptions.adjectives.length > 0) {
             n = this.addadjectives(descriptions.adjectives, n)
         }
-        if (!descriptions.definite && !descriptions.count && !descriptions.plural) {
+        if (!descriptions.definite && !descriptions.count
+            && !descriptions.plural && !descriptions.possession) {
             n = 'a ' + n
         }
         if (descriptions.count) {
@@ -113,8 +126,11 @@ exports.English = class English {
         if (descriptions.possession) {
             n = poss_pronouns(...(descriptions.possession)) + ' ' + n
         }
-        if (descriptions.definite) {
+        if (descriptions.definite && !descriptions.possession) {
             n = 'the ' + n
+        }
+        if (descriptions.case) {
+            n = this.cases[descriptions.case](noun) + ' ' + n
         }
         return n
     };
@@ -146,6 +162,9 @@ exports.English = class English {
             nv = verbneg(nv)
         }
         nv = this.tenses[descriptions.tense](nv, p, sing)
+        if (enverbs[verb].prep) {
+            nv += ' ' + enverbs[verb].prep
+        }
         return this.getpronoun(p, sing) + ' ' + nv
     }
     verbpressimple(word, p, sing) {

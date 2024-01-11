@@ -113,7 +113,11 @@ app.get("/random", (req, res) => {
         3: sgen.getFromPattern('en', sgen.pattern2),
         4: sgen.getFromPattern('tr', sgen.pattern3),
         5: sgen.getFromPattern('en', sgen.pattern3),
-        6: sgen.getRandomSentence('en', 'tr')
+        6: sgen.getFromPattern('tr', sgen.pattern4),
+        7: sgen.getFromPattern('en', sgen.pattern4),
+        8: sgen.getFromPattern('tr', sgen.pattern5),
+        9: sgen.getFromPattern('en', sgen.pattern5),
+        10: sgen.getRandomSentence('en', 'tr')
     });
 });
 
