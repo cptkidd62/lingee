@@ -228,6 +228,48 @@ const verbneg = function (word) {
     let v = tr2vowel(word);
     return word + 'm' + v;
 }
+const poss_pronouns = function (p, s) {
+    if (s) {
+        switch (p) {
+            case 1:
+                return 'benim';
+            case 2:
+                return 'senin';
+            case 3:
+                return 'onun';
+        }
+    } else {
+        switch (p) {
+            case 1:
+                return 'bizim';
+            case 2:
+                return 'sizin';
+            case 3:
+                return 'onların';
+        }
+    }
+}
+const getpronoun = function (p, s) {
+    if (s) {
+        switch (p) {
+            case 1:
+                return 'ben';
+            case 2:
+                return 'sen';
+            case 3:
+                return 'o';
+        }
+    } else {
+        switch (p) {
+            case 1:
+                return 'biz';
+            case 2:
+                return 'siz';
+            case 3:
+                return 'onlar';
+        }
+    }
+}
 
 exports.Turkish = class Turkish {
     tenses = {
@@ -258,7 +300,7 @@ exports.Turkish = class Turkish {
     tobe(n, vdesc) {
         let rn = n[1]
         if (n[1] != 'var' && n[1] != '') {
-            rn = this.describenoun(...n)
+            rn = getpronoun(vdesc.person, vdesc.singular) + ' ' + this.describenoun(...n)
         }
         if (vdesc.tense.slice(0, 4) == 'pres') {
             return verbconj(rn, vdesc.person, vdesc.singular)
@@ -287,13 +329,13 @@ exports.Turkish = class Turkish {
         } else if (t == 'futuresimple') {
             c = this.tobe([{}, ''], { person: 3, singular: true, tense: 'future' })
         }
-        return nounaddposs(this.describenoun(...n), p, s) + ' ' + c
+        return poss_pronouns(p, s) + ' ' + nounaddposs(this.describenoun(...n), p, s) + ' ' + c
     }
     dosth(n, vdesc, v) {
         let nv = trverbsl[v]
         let rn = this.cases[trverbs[nv].case](this.describenoun(...n));
         let rv = this.conjugateverb(vdesc, nv, vdesc.person, vdesc.singular);
-        return rn + ' ' + rv;
+        return getpronoun(vdesc.person, vdesc.singular) + ' ' + rn + ' ' + rv;
     }
     describenoun(descriptions, noun) { // ex. [trnounplural, trnounaccus], 'erkek'
         let n = noun
@@ -315,6 +357,9 @@ exports.Turkish = class Turkish {
         }
         if (descriptions.count && descriptions.count != 1) {
             n = trnums[descriptions.count] + ' ' + n
+        }
+        if (descriptions.possession) {
+            n = poss_pronouns(...(descriptions.possession)) + ' ' + n
         }
         return n
     }
