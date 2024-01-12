@@ -5,6 +5,7 @@ import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { MyaccountComponent } from './myaccount/myaccount.component';
 import { TranslatemodeComponent } from './translatemode/translatemode.component';
+import { TopicslistComponent } from './topicslist/topicslist.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,11 @@ const routes: Routes = [
     path: 'learn',
     component: TranslatemodeComponent,
     title: 'Translate Mode'
+  },
+  {
+    path: 'topics',
+    component: TopicslistComponent,
+    title: 'Topics'
   },];
 
 @NgModule({

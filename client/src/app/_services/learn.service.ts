@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Sentence } from '../sentence';
+import { Topic } from '../topic';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -15,5 +16,9 @@ export class LearnService {
 
   getSentences(): Observable<Array<Sentence>> {
     return this.http.get<Array<Sentence>>(this.url);
+  }
+
+  getTopicsList(): Observable<Array<Topic>> {
+    return this.http.get<Array<Topic>>(this.url + '/topics');
   }
 }

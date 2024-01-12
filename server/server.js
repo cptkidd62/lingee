@@ -36,7 +36,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin', '/auth/signup', '/random'] }));
+app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin', '/auth/signup', '/random', '/random/topics'] }));
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
@@ -120,6 +120,13 @@ app.get("/random", (req, res) => {
     //     10: sgen.getRandomSentence('en', 'tr')
     // });
     res.json(sgen.getNRandomSentences(6, 'tr', 'en'))
+});
+
+app.get("/random/topics", (req, res) => {
+    res.json([{ name: 'To Be', code: 'tobe' },
+    { name: 'To Have', code: 'tohave' },
+    { name: 'To Do', code: 'dosth' },
+    { name: 'Adjectives', code: 'adj' },])
 });
 
 app.listen(3000, () => {
