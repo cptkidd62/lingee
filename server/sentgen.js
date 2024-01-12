@@ -149,7 +149,7 @@ exports.Generator = class Generator {
         }
     }
     getNRandomSentences(n, lang1, lang2) {
-        let res = {}
+        let res = []
         for (let i = 0; i < n; i++) {
             res[i] = this.getRandomSentence(lang1, lang2)
         }

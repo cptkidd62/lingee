@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { MyaccountComponent } from './myaccount/myaccount.component';
+import { TranslatemodeComponent } from './translatemode/translatemode.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,12 @@ const routes: Routes = [
     path: 'myaccount',
     component: MyaccountComponent,
     title: 'My Account'
-  }];
+  },
+  {
+    path: 'learn',
+    component: TranslatemodeComponent,
+    title: 'Translate Mode'
+  },];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
