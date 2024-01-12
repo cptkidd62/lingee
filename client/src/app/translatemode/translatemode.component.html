@@ -1,5 +1,8 @@
-<p>translatemode works!</p>
-<div *ngFor="let sentence of sentences">
-    <p>{{sentence.original}}</p>
-    <p>{{sentence.translation}}</p>
-</div>
+<form [formGroup]="translateForm" (ngSubmit)="checkAnwers()">
+    <div *ngFor="let sentence of sentences; let i = index">
+        <p>{{sentence.translation}}</p>
+        <input id="res{{i}}" type="text" formControlName="res{{i}}">
+        <span *ngIf="answersCorrect[i]">ok</span>
+    </div>
+    <button type="submit">Check</button>
+</form>
