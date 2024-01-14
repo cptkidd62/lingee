@@ -1,27 +1,9 @@
-const ennounsl = ['woman', 'man', 'school', 'day', 'money', 'color', 'book']
-const ennouns = {
-    'woman': { sing: 'woman', plural: 'women', loc: undefined },
-    'man': { sing: 'man', plural: 'men', loc: undefined },
-    'school': { sing: 'school', plural: 'schools', loc: 'at' },
-    'day': { sing: 'day', plural: 'days', loc: undefined },
-    'money': { sing: 'money', plural: undefined, loc: undefined },
-    'color': { sing: 'color', plural: 'colors', loc: undefined },
-    'book': { sing: 'book', plural: 'books', loc: 'in' }
-}
-const enverbsl = ['like', 'take', 'see', 'listen', 'hear', 'go']
-const enverbs = {
-    'like': { present: 'like', third: 'likes', cont: 'liking', past: 'liked' },
-    'take': { present: 'take', third: 'takes', cont: 'taking', past: 'took' },
-    'see': { present: 'see', third: 'sees', cont: 'seeing', past: 'saw' },
-    'listen': { present: 'listen', third: 'listens', cont: 'listening', past: 'listened', prep: 'to' },
-    'hear': { present: 'hear', third: 'hears', cont: 'hearing', past: 'heard' },
-    'go': { present: 'go', third: 'goes', cont: 'going', past: 'went', prep: 'to' },
-    'have': { present: 'have', third: 'has', cont: 'having', past: 'had' }
-}
-const enadj = ['beautiful', 'good', 'bad', 'long']
-const enadv = ['quickly', 'slowly']
+const dbrepo = require("./db")
+var repo
 const ennums = ['zero', 'one', 'two', 'three', 'four',
     'five', 'six', 'seven', 'eight', 'nine', 'ten']
+
+const haveconj = { present: 'have', third: 'has', gerund: 'having', past: 'had' }
 
 const conj_tobe = function (p, sing, tense) {
     if (tense == 'futuresimple') {
@@ -60,10 +42,13 @@ const poss_pronouns = function (p, s) {
 }
 
 const noun_location = function (noun) {
-    return ennouns[noun].loc
+    return noun.loc_prep
 }
 
 exports.English = class English {
+    constructor() {
+        repo = new dbrepo.Repository()
+    }
     tenses = {
         pastsimple: this.verbpastsimple,
         pastcont: this.verbpastcont,
@@ -75,32 +60,32 @@ exports.English = class English {
         loc: noun_location,
     }
     nounplural(word) {
-        let res = ennouns[word].plural;
+        let res = word.plural;
         if (res) {
             return res;
         } else {
-            return word;
+            return word.word;
         }
     };
-    run(pattern) {
+    async run(pattern) {
         let n = pattern[1]
         let d = JSON.parse(JSON.stringify(n[0])) // need to deep-copy the array
-        d.adjectives = d.adjectives.map((x) => enadj[x])
-        n = [d, ennounsl[n[1]]]
+        d.adjectives = await Promise.all(d.adjectives.map(async (x) => (await repo.getWordInfo('en', 'adjective', x)).word))
+        n = [d, (await repo.getWordInfo('en', 'noun', n[1]))]
         let v = JSON.parse(JSON.stringify(pattern[2])) // need to deep-copy the object
-        v.adverbs = v.adverbs.map((x) => enadv[x])
-        return this[pattern[0]](n, v, ...(pattern[3]))
+        v.adverbs = await Promise.all(v.adverbs.map(async (x) => (await repo.getWordInfo('en', 'adverb', x)).word))
+        return await this[pattern[0]](n, v, ...(pattern[3]))
     }
-    tobe(n, vdesc) {
+    async tobe(n, vdesc) {
         let rn = this.describenoun(...n)
         let rv = conj_tobe(vdesc.person, vdesc.singular, vdesc.tense)
         return this.getpronoun(vdesc.person, vdesc.singular) + ' ' + rv + ' ' + rn
     }
-    tohave(n, vdesc, p, s) {
-        return this.conjugateverb(vdesc, 'have', p, s) + ' ' + this.describenoun(...n);
+    async tohave(n, vdesc, p, s) {
+        return this.conjugateverb(vdesc, haveconj, p, s) + ' ' + this.describenoun(...n);
     };
-    dosth(n, vdesc, v) {
-        let nv = enverbsl[v]
+    async dosth(n, vdesc, v) {
+        let nv = await repo.getWordInfo('en', 'verb', v)
         let rn = this.describenoun(...n);
         let rv = this.conjugateverb(vdesc, nv, vdesc.person, vdesc.singular);
         let advs = ''
@@ -109,13 +94,10 @@ exports.English = class English {
         }
         return rv + ' ' + rn + advs;
     }
-    likesth() {
-        return this.verbfuture('like', p, true) + ' ' + this.addadjectives(enadj, this.nounplural(getRandomElement(ennounsl)))
-    }
     describenoun(descriptions, noun) {
-        let n = noun
+        let n = noun.word
         if (descriptions.plural) {
-            n = this.nounplural(n)
+            n = this.nounplural(noun)
         }
         if (descriptions.adjectives && descriptions.adjectives.length > 0) {
             n = this.addadjectives(descriptions.adjectives, n)
@@ -139,7 +121,7 @@ exports.English = class English {
         return n
     };
     nounwith(word) {
-        return 'with ' + word;
+        return 'with ' + word.word;
     }
     getpronoun(p, sing) {
         if (sing) {
@@ -162,33 +144,33 @@ exports.English = class English {
     }
     conjugateverb(descriptions, verb, p, sing) {
         let nv = verb
-        if (descriptions.negation) {
-            nv = verbneg(nv)
-        }
-        nv = this.tenses[descriptions.tense](nv, p, sing)
-        if (enverbs[verb].prep) {
-            nv += ' ' + enverbs[verb].prep
+        // if (descriptions.negation) {
+        //     nv = verbneg(nv)
+        // }
+        nv = this.tenses[descriptions.tense](verb, p, sing)
+        if (verb.prep) {
+            nv += ' ' + verb.prep
         }
         return this.getpronoun(p, sing) + ' ' + nv
     }
     verbpressimple(word, p, sing) {
         if (sing && p == 3) {
-            return enverbs[word].third;
+            return word.third;
         } else {
-            return enverbs[word].present;
+            return word.present;
         }
     }
     verbprescont(word, p, sing) {
-        return conj_tobe(p, sing, false) + ' ' + enverbs[word].cont
+        return conj_tobe(p, sing, 'pressimple') + ' ' + word.gerund
     }
     verbpastsimple(word) {
-        return enverbs[word].past;
+        return word.past;
     }
     verbpastcont(word, p, sing) {
-        return conj_tobe(p, sing, true) + ' ' + enverbs[word].cont
+        return conj_tobe(p, sing, 'pastsimple') + ' ' + word.gerund
     }
     verbfuturesimple(word) {
-        return 'will ' + word;
+        return 'will ' + word.present;
     }
     addadjectives(adjlst, noun) {
         return adjlst.join(' ') + ' ' + noun;

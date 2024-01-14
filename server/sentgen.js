@@ -1,5 +1,7 @@
 const trgen = require('./trgen')
 const engen = require('./engen')
+const dbrepo = require("./db")
+var repo
 
 patterns = ['tobe', 'tohave', 'dosth']
 tensessimple = ['pastsimple', 'pressimple', 'futuresimple']
@@ -13,18 +15,20 @@ function getRandomNum(b, e) {
     return b + Math.floor(Math.random() * (e - b))
 }
 
-function genRandomPattern() {
+async function genRandomPattern() {
     let p = getRandomElement(patterns)
     switch (p) {
         case 'tobe':
+            let n1 = getRandomElement(await repo.getSpeechPartIDs('noun')).v_id
+            let adj1 = getRandomElement(await repo.getSpeechPartIDs('adjective')).v_id
             return [p, [{
                 plural: false,
-                adjectives: [getRandomNum(0, 4)],
+                adjectives: [adj1],
                 count: undefined,
                 definite: getRandomNum(0, 2),
                 possession: undefined,
                 case: undefined
-            }, getRandomNum(0, 7)], {
+            }, n1], {
                     tense: getRandomElement(tensessimple),
                     negation: getRandomNum(0, 1),
                     person: getRandomNum(1, 4),
@@ -32,38 +36,44 @@ function genRandomPattern() {
                     adverbs: []
                 }, []]
         case 'tohave':
+            let n2 = getRandomElement(await repo.getSpeechPartIDs('noun')).v_id
+            let adj2 = getRandomElement(await repo.getSpeechPartIDs('adjective')).v_id
             return [p, [{
                 plural: getRandomNum(0, 2),
-                adjectives: [],
+                adjectives: [adj2],
                 count: undefined,
                 definite: getRandomNum(0, 2),
                 possession: undefined,
                 case: undefined
-            }, getRandomNum(0, 7)], {
+            }, n2], {
                     tense: getRandomElement(tensessimple),
                     negation: getRandomNum(0, 1),
                     adverbs: []
                 }, [getRandomNum(1, 4), getRandomNum(0, 2)]]
         case 'dosth':
+            let n3 = getRandomElement(await repo.getSpeechPartIDs('noun')).v_id
+            let adj3 = getRandomElement(await repo.getSpeechPartIDs('adjective')).v_id
+            let v3 = getRandomElement(await repo.getSpeechPartIDs('verb')).v_id
             return [p, [{
                 plural: getRandomNum(0, 2),
-                adjectives: [],
+                adjectives: [adj3],
                 count: undefined,
                 definite: getRandomNum(0, 2),
                 possession: undefined,
                 case: undefined
-            }, getRandomNum(0, 7)], {
+            }, n3], {
                     tense: getRandomElement(tenses),
                     negation: getRandomNum(0, 1),
                     person: getRandomNum(1, 4),
                     singular: getRandomNum(0, 2),
                     adverbs: []
-                }, [getRandomNum(0, 6)]]
+                }, [v3]]
     }
 }
 
 exports.Generator = class Generator {
     constructor() {
+        repo = new dbrepo.Repository()
         this.langs = {
             tr: new trgen.Turkish(),
             en: new engen.English(),
@@ -140,18 +150,18 @@ exports.Generator = class Generator {
     getFromPattern(lang, pattern) {
         return this.langs[lang].run(pattern)
     }
-    getRandomSentence(lang1, lang2) {
-        let p = genRandomPattern()
+    async getRandomSentence(lang1, lang2) {
+        let p = await genRandomPattern()
         console.log(p)
         return {
-            original: this.langs[lang1].run(p),
-            translation: this.langs[lang2].run(p)
+            original: await this.langs[lang1].run(p),
+            translation: await this.langs[lang2].run(p)
         }
     }
-    getNRandomSentences(n, lang1, lang2) {
+    async getNRandomSentences(n, lang1, lang2) {
         let res = []
         for (let i = 0; i < n; i++) {
-            res[i] = this.getRandomSentence(lang1, lang2)
+            res[i] = await this.getRandomSentence(lang1, lang2)
         }
         return res
     }

@@ -105,21 +105,8 @@ app.post("/auth/signup", async (req, res) => {
     }
 });
 
-app.get("/random", (req, res) => {
-    // res.json({
-    //     0: sgen.getFromPattern('tr', sgen.pattern1),
-    //     1: sgen.getFromPattern('en', sgen.pattern1),
-    //     2: sgen.getFromPattern('tr', sgen.pattern2),
-    //     3: sgen.getFromPattern('en', sgen.pattern2),
-    //     4: sgen.getFromPattern('tr', sgen.pattern3),
-    //     5: sgen.getFromPattern('en', sgen.pattern3),
-    //     6: sgen.getFromPattern('tr', sgen.pattern4),
-    //     7: sgen.getFromPattern('en', sgen.pattern4),
-    //     8: sgen.getFromPattern('tr', sgen.pattern5),
-    //     9: sgen.getFromPattern('en', sgen.pattern5),
-    //     10: sgen.getRandomSentence('en', 'tr')
-    // });
-    res.json(sgen.getNRandomSentences(6, 'tr', 'en'))
+app.get("/random", async (req, res) => {
+    res.json(await sgen.getNRandomSentences(2, 'tr', 'en'))
 });
 
 app.get("/random/topics", async (req, res) => {

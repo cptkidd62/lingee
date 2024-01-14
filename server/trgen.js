@@ -1,15 +1,6 @@
-const trnouns = ['kadın', 'erkek', 'okul', 'gün', 'para', 'renk', 'kitap', 'baba', 'anne']
-const trverbsl = ['sev', 'al', 'gör', 'dinle', 'duy', 'git']
-const trverbs = {
-    'sev': { case: 'acc', aor: 'e' },
-    'al': { case: 'acc', aor: 'ı' },
-    'gör': { case: 'acc', aor: 'ü' },
-    'dinle': { case: 'acc', aor: 'e' },
-    'duy': { case: 'acc', aor: 'a' },
-    'git': { case: 'dat', aor: 'e' }
-}
-const tradj = ['güzel', 'iyi', 'kötü', 'uzun']
-const tradv = ['çabuk', 'yavaşça']
+const dbrepo = require("./db")
+var repo
+
 const trnums = ['sıfır', 'bir', 'iki', 'üç', 'dört',
     'beş', 'altı', 'yedi', 'sekiz', 'dokuz', 'on']
 const vowels = ['a', 'e', 'i', 'ı', 'o', 'ö', 'u', 'ü']
@@ -129,6 +120,9 @@ const noundative = function (word) {
     }
     return res + v;
 }
+const nounablative = function (word) {
+    return nounlocative(word) + 'n'
+}
 const nounwith = function (word) {
     let v = tr2vowel(word);
     let res = word;
@@ -217,12 +211,12 @@ const verbconj = function (word, p, sing) {
         }
     }
 }
-const verbaorist = function (word) {
+const verbaorist = function (word, _, _, aor) {
     let res = word
     if (vowels.includes(word.slice(-1))) {
         res = word.slice(0, -1)
     }
-    return res + trverbs[word].aor + 'r'
+    return res + aor + 'r'
 }
 const verbneg = function (word) {
     let v = tr2vowel(word);
@@ -272,6 +266,9 @@ const getpronoun = function (p, s) {
 }
 
 exports.Turkish = class Turkish {
+    constructor() {
+        repo = new dbrepo.Repository()
+    }
     tenses = {
         pastsimple: this.verbpastsimple,
         pastcont: this.verbpastcont,
@@ -282,22 +279,23 @@ exports.Turkish = class Turkish {
     cases = {
         acc: nounaccus,
         loc: nounlocative,
-        dat: noundative
+        dat: noundative,
+        abl: nounablative
     }
     nounplural(word) {
         let v = tr2vowel(word);
         return word + 'l' + v + 'r';
     }
-    run(pattern) {
+    async run(pattern) {
         let n = pattern[1]
         let d = JSON.parse(JSON.stringify(n[0])) // need to deep-copy the array
-        d.adjectives = d.adjectives.map((x) => tradj[x])
-        n = [d, trnouns[n[1]]]
+        d.adjectives = await Promise.all(d.adjectives.map(async (x) => (await repo.getWordInfo('tr', 'adjective', x)).word))
+        n = [d, (await repo.getWordInfo('tr', 'noun', n[1])).word]
         let v = JSON.parse(JSON.stringify(pattern[2])) // need to deep-copy the object
-        v.adverbs = v.adverbs.map((x) => tradv[x])
-        return this[pattern[0]](n, v, ...(pattern[3]))
+        v.adverbs = await Promise.all(v.adverbs.map(async (x) => (await repo.getWordInfo('tr', 'adverb', x)).word))
+        return await this[pattern[0]](n, v, ...(pattern[3]))
     }
-    tobe(n, vdesc) {
+    async tobe(n, vdesc) {
         let rn = n[1]
         if (n[1] != 'var' && n[1] != '') {
             rn = getpronoun(vdesc.person, vdesc.singular) + ' ' + this.describenoun(...n)
@@ -319,21 +317,21 @@ exports.Turkish = class Turkish {
             return rn
         }
     }
-    tohave(n, vdesc, p, s) {
+    async tohave(n, vdesc, p, s) {
         let c = 'var'
         let t = vdesc.tense
         if (t == 'pastsimple') {
-            c = this.tobe([{}, c], { person: 3, singular: true, tense: 'past' })
+            c = await this.tobe([{}, c], { person: 3, singular: true, tense: 'past' })
         } else if (t == 'pressimple') {
-            c = this.tobe([{}, c], { person: 3, singular: true, tense: 'pres' })
+            c = await this.tobe([{}, c], { person: 3, singular: true, tense: 'pres' })
         } else if (t == 'futuresimple') {
-            c = this.tobe([{}, ''], { person: 3, singular: true, tense: 'future' })
+            c = await this.tobe([{}, ''], { person: 3, singular: true, tense: 'future' })
         }
         return poss_pronouns(p, s) + ' ' + nounaddposs(this.describenoun(...n), p, s) + ' ' + c
     }
-    dosth(n, vdesc, v) {
-        let nv = trverbsl[v]
-        let rn = this.cases[trverbs[nv].case](this.describenoun(...n));
+    async dosth(n, vdesc, v) {
+        let nv = await repo.getWordInfo('tr', 'verb', v)
+        let rn = this.cases[nv.case](this.describenoun(...n));
         let rv = this.conjugateverb(vdesc, nv, vdesc.person, vdesc.singular);
         return getpronoun(vdesc.person, vdesc.singular) + ' ' + rn + ' ' + rv;
     }
@@ -364,18 +362,20 @@ exports.Turkish = class Turkish {
         return n
     }
     conjugateverb(descriptions, verb, p, sing) {
-        let nv = verb
+        let nv = verb.root
         if (descriptions.negation) {
             nv = verbneg(nv)
         }
-        nv = this.tenses[descriptions.tense](nv, p, sing)
+        console.log('conj', verb.aorist)
+        nv = this.tenses[descriptions.tense](nv, p, sing, verb.aorist)
         if (descriptions.adverbs && descriptions.adverbs.length > 0) {
             nv = this.addadverbs(descriptions.adverbs) + ' ' + nv
         }
         return nv;
     }
-    verbpressimple(word, p, sing) {
-        return verbconj(verbaorist(word), p, sing)
+    verbpressimple(word, p, sing, aor) {
+        console.log('pressimple', aor)
+        return verbconj(verbaorist(word, p, sing, aor), p, sing)
     }
     verbprescont(word, p, sing) {
         return verbconj(verbcont(word), p, sing)
