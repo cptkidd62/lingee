@@ -106,7 +106,7 @@ app.post("/auth/signup", async (req, res) => {
 });
 
 app.get("/random", async (req, res) => {
-    res.json(await sgen.getNRandomSentences(2, 'tr', 'en'))
+    res.json(await sgen.getNRandomSentences(12, 'tr', 'en'))
 });
 
 app.get("/random/topics", async (req, res) => {

@@ -15,18 +15,12 @@ export class TranslatemodeComponent {
   sentences: Array<Sentence> = [];
   learnService: LearnService = inject(LearnService);
 
-  translateForm = new FormGroup({
-    res0: new FormControl(''),
-    res1: new FormControl(''),
-    res2: new FormControl(''),
-    res3: new FormControl(''),
-    res4: new FormControl(''),
-    res5: new FormControl(''),
-  })
+  translateForm: FormGroup = new FormGroup({})
 
   answersCorrect: Array<boolean> = [];
 
   checkAnwers() {
+    console.log(this.sentences.length)
     const formVals = this.translateForm.value;
     let formArr = Object.values(formVals);
     for (let i = 0; i < this.sentences.length; i++) {
@@ -38,8 +32,15 @@ export class TranslatemodeComponent {
 
   constructor() {
     this.learnService.getSentences().subscribe({
-      next: sentences => this.sentences = sentences
+      next: sentences => {
+        this.sentences = sentences
+        this.answersCorrect = new Array(this.sentences.length).fill(false)
+        var ctrls: { [key: string]: FormControl } = {}
+        for (let i = 0; i < this.sentences.length; i++) {
+          ctrls['res' + i] = new FormControl('')
+        }
+        this.translateForm = new FormGroup(ctrls)
+      }
     });
-    this.answersCorrect = new Array(this.sentences.length).fill(false)
   }
 }
