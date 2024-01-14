@@ -54,4 +54,10 @@ exports.Repository = class Repository {
             return null;
         }
     }
+
+    async getAllTopics() {
+        let data1 = await this.pool.query("SELECT * FROM topics_grammar");
+        let data2 = await this.pool.query("SELECT * FROM topics_lexical");
+        return { grammar: data1.rows, lexical: data2.rows };
+    }
 }

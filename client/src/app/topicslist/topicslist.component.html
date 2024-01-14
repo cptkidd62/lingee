@@ -1,4 +1,8 @@
-<p>topicslist works!</p>
-<div *ngFor="let topic of topics">
-    <p>{{topic.name}}</p>
+<h3>Grammar</h3>
+<div *ngFor="let topic of topics.grammar">
+    <p>{{topic.tg_name}}</p>
+</div>
+<h3>Lexical</h3>
+<div *ngFor="let topic of topics.lexical">
+    <p>{{topic.tl_name}}</p>
 </div>

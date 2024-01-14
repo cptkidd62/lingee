@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Topic } from '../topic';
+import { TopicGrammar } from '../topicgrammar';
+import { TopicLexical } from '../topiclexical';
 import { LearnService } from '../_services/learn.service';
 
 @Component({
@@ -11,12 +12,13 @@ import { LearnService } from '../_services/learn.service';
   styleUrls: ['./topicslist.component.css']
 })
 export class TopicslistComponent {
-  topics: Array<Topic> = []
+  topics: { grammar: Array<TopicGrammar>, lexical: Array<TopicLexical> } = { grammar: [], lexical: [] }
   learnService: LearnService = inject(LearnService);
 
   constructor() {
     this.learnService.getTopicsList().subscribe({
-      next: topics => this.topics = topics
+      next: topics => { this.topics.grammar = topics.grammar; this.topics.lexical = topics.lexical }
     });
+    console.log(this.topics)
   }
 }

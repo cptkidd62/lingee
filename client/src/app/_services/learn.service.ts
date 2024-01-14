@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Sentence } from '../sentence';
-import { Topic } from '../topic';
+import { TopicGrammar } from '../topicgrammar';
+import { TopicLexical } from '../topiclexical';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -18,7 +19,7 @@ export class LearnService {
     return this.http.get<Array<Sentence>>(this.url);
   }
 
-  getTopicsList(): Observable<Array<Topic>> {
-    return this.http.get<Array<Topic>>(this.url + '/topics');
+  getTopicsList(): Observable<{ grammar: Array<TopicGrammar>, lexical: Array<TopicLexical> }> {
+    return this.http.get<{ grammar: Array<TopicGrammar>, lexical: Array<TopicLexical> }>(this.url + '/topics');
   }
 }

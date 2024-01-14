@@ -122,11 +122,9 @@ app.get("/random", (req, res) => {
     res.json(sgen.getNRandomSentences(6, 'tr', 'en'))
 });
 
-app.get("/random/topics", (req, res) => {
-    res.json([{ name: 'To Be', code: 'tobe' },
-    { name: 'To Have', code: 'tohave' },
-    { name: 'To Do', code: 'dosth' },
-    { name: 'Adjectives', code: 'adj' },])
+app.get("/random/topics", async (req, res) => {
+    let tops = await repo.getAllTopics();
+    res.json(tops)
 });
 
 app.listen(3000, () => {
