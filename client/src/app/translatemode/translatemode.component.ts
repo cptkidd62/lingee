@@ -24,12 +24,12 @@ export class TranslatemodeComponent {
     res5: new FormControl(''),
   })
 
-  answersCorrect: Array<boolean> = new Array(6).fill(false);
+  answersCorrect: Array<boolean> = [];
 
   checkAnwers() {
     const formVals = this.translateForm.value;
     let formArr = Object.values(formVals);
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < this.sentences.length; i++) {
       console.log(formArr[i])
       console.log(this.sentences[i].original)
       this.answersCorrect[i] = formArr[i] == this.sentences[i].original;
@@ -40,5 +40,6 @@ export class TranslatemodeComponent {
     this.learnService.getSentences().subscribe({
       next: sentences => this.sentences = sentences
     });
+    this.answersCorrect = new Array(this.sentences.length).fill(false)
   }
 }
