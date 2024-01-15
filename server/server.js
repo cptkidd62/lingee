@@ -36,7 +36,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin', '/auth/signup', '/random', '/topics', '/topics/lexical/:id'] }));
+app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin', '/auth/signup', '/random', '/topics', '/topics/lexical/:lang/:id'] }));
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
@@ -114,8 +114,8 @@ app.get("/topics", async (req, res) => {
     res.json(tops)
 });
 
-app.get("/topics/lexical/:id", async (req, res) => {
-    let tops = await repo.getWordsFromTopic('tr', req.params.id, 2)
+app.get("/topics/lexical/:lang/:id", async (req, res) => {
+    let tops = await repo.getWordsFromTopic(req.params.lang, req.params.id, req.auth.id)
     res.json(tops)
 });
 

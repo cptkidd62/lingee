@@ -40,7 +40,7 @@ const routes: Routes = [
     title: 'Topics'
   },
   {
-    path: 'topics/lexical/:id',
+    path: 'topics/lexical/:lang/:id',
     component: TopicwordlistComponent,
     title: 'Topics Word List'
   },];

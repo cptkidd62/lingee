@@ -16,9 +16,11 @@ export class TopicwordlistComponent {
   learnService: LearnService = inject(LearnService);
 
   constructor(private route: ActivatedRoute) {
-    this.learnService.getWordList(this.route.snapshot.params['id']).subscribe({
-      next: lst => this.wlist = lst
+    this.learnService.getWordList(this.route.snapshot.params['lang'], this.route.snapshot.params['id']).subscribe({
+      next: lst => {
+        this.wlist = lst
+        console.log(this.wlist)
+      }
     });
-    console.log(this.wlist)
   }
 }

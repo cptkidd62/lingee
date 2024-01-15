@@ -24,7 +24,7 @@ export class LearnService {
     return this.http.get<{ grammar: Array<TopicGrammar>, lexical: Array<TopicLexical> }>(this.url + '/topics');
   }
 
-  getWordList(id: number): Observable<Array<Topicwordview>> {
-    return this.http.get<Array<Topicwordview>>(this.url + '/topics/lexical/' + id);
+  getWordList(lang: string, id: number): Observable<Array<Topicwordview>> {
+    return this.http.get<Array<Topicwordview>>(this.url + '/topics/lexical/' + lang + '/' + id);
   }
 }
