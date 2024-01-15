@@ -99,9 +99,9 @@ app.post("/auth/signup", async (req, res) => {
         await repo.addUsr(sdata);
         const jwtBearer = jwt.sign({ id: sdata.id }, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
-            expiresIn: 1200
+            expiresIn: 12000
         })
-        res.json({ idToken: jwtBearer, expiresIn: 1200 });
+        res.json({ idToken: jwtBearer, expiresIn: 12000 });
     }
 });
 
