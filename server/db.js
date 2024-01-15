@@ -68,39 +68,7 @@ exports.Repository = class Repository {
 
     async getWordInfo(lang, sp, id) {
         let table = lang + '_' + sp + 's'
-        let data
-        switch (table) {
-            case 'tr_verbs':
-                data = await this.pool.query("SELECT * FROM tr_verbs WHERE v_id = $1", [id])
-                break
-            case 'en_verbs':
-                data = await this.pool.query("SELECT * FROM en_verbs WHERE v_id = $1", [id])
-                break
-            case 'tr_adverbs':
-                data = await this.pool.query("SELECT * FROM tr_adverbs WHERE v_id = $1", [id])
-                break
-            case 'en_adverbs':
-                data = await this.pool.query("SELECT * FROM en_adverbs WHERE v_id = $1", [id])
-                break
-            case 'tr_adjectives':
-                data = await this.pool.query("SELECT * FROM tr_adjectives WHERE v_id = $1", [id])
-                break
-            case 'en_adjectives':
-                data = await this.pool.query("SELECT * FROM en_adjectives WHERE v_id = $1", [id])
-                break
-            case 'tr_nouns':
-                data = await this.pool.query("SELECT * FROM tr_nouns WHERE v_id = $1", [id])
-                break
-            case 'en_nouns':
-                data = await this.pool.query("SELECT * FROM en_nouns WHERE v_id = $1", [id])
-                break
-            case 'tr_numerals':
-                data = await this.pool.query("SELECT * FROM tr_numerals WHERE v_id = $1", [id])
-                break
-            case 'en_numerals':
-                data = await this.pool.query("SELECT * FROM en_numerals WHERE v_id = $1", [id])
-                break
-        }
+        let data = await this.pool.query("SELECT * FROM " + table + " WHERE v_id = $1", [id])
         return (data.rows[0])
     }
 }
