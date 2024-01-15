@@ -1,8 +1,8 @@
 <h3>Grammar</h3>
 <div *ngFor="let topic of topics.grammar">
-    <p>{{topic.tg_name}}</p>
+    <a>{{topic.tg_name}}</a>
 </div>
 <h3>Lexical</h3>
 <div *ngFor="let topic of topics.lexical">
-    <p>{{topic.tl_name}}</p>
+    <a href="/topics/lexical/{{topic.tl_id}}">{{topic.tl_name}}</a>
 </div>

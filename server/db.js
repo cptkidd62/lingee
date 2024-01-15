@@ -61,6 +61,17 @@ exports.Repository = class Repository {
         return { grammar: data1.rows, lexical: data2.rows };
     }
 
+    async getWordsFromTopic(lang, tl_id, u_id) {
+        let data1 = await this.pool.query("SELECT tl_type FROM topics_lexical WHERE tl_id = $1", [tl_id])
+        let table = lang + '_' + data1.rows[0].tl_type
+        let data2 = await this.pool.query("select ta.v_id, ta.word, uvp.progress from " +
+            table + " ta \
+                    join vocab_topics vt on ta.v_id = vt.v_id \
+                    left join (select * from user_vocab_progress uvp where uvp.u_id = $1) as uvp on uvp.v_id = ta.v_id \
+                    where vt.tl_id = $2", [u_id, tl_id])
+        return data2.rows
+    }
+
     async getSpeechPartIDs(sp) {
         let data = await this.pool.query("SELECT v_id FROM vocab WHERE v_speechpart = $1", [sp])
         return data.rows

@@ -6,6 +6,7 @@ import { SignupComponent } from './signup/signup.component';
 import { MyaccountComponent } from './myaccount/myaccount.component';
 import { TranslatemodeComponent } from './translatemode/translatemode.component';
 import { TopicslistComponent } from './topicslist/topicslist.component';
+import { TopicwordlistComponent } from './topicwordlist/topicwordlist.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,11 @@ const routes: Routes = [
     path: 'topics',
     component: TopicslistComponent,
     title: 'Topics'
+  },
+  {
+    path: 'topics/lexical/:id',
+    component: TopicwordlistComponent,
+    title: 'Topics Word List'
   },];
 
 @NgModule({
