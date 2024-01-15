@@ -36,7 +36,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin', '/auth/signup', '/random', '/topics', '/topics/lexical/:lang/:id'] }));
+app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin', '/auth/signup', '/topics', '/topics/lexical/:lang/:id'] }));
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
@@ -106,7 +106,7 @@ app.post("/auth/signup", async (req, res) => {
 });
 
 app.get("/random", async (req, res) => {
-    res.json(await sgen.getNRandomSentences(12, 'tr', 'en'))
+    res.json(await sgen.getNRandomSentences(8, 'tr', 'en', req.auth.id, null, null, null))
 });
 
 app.get("/topics", async (req, res) => {
