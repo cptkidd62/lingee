@@ -31,7 +31,7 @@ export class TranslatemodeComponent {
   }
 
   constructor() {
-    this.learnService.getSentences().subscribe({
+    this.learnService.getSentences(10).subscribe({
       next: sentences => {
         this.sentences = sentences
         this.answersCorrect = new Array(this.sentences.length).fill(false)

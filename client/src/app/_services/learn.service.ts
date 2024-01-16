@@ -16,8 +16,12 @@ export class LearnService {
 
   url = 'http://localhost:3000';
 
-  getSentences(): Observable<Array<Sentence>> {
-    return this.http.get<Array<Sentence>>(this.url + '/random');
+  getSentences(n : number, prms?: [string]): Observable<Array<Sentence>> {
+    let extra : string = ''
+    if (prms) {
+      extra = '&' + prms.join('&')
+    }
+    return this.http.get<Array<Sentence>>(this.url + '/random?count=' + n + extra);
   }
 
   getTopicsList(): Observable<{ grammar: Array<TopicGrammar>, lexical: Array<TopicLexical> }> {

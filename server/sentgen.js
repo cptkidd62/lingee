@@ -17,11 +17,14 @@ function getRandomNum(b, e) {
 
 async function genRandomPattern(uid, noun, verb, adjective, adverb, numeral) {
     let p, n, v, adj, adv, num
-    if (verb) {
+    if (verb || adverb) {
         p = 'dosth'
-        v = verb
     } else {
         p = getRandomElement(patterns)
+    }
+    if (verb) {
+        v = verb
+    } else {
         v = getRandomElement(await repo.getSpeechPartIDs('verb')).v_id
     }
     if (noun) {
@@ -101,7 +104,7 @@ exports.Generator = class Generator {
     }
     async getRandomSentence(lang1, lang2, uid, noun, verb, adj, adv, num) {
         let p = await genRandomPattern(uid, noun, verb, adj, adv, num)
-        console.log(p)
+        // console.log(p)
         return {
             original: await this.langs[lang1].run(p),
             translation: await this.langs[lang2].run(p)

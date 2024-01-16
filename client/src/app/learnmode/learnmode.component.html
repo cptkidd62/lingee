@@ -1,5 +1,8 @@
-<p>learnmode works!</p>
-<div *ngFor="let w of wlist">
-    <p>{{w.word}}</p>
-    <p>{{w.progress}}</p>
+<div *ngIf="size(sentences) == size(wlist)">
+    <div *ngFor="let s of sentences; let i = index">
+        <p>{{wlist[i].word}}</p>
+        <p>{{wlist[i].progress}}</p>
+        <p>{{s.original}}</p>
+        <p>{{s.translation}}</p>
+    </div>
 </div>

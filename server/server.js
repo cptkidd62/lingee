@@ -108,7 +108,7 @@ app.post("/auth/signup", async (req, res) => {
 });
 
 app.get("/random", async (req, res) => {
-    res.json(await sgen.getNRandomSentences(8, 'tr', 'en', req.auth.id, req.query.noun, req.query.verb, req.query.adjective, req.query.adverb, req.query.numeral))
+    res.json(await sgen.getNRandomSentences(req.query.count ? req.query.count : 1, 'tr', 'en', req.auth.id, req.query.noun, req.query.verb, req.query.adjective, req.query.adverb, req.query.numeral))
 });
 
 app.get("/topics", async (req, res) => {
