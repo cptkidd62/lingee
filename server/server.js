@@ -121,6 +121,15 @@ app.get("/topics/lexical/:lang/:id", async (req, res) => {
     res.json(tops)
 });
 
+app.post("/reviews/add", async (req, res) => {
+    let wlist = req.body.wlist
+    let lang = req.body.lang
+    for (let i = 0; i < wlist.length; i++) {
+        await repo.addWordToReviews(lang, req.auth.id, wlist[i])
+    }
+    res.json({ status: 'ok' })
+})
+
 app.listen(3000, () => {
     console.log("Working on port 3000");
 });

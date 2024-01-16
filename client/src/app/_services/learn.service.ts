@@ -16,8 +16,8 @@ export class LearnService {
 
   url = 'http://localhost:3000';
 
-  getSentences(n : number, prms?: [string]): Observable<Array<Sentence>> {
-    let extra : string = ''
+  getSentences(n: number, prms?: [string]): Observable<Array<Sentence>> {
+    let extra: string = ''
     if (prms) {
       extra = '&' + prms.join('&')
     }
@@ -30,5 +30,9 @@ export class LearnService {
 
   getWordList(lang: string, id: number): Observable<Array<Topicwordview>> {
     return this.http.get<Array<Topicwordview>>(this.url + '/topics/lexical/' + lang + '/' + id);
+  }
+
+  addToReviews(wlist: Array<number>) {
+    return this.http.post(this.url + '/reviews/add', { wlist: wlist, lang: 'tr' }, { responseType: 'json', withCredentials: true })
   }
 }

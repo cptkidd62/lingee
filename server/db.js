@@ -83,4 +83,10 @@ exports.Repository = class Repository {
         let data = await this.pool.query("SELECT * FROM " + table + " WHERE v_id = $1", [id])
         return (data.rows[0])
     }
+
+    async addWordToReviews(lang, u_id, v_id) {
+        let data = await this.pool.query("SELECT l_id FROM langs WHERE l_code = $1", [lang])
+        let lid = data.rows[0].l_id
+        await this.pool.query("INSERT INTO user_vocab_progress (u_id, v_id, progress, l_id) VALUES ($1, $2, 1, $3) on conflict (u_id, v_id, l_id) do nothing", [u_id, v_id, lid])
+    }
 }
