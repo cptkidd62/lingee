@@ -13,6 +13,8 @@ var repo;
 const sentgen = require("./sentgen");
 var sgen;
 
+const expirytm = 60 * 60 * 24 * 30
+
 const RSA_PRIVATE_KEY = fs.readFileSync('./keys/jwtRS256.key');
 const RSA_PUBLIC_KEY = fs.readFileSync('./keys/jwtRS256.key.pub');
 
@@ -68,9 +70,9 @@ app.post("/auth/signin", async (req, res) => {
     } else if (await bcrypt.compare(pwd, pwdHsh)) {
         const jwtBearer = jwt.sign({ id: id }, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
-            expiresIn: 1200
+            expiresIn: expirytm
         })
-        res.json({ idToken: jwtBearer, expiresIn: 1200 });
+        res.json({ idToken: jwtBearer, expiresIn: expirytm });
     } else {
         return res.status(403).send({
             success: false,
@@ -99,9 +101,9 @@ app.post("/auth/signup", async (req, res) => {
         await repo.addUsr(sdata);
         const jwtBearer = jwt.sign({ id: sdata.id }, RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
-            expiresIn: 12000
+            expiresIn: expirytm
         })
-        res.json({ idToken: jwtBearer, expiresIn: 12000 });
+        res.json({ idToken: jwtBearer, expiresIn: expirytm });
     }
 });
 
