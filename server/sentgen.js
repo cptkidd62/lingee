@@ -99,18 +99,18 @@ exports.Generator = class Generator {
             en: new engen.English(),
         }
     }
-    async getRandomSentence(lang1, lang2, uid, noun, verb, adj) {
-        let p = await genRandomPattern(uid, noun, verb, adj)
+    async getRandomSentence(lang1, lang2, uid, noun, verb, adj, adv, num) {
+        let p = await genRandomPattern(uid, noun, verb, adj, adv, num)
         console.log(p)
         return {
             original: await this.langs[lang1].run(p),
             translation: await this.langs[lang2].run(p)
         }
     }
-    async getNRandomSentences(n, lang1, lang2, uid, noun, verb, adj) {
+    async getNRandomSentences(n, lang1, lang2, uid, noun, verb, adj, adv, num) {
         let res = []
         for (let i = 0; i < n; i++) {
-            res[i] = await this.getRandomSentence(lang1, lang2, uid, noun, verb, adj)
+            res[i] = await this.getRandomSentence(lang1, lang2, uid, noun, verb, adj, adv, num)
         }
         return res
     }

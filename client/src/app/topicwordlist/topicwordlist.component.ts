@@ -23,7 +23,8 @@ export class TopicwordlistComponent {
         this.toLearn = !(this.wlist.every(w => w.progress && w.progress > 0))
         console.log(this.toLearn)
         console.log(this.wlist)
-      }
+      },
+      error: err => this.router.navigate(['/'])
     });
   }
 
