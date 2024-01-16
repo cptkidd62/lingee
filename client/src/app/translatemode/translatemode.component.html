@@ -2,6 +2,8 @@
     <div>
         <p>{{sentences[current].translation}}</p>
         <input id="res" type="text" formControlName="res" autocomplete="off">
+        <p>{{sentences[current].original}}</p>
+        <p *ngFor="let t of sentTokens; let i = index">{{t}}</p>
     </div>
     <button type="submit">Next</button>
 </form>

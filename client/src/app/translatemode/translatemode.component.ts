@@ -14,6 +14,7 @@ import { LearnService } from '../_services/learn.service';
 export class TranslatemodeComponent {
   sentences: Array<Sentence> = [];
   learnService: LearnService = inject(LearnService);
+  sentTokens: Array<string> = []
 
   translateForm: FormGroup = new FormGroup({
     res: new FormControl('')
@@ -35,7 +36,14 @@ export class TranslatemodeComponent {
   next() {
     this.checkAnswer()
     this.current++
+    if (this.current < this.total) {
+      this.makeTokens(this.sentences[this.current].original)
+    }
     this.translateForm.controls['res'].reset()
+  }
+
+  makeTokens(sent: string) {
+    this.sentTokens = sent.split(' ')
   }
 
   constructor() {
@@ -43,6 +51,7 @@ export class TranslatemodeComponent {
       next: sentences => {
         this.sentences = sentences
         this.answersCorrect = new Array(this.sentences.length).fill(false)
+        this.makeTokens(this.sentences[0].original)
       }
     });
   }
