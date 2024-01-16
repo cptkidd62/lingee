@@ -29,6 +29,6 @@ export class TopicwordlistComponent {
   }
 
   enterLearnMode() {
-    this.router.navigate(['/learn'])
+    this.router.navigate(['/learn'], { state: { data: this.wlist } })
   }
 }
