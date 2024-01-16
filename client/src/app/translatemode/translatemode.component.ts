@@ -15,32 +15,39 @@ export class TranslatemodeComponent {
   sentences: Array<Sentence> = [];
   learnService: LearnService = inject(LearnService);
 
-  translateForm: FormGroup = new FormGroup({})
+  translateForm: FormGroup = new FormGroup({
+    res: new FormControl('')
+  })
 
   answersCorrect: Array<boolean> = [];
 
-  checkAnwers() {
-    console.log(this.sentences.length)
-    const formVals = this.translateForm.value;
-    let formArr = Object.values(formVals);
-    for (let i = 0; i < this.sentences.length; i++) {
-      console.log(formArr[i])
-      console.log(this.sentences[i].original)
-      this.answersCorrect[i] = formArr[i] == this.sentences[i].original;
-    }
+  total: number = 10
+  current: number = 0
+  correct: number = 0
+
+  checkAnswer() {
+    const ans = this.translateForm.value.res;
+    console.log(this.sentences[this.current].original)
+    this.answersCorrect[this.current] = ans == this.sentences[this.current].original;
+    this.correct += this.answersCorrect[this.current] ? 1 : 0
+  }
+
+  next() {
+    this.checkAnswer()
+    this.current++
+    this.translateForm.controls['res'].reset()
   }
 
   constructor() {
-    this.learnService.getSentences(10).subscribe({
+    this.learnService.getSentences(this.total).subscribe({
       next: sentences => {
         this.sentences = sentences
         this.answersCorrect = new Array(this.sentences.length).fill(false)
-        var ctrls: { [key: string]: FormControl } = {}
-        for (let i = 0; i < this.sentences.length; i++) {
-          ctrls['res' + i] = new FormControl('')
-        }
-        this.translateForm = new FormGroup(ctrls)
       }
     });
+  }
+
+  size(arr: Array<any>): number {
+    return arr.filter(x => x).length
   }
 }

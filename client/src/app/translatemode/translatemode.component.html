@@ -1,8 +1,9 @@
-<form [formGroup]="translateForm" (ngSubmit)="checkAnwers()">
-    <div *ngFor="let sentence of sentences; let i = index">
-        <p>{{sentence.translation}}</p>
-        <input id="res{{i}}" type="text" formControlName="res{{i}}" autocomplete="off">
-        <span *ngIf="answersCorrect[i]">ok</span>
+<form *ngIf="current < total && size(sentences) == total" [formGroup]="translateForm" (ngSubmit)="next()">
+    <div>
+        <p>{{sentences[current].translation}}</p>
+        <input id="res" type="text" formControlName="res" autocomplete="off">
     </div>
-    <button type="submit">Check</button>
+    <button type="submit">Next</button>
 </form>
+
+<div *ngIf="current == total">{{correct}}/{{total}}</div>
