@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './myaccount.component.html',
-  styleUrls: ['./myaccount.component.css']
+  styleUrls: ['./myaccount.component.scss']
 })
 export class MyaccountComponent {
   myaccount: UserAccount = { id: -1, displayname: "", login: "" };

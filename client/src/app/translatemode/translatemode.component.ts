@@ -9,7 +9,7 @@ import { LearnService } from '../_services/learn.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './translatemode.component.html',
-  styleUrls: ['./translatemode.component.css']
+  styleUrls: ['./translatemode.component.scss']
 })
 export class TranslatemodeComponent {
   sentences: Array<Sentence> = [];

@@ -9,7 +9,7 @@ import { LearnService } from '../_services/learn.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './topicslist.component.html',
-  styleUrls: ['./topicslist.component.css']
+  styleUrls: ['./topicslist.component.scss']
 })
 export class TopicslistComponent {
   topics: { grammar: Array<TopicGrammar>, lexical: Array<TopicLexical> } = { grammar: [], lexical: [] }

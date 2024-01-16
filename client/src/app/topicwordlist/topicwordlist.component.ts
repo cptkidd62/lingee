@@ -10,7 +10,7 @@ import { LearnService } from '../_services/learn.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './topicwordlist.component.html',
-  styleUrls: ['./topicwordlist.component.css']
+  styleUrls: ['./topicwordlist.component.scss']
 })
 export class TopicwordlistComponent {
   wlist: Array<Topicwordview> = []
