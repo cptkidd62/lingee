@@ -1,3 +1,4 @@
+<h1 *ngIf="topics.grammar.length == 0 && topics.lexical.length == 0">Loading</h1>
 <h3>Grammar</h3>
 <div *ngFor="let topic of topics.grammar">
     <a>{{topic.tg_name}}</a>
