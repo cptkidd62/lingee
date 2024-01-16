@@ -1,6 +1,9 @@
-<p>topicwordlist works!</p>
-<div *ngFor="let w of wlist">
-    <p>{{w.word}}</p>
-    <p>{{w.progress}}</p>
+<div *ngIf="size(sentences) == size(wlist)">
+    <div *ngFor="let s of sentences; let i = index">
+        <h2>{{wlist[i].word}}</h2>
+        <p>{{wlist[i].progress}}</p>
+        <p>{{s.original}}</p>
+        <p>{{s.translation}}</p>
+    </div>
 </div>
-<button *ngIf="toLearn" (click)="enterLearnMode()">Learn</button>
+<button *ngIf="toLearn" (click)="null">Add to reviews</button>

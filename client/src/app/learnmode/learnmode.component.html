@@ -1,8 +1,0 @@
-<div *ngIf="size(sentences) == size(wlist)">
-    <div *ngFor="let s of sentences; let i = index">
-        <p>{{wlist[i].word}}</p>
-        <p>{{wlist[i].progress}}</p>
-        <p>{{s.original}}</p>
-        <p>{{s.translation}}</p>
-    </div>
-</div>
