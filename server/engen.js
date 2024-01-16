@@ -1,4 +1,3 @@
-const dbrepo = require("./db")
 var repo
 const ennums = ['zero', 'one', 'two', 'three', 'four',
     'five', 'six', 'seven', 'eight', 'nine', 'ten']
@@ -46,8 +45,8 @@ const noun_location = function (noun) {
 }
 
 exports.English = class English {
-    constructor() {
-        repo = new dbrepo.Repository()
+    constructor(dbrepo) {
+        repo = dbrepo
     }
     tenses = {
         pastsimple: this.verbpastsimple,

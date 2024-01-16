@@ -1,4 +1,3 @@
-const dbrepo = require("./db")
 var repo
 
 const trnums = ['sıfır', 'bir', 'iki', 'üç', 'dört',
@@ -266,8 +265,8 @@ const getpronoun = function (p, s) {
 }
 
 exports.Turkish = class Turkish {
-    constructor() {
-        repo = new dbrepo.Repository()
+    constructor(dbrepo) {
+        repo = dbrepo
     }
     tenses = {
         pastsimple: this.verbpastsimple,

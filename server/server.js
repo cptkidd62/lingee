@@ -34,7 +34,7 @@ app.use(cookieParser('1QVIQ7F7tJNa2fGwORfvl6bf6dfYoj63'));
 
 app.use((req, res, next) => {
     repo = new dbrepo.Repository();
-    sgen = new sentgen.Generator();
+    sgen = new sentgen.Generator(repo);
     next();
 });
 

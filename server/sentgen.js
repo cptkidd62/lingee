@@ -1,6 +1,5 @@
 const trgen = require('./trgen')
 const engen = require('./engen')
-const dbrepo = require("./db")
 var repo
 
 patterns = ['tobe', 'tohave', 'dosth']
@@ -95,11 +94,11 @@ async function genRandomPattern(uid, noun, verb, adjective, adverb, numeral) {
 }
 
 exports.Generator = class Generator {
-    constructor() {
-        repo = new dbrepo.Repository()
+    constructor(dbrepo) {
+        repo = dbrepo
         this.langs = {
-            tr: new trgen.Turkish(),
-            en: new engen.English(),
+            tr: new trgen.Turkish(dbrepo),
+            en: new engen.English(dbrepo),
         }
     }
     async getRandomSentence(lang1, lang2, uid, noun, verb, adj, adv, num) {
