@@ -7,6 +7,7 @@ import { MyaccountComponent } from './myaccount/myaccount.component';
 import { TranslatemodeComponent } from './translatemode/translatemode.component';
 import { TopicslistComponent } from './topicslist/topicslist.component';
 import { TopicwordlistComponent } from './topicwordlist/topicwordlist.component';
+import { LearnmodeComponent } from './learnmode/learnmode.component';
 
 const routes: Routes = [
   {
@@ -31,8 +32,13 @@ const routes: Routes = [
   },
   {
     path: 'learn',
+    component: LearnmodeComponent,
+    title: 'Learn Mode'
+  },
+  {
+    path: 'review',
     component: TranslatemodeComponent,
-    title: 'Translate Mode'
+    title: 'Review Mode'
   },
   {
     path: 'topics',

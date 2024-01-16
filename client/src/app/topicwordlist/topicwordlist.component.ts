@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Topicwordview } from '../topicwordview';
 import { LearnService } from '../_services/learn.service';
 
@@ -13,14 +13,21 @@ import { LearnService } from '../_services/learn.service';
 })
 export class TopicwordlistComponent {
   wlist: Array<Topicwordview> = []
+  toLearn: boolean = true
   learnService: LearnService = inject(LearnService);
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.learnService.getWordList(this.route.snapshot.params['lang'], this.route.snapshot.params['id']).subscribe({
       next: lst => {
         this.wlist = lst
+        this.toLearn = !(this.wlist.every(w => w.progress && w.progress > 0))
+        console.log(this.toLearn)
         console.log(this.wlist)
       }
     });
+  }
+
+  enterLearnMode() {
+    this.router.navigate(['/learn'])
   }
 }
