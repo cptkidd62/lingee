@@ -326,8 +326,8 @@ ALTER SEQUENCE public.user_user_id_seq OWNED BY public.users.u_id;
 CREATE TABLE public.user_vocab_progress (
     u_id integer NOT NULL,
     v_id integer NOT NULL,
-    progress integer,
-    next_review date DEFAULT CURRENT_TIMESTAMP,
+    progress integer DEFAULT 1 NOT NULL,
+    next_review date DEFAULT CURRENT_TIMESTAMP NOT NULL,
     l_id integer NOT NULL
 );
 
@@ -892,23 +892,23 @@ COPY public.user_grammar_progress (u_id, tg_id, progress, next_review) FROM stdi
 --
 
 COPY public.user_vocab_progress (u_id, v_id, progress, next_review, l_id) FROM stdin;
-1	1	30	\N	1
-2	1	20	\N	1
-1	2	20	\N	1
-1	3	20	\N	1
-1	4	22	\N	1
-1	5	13	\N	1
-1	6	22	\N	1
-1	7	2	\N	1
-1	8	23	\N	1
-1	9	44	\N	1
-1	10	3	\N	1
-1	109	1	2024-01-17	1
+1	9	6	2024-02-11	1
 1	112	1	2024-01-17	1
-1	111	1	2024-01-17	1
-1	12	31	2024-01-16	1
-1	11	23	2024-01-20	1
-1	110	10	2024-01-17	1
+1	110	1	2024-01-17	1
+1	1	3	2024-01-18	1
+2	1	4	2024-01-17	1
+1	2	2	2024-01-18	1
+1	5	6	2024-01-19	1
+1	6	4	2024-01-19	1
+1	7	5	2024-01-19	1
+1	8	5	2024-01-19	1
+1	11	2	2024-01-20	1
+1	10	1	2024-01-17	1
+1	12	3	2024-01-20	1
+1	3	3	2024-01-21	1
+1	111	2	2024-01-18	1
+1	4	3	2024-01-21	1
+1	109	3	2024-01-21	1
 \.
 
 
