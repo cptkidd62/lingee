@@ -1,0 +1,16 @@
+<form [formGroup]="signinForm" (ngSubmit)="signinSubmit()">
+    <label for="login">Login: </label>
+    <input id="login" type="text" formControlName="login">
+    <span *ngIf="signinForm.controls['login'].invalid 
+        && (signinForm.controls['login'].dirty || signinForm.controls['login'].touched) 
+        && signinForm.controls['login'].errors?.['required']" class="form-alert-msg">Login is required.</span>
+    <br>
+    <label for="pwd">Password: </label>
+    <input id="pwd" type="password" formControlName="pwd">
+    <span *ngIf="signinForm.controls['pwd'].invalid 
+        && (signinForm.controls['pwd'].dirty || signinForm.controls['pwd'].touched) 
+        && signinForm.controls['pwd'].errors?.['required']" class="form-alert-msg">Password is required.</span>
+    <br>
+    <div *ngIf="errMsg != ''" class="form-alert-msg">{{errMsg}}</div>
+    <button type="submit" [disabled]="!signinForm.valid">Sign in</button>
+</form>

@@ -17,3 +17,5 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
+# Security
+/server/keys
