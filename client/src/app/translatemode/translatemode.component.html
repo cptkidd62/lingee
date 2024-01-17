@@ -12,4 +12,5 @@
     <button type="submit">Next</button>
 </form>
 
-<div *ngIf="current == total">{{correct}} / {{total}}</div>
+<div *ngIf="current == total">Result: {{correct}} / {{total}}</div>
+<div *ngIf="current != total">{{current + 1}} / {{total}}</div>

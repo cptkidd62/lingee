@@ -41,6 +41,7 @@ export class TranslatemodeComponent {
   checkAnswer(ans: string) {
     this.answersCorrect[this.current] = ans == this.sentences[this.current].original;
     this.correct += this.answersCorrect[this.current] ? 1 : 0
+    this.learnService.updateReviews(this.wlist[this.current].v_id, this.answersCorrect[this.current]).subscribe({})
   }
 
   next() {

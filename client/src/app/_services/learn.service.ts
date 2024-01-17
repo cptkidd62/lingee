@@ -43,4 +43,8 @@ export class LearnService {
   getReviews(lang: string): Observable<Array<Topicwordview>> {
     return this.http.get<Array<Topicwordview>>(this.url + '/reviews/' + lang);
   }
+
+  updateReviews(id: number, correct: boolean) {
+    return this.http.post(this.url + '/reviews/update', { v_id: id, lang: 'tr', corr: correct }, { responseType: 'json', withCredentials: true })
+  }
 }

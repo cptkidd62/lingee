@@ -107,4 +107,17 @@ exports.Repository = class Repository {
                 join topics_lexical tl on vt.tl_id = tl.tl_id", [u_id, lid])
         return data2.rows
     }
+
+    async updateWordReviews(lang, u_id, v_id, correct) {
+        let data1 = await this.pool.query("SELECT l_id FROM langs WHERE l_code = $1", [lang])
+        let lid = data1.rows[0].l_id
+        if (correct) {
+            await this.pool.query("UPDATE user_vocab_progress SET next_review = next_review + progress * progress, progress = progress + 1\
+                                    WHERE l_id = $1 AND u_id = $2 AND v_id = $3", [lid, u_id, v_id])
+        }
+        else {
+            await this.pool.query("UPDATE user_vocab_progress SET next_review = current_date, progress = 1\
+                                    WHERE l_id = $1 AND u_id = $2 AND v_id = $3", [lid, u_id, v_id])
+        }
+    }
 }

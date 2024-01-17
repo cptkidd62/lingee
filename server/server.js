@@ -140,6 +140,14 @@ app.get("/reviews/:lang/count", async (req, res) => {
     res.json(cnt)
 })
 
+app.post("/reviews/update", async (req, res) => {
+    let v_id = req.body.v_id
+    let lang = req.body.lang
+    let corr = req.body.corr
+    await repo.updateWordReviews(lang, req.auth.id, v_id, corr)
+    res.json({ status: 'ok' })
+})
+
 app.listen(3000, () => {
     console.log("Working on port 3000");
 });
