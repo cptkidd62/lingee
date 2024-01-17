@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Topicwordview } from '../topicwordview';
 import { Sentence } from '../sentence';
 import { LearnService } from '../_services/learn.service';
@@ -8,7 +9,7 @@ import { LearnService } from '../_services/learn.service';
 @Component({
   selector: 'app-topicwordlist',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatProgressBarModule],
   templateUrl: './topicwordlist.component.html',
   styleUrls: ['./topicwordlist.component.scss']
 })

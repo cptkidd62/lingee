@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './_helpers/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
@@ -21,7 +20,6 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatSlideToggleModule,
     ToolbarComponent
   ],
   providers: [

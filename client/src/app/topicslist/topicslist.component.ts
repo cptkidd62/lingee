@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TopicGrammar } from '../topicgrammar';
 import { TopicLexical } from '../topiclexical';
 import { LearnService } from '../_services/learn.service';
@@ -7,7 +8,7 @@ import { LearnService } from '../_services/learn.service';
 @Component({
   selector: 'app-topicslist',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatProgressBarModule],
   templateUrl: './topicslist.component.html',
   styleUrls: ['./topicslist.component.scss']
 })

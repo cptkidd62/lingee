@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CdkDragDrop, CdkDrag, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Topicwordview } from '../topicwordview';
 import { Sentence } from '../sentence';
 import { LearnService } from '../_services/learn.service';
@@ -9,7 +10,11 @@ import { LearnService } from '../_services/learn.service';
 @Component({
   selector: 'app-translatemode',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CdkDropList, CdkDrag],
+  imports: [CommonModule,
+    ReactiveFormsModule,
+    CdkDropList,
+    CdkDrag,
+    MatProgressBarModule],
   templateUrl: './translatemode.component.html',
   styleUrls: ['./translatemode.component.scss']
 })
@@ -89,7 +94,7 @@ export class TranslatemodeComponent {
         }
         console.log(this.sentences.length)
 
-        
+
       }
     });
   }

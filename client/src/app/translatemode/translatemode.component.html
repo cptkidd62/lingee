@@ -1,3 +1,4 @@
+<mat-progress-bar *ngIf="!(current < total && size(sentences) == total) && current == 0" mode="query" color="accent"></mat-progress-bar>
 <form *ngIf="current < total && size(sentences) == total" [formGroup]="translateForm" (ngSubmit)="next()">
     <p>{{sentences[current].translation}}</p>
     <p>{{sentences[current].original}}</p>
