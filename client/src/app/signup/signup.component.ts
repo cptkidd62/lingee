@@ -5,11 +5,20 @@ import { AuthService } from '../_services/auth.service';
 import { SignupData } from '../signupdata';
 import { Jwtoken } from '../jwtoken';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
@@ -17,6 +26,7 @@ export class SignupComponent {
   constructor(private router: Router) { };
 
   errMsg: string = "";
+  hide = true
 
   authService: AuthService = inject(AuthService);
 

@@ -1,37 +1,58 @@
-<form [formGroup]="signupForm" (ngSubmit)="signupSubmit()">
-    <label for="name">Name: </label>
-    <input id="name" type="text" formControlName="name">
-    <span *ngIf="signupForm.controls['name'].invalid 
-        && (signupForm.controls['name'].dirty || signupForm.controls['name'].touched) 
-        && signupForm.controls['name'].errors?.['required']" class="form-alert-msg">Name is required.</span>
-    <br>
-    <label for="login">Login: </label>
-    <input id="login" type="text" formControlName="login">
-    <span *ngIf="signupForm.controls['login'].invalid 
-        && (signupForm.controls['login'].dirty || signupForm.controls['login'].touched) 
-        && signupForm.controls['login'].errors?.['required']" class="form-alert-msg">Login is required.</span>
-    <br>
-    <label for="email">Email: </label>
-    <input id="email" type="text" formControlName="email">
-    <span *ngIf="signupForm.controls['email'].invalid 
-        && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched) 
-        && signupForm.controls['email'].errors?.['required']" class="form-alert-msg">Email is required.</span>
-    <span *ngIf="signupForm.controls['email'].invalid 
-        && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched) 
-        && signupForm.controls['email'].errors?.['email']" class="form-alert-msg">Wrong email format.</span>
-    <br>
-    <label for="pwd">Password: </label>
-    <input id="pwd" type="password" formControlName="pwd">
-    <span *ngIf="signupForm.controls['pwd'].invalid 
-        && (signupForm.controls['pwd'].dirty || signupForm.controls['pwd'].touched) 
-        && signupForm.controls['pwd'].errors?.['required']" class="form-alert-msg">Password is required.</span>
-    <br>
-    <label for="rpwd">Repeat password: </label>
-    <input id="rpwd" type="password" formControlName="rpwd">
-    <span *ngIf="signupForm.invalid 
-        && (signupForm.dirty || signupForm.touched) 
-        && signupForm.errors?.['notEqual']" class="form-alert-msg">Passwords don't match.</span>
-    <br>
+<form [formGroup]="signupForm">
+    <p>
+        <mat-form-field appearance="fill" color="accent">
+            <mat-label>Name</mat-label>
+            <input matInput id="name" type="text" placeholder="John Doe" formControlName="name">
+            <mat-error *ngIf="signupForm.controls['name'].invalid 
+                    && (signupForm.controls['name'].dirty || signupForm.controls['name'].touched) 
+                    && signupForm.controls['name'].errors?.['required']">Name is required</mat-error>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill" color="accent">
+            <mat-label>Login</mat-label>
+            <input matInput id="login" type="text" placeholder="johndoe00" formControlName="login">
+            <mat-error *ngIf="signupForm.controls['login'].invalid 
+                    && (signupForm.controls['login'].dirty || signupForm.controls['login'].touched) 
+                    && signupForm.controls['login'].errors?.['required']">Login is required</mat-error>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill" color="accent">
+            <mat-label>Email</mat-label>
+            <input matInput id="email" type="email" placeholder="johndoe@example.com" formControlName="email">
+            <mat-error *ngIf="signupForm.controls['email'].invalid 
+                    && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched) 
+                    && signupForm.controls['email'].errors?.['required']">Email is required</mat-error>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill" color="accent">
+            <mat-label>Password</mat-label>
+            <input matInput id="pwd" [type]="hide ? 'password' : 'text'" formControlName="pwd">
+            <mat-error *ngIf="signupForm.controls['pwd'].invalid 
+                    && (signupForm.controls['pwd'].dirty || signupForm.controls['pwd'].touched) 
+                    && signupForm.controls['pwd'].errors?.['required']">Password is required</mat-error>
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill" color="accent">
+            <mat-label>Repeat password</mat-label>
+            <input matInput id="rpwd" [type]="hide ? 'password' : 'text'" formControlName="rpwd">
+            <mat-error *ngIf="signupForm.invalid 
+                    && (signupForm.dirty || signupForm.touched) 
+                    && signupForm.errors?.['notEqual']">Passwords don't match</mat-error>
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+    </p>
     <div *ngIf="errMsg != ''" class="form-alert-msg">{{errMsg}}</div>
-    <button type="submit" [disabled]="!signupForm.valid">Sign up</button>
+    <button mat-raised-button color="accent" type="submit" [disabled]="!signupForm.valid"
+        (click)="signupSubmit()">Create an account</button>
 </form>

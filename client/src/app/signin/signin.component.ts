@@ -4,11 +4,20 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../_services/auth.service';
 import { Jwtoken } from '../jwtoken';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-signin',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule],
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss']
 })
@@ -16,6 +25,7 @@ export class SigninComponent {
   constructor(private router: Router) { };
 
   errMsg: string = "";
+  hide = true
 
   authService: AuthService = inject(AuthService);
 
