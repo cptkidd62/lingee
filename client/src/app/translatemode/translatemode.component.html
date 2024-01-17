@@ -3,7 +3,6 @@
     <p>{{sentences[current].original}}</p>
     <div *ngIf="enterText">
         <input id="res" type="text" formControlName="res" autocomplete="off">
-        <p *ngFor="let t of sentTokens; let i = index">{{t}}</p>
     </div>
     <div *ngIf="!enterText">
         <div cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">

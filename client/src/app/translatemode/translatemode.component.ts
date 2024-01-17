@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CdkDragDrop, CdkDrag, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Topicwordview } from '../topicwordview';
 import { Sentence } from '../sentence';
 import { LearnService } from '../_services/learn.service';
 
@@ -13,6 +14,7 @@ import { LearnService } from '../_services/learn.service';
   styleUrls: ['./translatemode.component.scss']
 })
 export class TranslatemodeComponent {
+  wlist: Array<Topicwordview> = []
   sentences: Array<Sentence> = [];
   learnService: LearnService = inject(LearnService);
   sentTokens: Array<string> = []
@@ -23,10 +25,10 @@ export class TranslatemodeComponent {
 
   answersCorrect: Array<boolean> = [];
 
-  total: number = 10
+  total: number = 0
   current: number = 0
   correct: number = 0
-  enterText: boolean = false
+  enterText: boolean = true
 
   shuffle = (array: Array<any>) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -59,14 +61,34 @@ export class TranslatemodeComponent {
   makeTokens(sent: string) {
     this.sentTokens = sent.split(' ')
     this.sentTokens = this.shuffle(this.sentTokens)
+    this.enterText = this.wlist[this.current].progress >= 5
   }
 
   constructor() {
-    this.learnService.getSentences(this.total).subscribe({
-      next: sentences => {
-        this.sentences = sentences
-        this.answersCorrect = new Array(this.sentences.length).fill(false)
-        this.makeTokens(this.sentences[0].original)
+    this.learnService.getReviews('tr').subscribe({
+      next: lst => {
+        this.wlist = lst
+        this.wlist = this.shuffle(this.wlist)
+        this.total = this.wlist.length
+        this.answersCorrect = new Array(this.wlist.length).fill(false)
+        console.log(this.wlist)
+
+        for (let i = 0; i < this.wlist.length; i++) {
+          this.learnService.getSentences(1, [this.wlist[i].speechpart.slice(0, -1) + '=' + this.wlist[i].v_id]).subscribe({
+            next: sentences => {
+              this.sentences[i] = sentences[0]
+              console.log(this.wlist[i].word, this.wlist[i].v_id)
+              console.log(this.sentences)
+              console.log(this.size(this.sentences))
+              if (i == 0) {
+                this.makeTokens(this.sentences[0].original)
+              }
+            }
+          });
+        }
+        console.log(this.sentences.length)
+
+        
       }
     });
   }

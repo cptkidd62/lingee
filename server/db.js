@@ -89,4 +89,22 @@ exports.Repository = class Repository {
         let lid = data.rows[0].l_id
         await this.pool.query("INSERT INTO user_vocab_progress (u_id, v_id, progress, l_id) VALUES ($1, $2, 1, $3) on conflict (u_id, v_id, l_id) do nothing", [u_id, v_id, lid])
     }
+
+    async getReviewsCount(lang, u_id) {
+        let data1 = await this.pool.query("SELECT l_id FROM langs WHERE l_code = $1", [lang])
+        let lid = data1.rows[0].l_id
+        let data2 = await this.pool.query("SELECT COUNT(v_id) FROM user_vocab_progress WHERE u_id = $1 AND l_id = $2 AND next_review <= current_date", [u_id, lid])
+        return data2.rows[0].count
+    }
+
+    async getReviews(lang, u_id) {
+        let data1 = await this.pool.query("SELECT l_id FROM langs WHERE l_code = $1", [lang])
+        let lid = data1.rows[0].l_id
+        let data2 = await this.pool.query("select uvp.v_id, null as word, uvp.progress, tl.tl_type as speechpart from\
+                (select uvp.v_id as v_id, uvp.progress as progress from user_vocab_progress uvp\
+                where uvp.u_id = $1 and uvp.l_id = $2 and uvp.next_review <= current_date) as uvp\
+                join vocab_topics vt on uvp.v_id = vt.v_id\
+                join topics_lexical tl on vt.tl_id = tl.tl_id", [u_id, lid])
+        return data2.rows
+    }
 }

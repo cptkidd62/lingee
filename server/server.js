@@ -130,6 +130,16 @@ app.post("/reviews/add", async (req, res) => {
     res.json({ status: 'ok' })
 })
 
+app.get("/reviews/:lang", async (req, res) => {
+    let data = await repo.getReviews(req.params.lang, req.auth.id)
+    res.json(data)
+})
+
+app.get("/reviews/:lang/count", async (req, res) => {
+    let cnt = await repo.getReviewsCount(req.params.lang, req.auth.id)
+    res.json(cnt)
+})
+
 app.listen(3000, () => {
     console.log("Working on port 3000");
 });

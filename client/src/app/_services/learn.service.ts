@@ -35,4 +35,12 @@ export class LearnService {
   addToReviews(wlist: Array<number>) {
     return this.http.post(this.url + '/reviews/add', { wlist: wlist, lang: 'tr' }, { responseType: 'json', withCredentials: true })
   }
+
+  getReviewsCount(): Observable<number> {
+    return this.http.get<number>(this.url + '/reviews/tr/count');
+  }
+
+  getReviews(lang: string): Observable<Array<Topicwordview>> {
+    return this.http.get<Array<Topicwordview>>(this.url + '/reviews/' + lang);
+  }
 }
