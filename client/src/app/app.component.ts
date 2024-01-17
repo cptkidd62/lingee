@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { AuthService } from './_services/auth.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +6,4 @@ import { AuthService } from './_services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  authService: AuthService = inject(AuthService);
 }

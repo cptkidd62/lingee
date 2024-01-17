@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './_helpers/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    ToolbarComponent
   ],
   providers: [
     importProvidersFrom(HttpClientModule),

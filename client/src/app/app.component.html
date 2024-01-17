@@ -1,7 +1,6 @@
 <main>
-    <header class="toolbar"><a routerLink="/"><span>Lingee</span></a><span *ngIf="this.authService.isSignedIn()"><button (click)="this.authService.signout()">Sign out</button></span></header>
-    <section class="content">
-        <router-outlet></router-outlet>
-        <mat-slide-toggle>Toggle me!</mat-slide-toggle>
-    </section>
+  <app-toolbar></app-toolbar>
+  <section class="content">
+    <router-outlet></router-outlet>
+  </section>
 </main>

@@ -1,0 +1,9 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <a href="/" style="text-decoration: none; color: white;"><span>Lingee</span></a>
+    <span class="example-spacer"></span>
+    <button *ngIf="this.authService.isSignedIn()" (click)="this.authService.signout()"
+        mat-stroked-button><mat-icon>exit_to_app</mat-icon><span>Sign out</span></button>
+</mat-toolbar>
