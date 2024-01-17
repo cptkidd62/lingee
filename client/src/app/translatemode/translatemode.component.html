@@ -5,7 +5,10 @@
         <p>{{sentences[current].original}}</p>
         <p *ngFor="let t of sentTokens; let i = index">{{t}}</p>
     </div>
+    <div cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let tok of sentTokens" cdkDrag>{{tok}}</div>
+    </div>
     <button type="submit">Next</button>
 </form>
 
-<div *ngIf="current == total">{{correct}}/{{total}}</div>
+<div *ngIf="current == total">{{correct}} / {{total}}</div>

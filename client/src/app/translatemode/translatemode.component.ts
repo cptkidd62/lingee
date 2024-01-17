@@ -1,13 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CdkDragDrop, CdkDrag, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Sentence } from '../sentence';
 import { LearnService } from '../_services/learn.service';
 
 @Component({
   selector: 'app-translatemode',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, CdkDropList, CdkDrag],
   templateUrl: './translatemode.component.html',
   styleUrls: ['./translatemode.component.scss']
 })
@@ -58,5 +59,9 @@ export class TranslatemodeComponent {
 
   size(arr: Array<any>): number {
     return arr.filter(x => x).length
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.sentTokens, event.previousIndex, event.currentIndex);
   }
 }
