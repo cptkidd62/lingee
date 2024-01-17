@@ -1,12 +1,14 @@
 <form *ngIf="current < total && size(sentences) == total" [formGroup]="translateForm" (ngSubmit)="next()">
-    <div>
-        <p>{{sentences[current].translation}}</p>
+    <p>{{sentences[current].translation}}</p>
+    <p>{{sentences[current].original}}</p>
+    <div *ngIf="enterText">
         <input id="res" type="text" formControlName="res" autocomplete="off">
-        <p>{{sentences[current].original}}</p>
         <p *ngFor="let t of sentTokens; let i = index">{{t}}</p>
     </div>
-    <div cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let tok of sentTokens" cdkDrag>{{tok}}</div>
+    <div *ngIf="!enterText">
+        <div cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let tok of sentTokens" cdkDrag>{{tok}}</div>
+        </div>
     </div>
     <button type="submit">Next</button>
 </form>

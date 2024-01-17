@@ -26,16 +26,29 @@ export class TranslatemodeComponent {
   total: number = 10
   current: number = 0
   correct: number = 0
+  enterText: boolean = false
 
-  checkAnswer() {
-    const ans = this.translateForm.value.res;
-    console.log(this.sentences[this.current].original)
+  shuffle = (array: Array<any>) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
+  checkAnswer(ans: string) {
     this.answersCorrect[this.current] = ans == this.sentences[this.current].original;
     this.correct += this.answersCorrect[this.current] ? 1 : 0
   }
 
   next() {
-    this.checkAnswer()
+    let ans
+    if (this.enterText) {
+      ans = this.translateForm.value.res;
+    } else {
+      ans = this.sentTokens.join(' ')
+    }
+    this.checkAnswer(ans)
     this.current++
     if (this.current < this.total) {
       this.makeTokens(this.sentences[this.current].original)
@@ -45,6 +58,7 @@ export class TranslatemodeComponent {
 
   makeTokens(sent: string) {
     this.sentTokens = sent.split(' ')
+    this.sentTokens = this.shuffle(this.sentTokens)
   }
 
   constructor() {
