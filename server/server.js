@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require('body-parser');
@@ -15,12 +16,9 @@ var sgen;
 
 const expirytm = 60 * 60 * 24 * 30
 
-const RSA_PRIVATE_KEY = fs.readFileSync('./keys/jwtRS256.key');
-const RSA_PUBLIC_KEY = fs.readFileSync('./keys/jwtRS256.key.pub');
-
 const app = express();
 
-const verifyAuthenticated = ejwt({ secret: RSA_PUBLIC_KEY, algorithms: ["RS256"] });
+const verifyAuthenticated = ejwt({ secret: process.env.RSA_PUBLIC_KEY, algorithms: ["RS256"] });
 
 app.use(cors({
     origin: 'http://localhost:4200',
@@ -68,7 +66,7 @@ app.post("/auth/signin", async (req, res) => {
             message: 'Incorrect login'
         });
     } else if (await bcrypt.compare(pwd, pwdHsh)) {
-        const jwtBearer = jwt.sign({ id: id }, RSA_PRIVATE_KEY, {
+        const jwtBearer = jwt.sign({ id: id }, process.env.RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
             expiresIn: expirytm
         })
@@ -99,7 +97,7 @@ app.post("/auth/signup", async (req, res) => {
         let hash = await bcrypt.hash(sdata.password, 12);
         sdata.password = hash;
         await repo.addUsr(sdata);
-        const jwtBearer = jwt.sign({ id: sdata.id }, RSA_PRIVATE_KEY, {
+        const jwtBearer = jwt.sign({ id: sdata.id }, process.env.RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
             expiresIn: expirytm
         })
