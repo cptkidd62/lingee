@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcrypt");
 
+const OpenAI = require("openai");
+const openai = new OpenAI();
+
 const jwt = require("jsonwebtoken");
 const { expressjwt: ejwt } = require("express-jwt");
 const fs = require("fs");
@@ -36,7 +39,10 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin', '/auth/signup', '/topics', '/topics/lexical/:lang/:id'] }));
+app.use("/", verifyAuthenticated.unless({
+    path: ['/', '/auth/signin', '/auth/signup',
+        '/topics', '/topics/lexical/:lang/:id', '/aitest']
+}));
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
@@ -144,6 +150,24 @@ app.post("/reviews/update", async (req, res) => {
     let corr = req.body.corr
     await repo.updateWordReviews(lang, req.auth.id, v_id, corr)
     res.json({ status: 'ok' })
+})
+
+app.get("/aitest", async (req, res) => {
+    const response = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [
+            {
+                "role": "user",
+                "content": "What is the best selling album of Metallica?"
+            }
+        ],
+        temperature: 1,
+        max_tokens: 256,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+    });
+    res.json(response.choices)
 })
 
 app.listen(3000, () => {
