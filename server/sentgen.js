@@ -1,5 +1,7 @@
 const trgen = require('./trgen')
 const engen = require('./engen')
+const plgen = require('./plgen')
+const csgen = require('./csgen')
 var repo
 
 patterns = ['tobe', 'tohave', 'dosth']
@@ -97,6 +99,8 @@ exports.Generator = class Generator {
     constructor(dbrepo) {
         repo = dbrepo
         this.langs = {
+            pl: new plgen.Polish(dbrepo),
+            cs: new csgen.Czech(dbrepo),
             tr: new trgen.Turkish(dbrepo),
             en: new engen.English(dbrepo),
         }

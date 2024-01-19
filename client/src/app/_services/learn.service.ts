@@ -16,7 +16,7 @@ export class LearnService {
 
   url = 'http://localhost:3000';
 
-  getSentences(n: number, prms?: [string]): Observable<Array<Sentence>> {
+  getSentences(n: number, prms?: string[]): Observable<Array<Sentence>> {
     let extra: string = ''
     if (prms) {
       extra = '&' + prms.join('&')
