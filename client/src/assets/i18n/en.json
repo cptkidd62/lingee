@@ -1,0 +1,47 @@
+{
+    "toolbar": {
+        "signin": "Sign in",
+        "signup": "Join",
+        "signout": "Sign out",
+        "myaccount": "My account"
+    },
+    "main": {
+        "reviews": "Reviews",
+        "topics": "Topics"
+    },
+    "signin": {
+        "loginlabel": "Login",
+        "loginerror": "Login is required",
+        "pwdlabel": "Password",
+        "pwderror": "Password is required",
+        "confirm": "Sign in"
+    },
+    "signup": {
+        "namelabel": "Name",
+        "nameph": "John Doe",
+        "nameerror": "Name is required",
+        "loginlabel": "Login",
+        "loginph": "johndoe00",
+        "loginerror": "Login is required",
+        "emaillabel": "Email",
+        "emailph": "johndoe@example.com",
+        "emailerror": "Email is required",
+        "pwdlabel": "Password",
+        "pwderror": "Password is required",
+        "rpwdlabel": "Repeat password",
+        "rpwderror": "Passwords don't match",
+        "confirm": "Create an account"
+    },
+    "myaccount": {
+        "hello": "Hello"
+    },
+    "topics": {
+        "grammar": "Grammar",
+        "lexical": "Lexical",
+        "addrevs": "Add to reviews"
+    },
+    "reviews": {
+        "next": "Next",
+        "result": "Result"
+    }
+}

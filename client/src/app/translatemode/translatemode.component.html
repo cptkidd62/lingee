@@ -1,4 +1,5 @@
-<mat-progress-bar *ngIf="!(current < total && size(sentences) == total) && current == 0" mode="query" color="accent"></mat-progress-bar>
+<mat-progress-bar *ngIf="!(current < total && size(sentences) == total) && current == 0" mode="query"
+    color="accent"></mat-progress-bar>
 <form *ngIf="current < total && size(sentences) == total" [formGroup]="translateForm" (ngSubmit)="next()">
     <p>{{sentences[current].translation}}</p>
     <p>{{sentences[current].original}}</p>
@@ -10,8 +11,8 @@
             <div class="example-box" *ngFor="let tok of sentTokens" cdkDrag>{{tok}}</div>
         </div>
     </div>
-    <button type="submit">Next</button>
+    <button type="submit">{{ "reviews.next" | translate }}</button>
 </form>
 
-<div *ngIf="current == total">Result: {{correct}} / {{total}}</div>
+<div *ngIf="current == total">{{ "reviews.result" | translate }}: {{correct}} / {{total}}</div>
 <div *ngIf="current != total">{{current + 1}} / {{total}}</div>

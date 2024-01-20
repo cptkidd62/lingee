@@ -3,12 +3,12 @@
         <mat-icon>home</mat-icon><span>Lingee</span>
     </a>
     <span class="example-spacer"></span>
-    <a *ngIf="!this.authService.isSignedIn()" href="/signin"
-        mat-button><mat-icon>login</mat-icon><span>Sign in</span></a>
-    <a *ngIf="!this.authService.isSignedIn()" href="/signup"
-        mat-button><mat-icon>person_add</mat-icon><span>Create an account</span></a>
-    <a *ngIf="this.authService.isSignedIn()" href="/myaccount"
-        mat-button><mat-icon>account_circle</mat-icon><span>My account</span></a>
+    <a *ngIf="!this.authService.isSignedIn()" href="/signin" mat-button><mat-icon>login</mat-icon><span>{{
+            "toolbar.signin" | translate }}</span></a>
+    <a *ngIf="!this.authService.isSignedIn()" href="/signup" mat-button><mat-icon>person_add</mat-icon><span>{{
+            "toolbar.signup" | translate }}</span></a>
+    <a *ngIf="this.authService.isSignedIn()" href="/myaccount" mat-button><mat-icon>account_circle</mat-icon><span>{{
+            "toolbar.myaccount" | translate }}</span></a>
     <button *ngIf="this.authService.isSignedIn()" (click)="this.authService.signout()"
-        mat-stroked-button><mat-icon>logout</mat-icon><span>Sign out</span></button>
+        mat-stroked-button><mat-icon>logout</mat-icon><span>{{ "toolbar.signout" | translate }}</span></button>
 </mat-toolbar>

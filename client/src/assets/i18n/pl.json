@@ -1,0 +1,47 @@
+{
+    "toolbar": {
+        "signin": "Zaloguj się",
+        "signup": "Dołącz",
+        "signout": "Wyloguj się",
+        "myaccount": "Moje konto"
+    },
+    "main": {
+        "reviews": "Powtórki",
+        "topics": "Zagadnienia"
+    },
+    "signin": {
+        "loginlabel": "Login",
+        "loginerror": "Login jest wymagany",
+        "pwdlabel": "Hasło",
+        "pwderror": "Hasło jest wymagane",
+        "confirm": "Zaloguj się"
+    },
+    "signup": {
+        "namelabel": "Imię i nazwisko",
+        "nameph": "Jan Nowak",
+        "nameerror": "Imię i nazwisko jest wymagane",
+        "loginlabel": "Login",
+        "loginph": "jannowak00",
+        "loginerror": "Login jest wymagany",
+        "emaillabel": "E-mail",
+        "emailph": "jannowak@przyklad.pl",
+        "emailerror": "E-mail jest wymagany",
+        "pwdlabel": "Hasło",
+        "pwderror": "Hasło jest wymagane",
+        "rpwdlabel": "Powtórz hasło",
+        "rpwderror": "Hasła się różnią",
+        "confirm": "Stwórz konto"
+    },
+    "myaccount": {
+        "hello": "Witaj"
+    },
+    "topics": {
+        "grammar": "Gramatyka",
+        "lexical": "Słownictwo",
+        "addrevs": "Dodaj do powtórek"
+    },
+    "reviews": {
+        "next": "Dalej",
+        "result": "Wynik"
+    }
+}

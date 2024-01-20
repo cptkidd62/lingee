@@ -1,0 +1,47 @@
+{
+    "toolbar": {
+        "signin": "Oturum aç",
+        "signup": "Katıl",
+        "signout": "Oturum kap",
+        "myaccount": "Hesabım"
+    },
+    "main": {
+        "reviews": "İncelemeler",
+        "topics": "Konular"
+    },
+    "signin": {
+        "loginlabel": "Kullanıcı adı",
+        "loginerror": "Kullanıcı adı gereklidir",
+        "pwdlabel": "Şifre",
+        "pwderror": "Şifre gereklidir",
+        "confirm": "Giriş yap"
+    },
+    "signup": {
+        "namelabel": "Ad",
+        "nameph": "John Doe",
+        "nameerror": "Ad gereklidir",
+        "loginlabel": "Kullanıcı adı",
+        "loginph": "johndoe00",
+        "loginerror": "Kullanıcı adı gereklidir",
+        "emaillabel": "E-posta",
+        "emailph": "johndoe@example.com",
+        "emailerror": "E-posta gereklidir",
+        "pwdlabel": "Şifre",
+        "pwderror": "Şifre gereklidir",
+        "rpwdlabel": "Şifreyi tekrarla",
+        "rpwderror": "Şifreler eşleşmiyor",
+        "confirm": "Hesap oluştur"
+    },
+    "myaccount": {
+        "hello": "Merhaba"
+    },
+    "topics": {
+        "grammar": "Dilbilgisi",
+        "lexical": "Leksik",
+        "addrevs": "İncelemelere ekle"
+    },
+    "reviews": {
+        "next": "Sonraki",
+        "result": "Sonuç"
+    }
+}

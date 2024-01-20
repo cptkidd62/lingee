@@ -5,11 +5,14 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Topicwordview } from '../topicwordview';
 import { Sentence } from '../sentence';
 import { LearnService } from '../_services/learn.service';
+import { TranslateService, TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: 'app-topicwordlist',
   standalone: true,
-  imports: [CommonModule, MatProgressBarModule],
+  imports: [CommonModule,
+    MatProgressBarModule,
+    TranslateModule],
   templateUrl: './topicwordlist.component.html',
   styleUrls: ['./topicwordlist.component.scss']
 })
@@ -19,7 +22,9 @@ export class TopicwordlistComponent {
   toLearn: boolean = true
   learnService: LearnService = inject(LearnService);
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private translate: TranslateService) {
+    translate.setDefaultLang('en');
+    translate.use('en');
     this.loadContents(true)
   }
 

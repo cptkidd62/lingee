@@ -1,0 +1,47 @@
+{
+    "toolbar": {
+        "signin": "Přihlásit se",
+        "signup": "Registrovat",
+        "signout": "Odhlásit se",
+        "myaccount": "Můj učet"
+    },
+    "main": {
+        "reviews": "Opakování",
+        "topics": "Témata"
+    },
+    "signin": {
+        "loginlabel": "Uživatelské jméno",
+        "loginerror": "Uživatelské jméno je povinné",
+        "pwdlabel": "Heslo",
+        "pwderror": "Heslo je povinné",
+        "confirm": "Přihlásit se"
+    },
+    "signup": {
+        "namelabel": "Jméno",
+        "nameph": "John Doe",
+        "nameerror": "Jméno je povinné",
+        "loginlabel": "Uživatelské jméno",
+        "loginph": "johndoe00",
+        "loginerror": "Uživatelské jméno je povinné",
+        "emaillabel": "E-mailová adresa",
+        "emailph": "johndoe@example.com",
+        "emailerror": "E-mailová adresa je povinná",
+        "pwdlabel": "Heslo",
+        "pwderror": "Heslo je povinné",
+        "rpwdlabel": "Potvrzení hesla",
+        "rpwderror": "Hesla jsou různá",
+        "confirm": "Vytvořit účet"
+    },
+    "myaccount": {
+        "hello": "Vítej"
+    },
+    "topics": {
+        "grammar": "Gramatika",
+        "lexical": "Slovní zásoba",
+        "addrevs": "Přidej k opakování"
+    },
+    "reviews": {
+        "next": "Další",
+        "result": "Výsledek"
+    }
+}

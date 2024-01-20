@@ -6,6 +6,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Topicwordview } from '../topicwordview';
 import { Sentence } from '../sentence';
 import { LearnService } from '../_services/learn.service';
+import { TranslateService, TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: 'app-translatemode',
@@ -14,7 +15,8 @@ import { LearnService } from '../_services/learn.service';
     ReactiveFormsModule,
     CdkDropList,
     CdkDrag,
-    MatProgressBarModule],
+    MatProgressBarModule,
+    TranslateModule],
   templateUrl: './translatemode.component.html',
   styleUrls: ['./translatemode.component.scss']
 })
@@ -70,7 +72,10 @@ export class TranslatemodeComponent {
     this.enterText = this.wlist[this.current].progress >= 5
   }
 
-  constructor() {
+  constructor(private translate: TranslateService) {
+    translate.setDefaultLang('en');
+    translate.use('en');
+
     this.learnService.getReviews('tr').subscribe({
       next: lst => {
         this.wlist = lst
