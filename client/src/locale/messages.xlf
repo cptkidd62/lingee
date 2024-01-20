@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="linkReviews" datatype="html">
+        <source>Review</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <note priority="1" from="description">Link to reviews page</note>
+        <note priority="1" from="meaning">Reviews Link</note>
+      </trans-unit>
+      <trans-unit id="linkTopics" datatype="html">
+        <source>Topics</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/home/home.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Link to topics page</note>
+        <note priority="1" from="meaning">Topics Link</note>
+      </trans-unit>
+      <trans-unit id="myaccHello" datatype="html">
+        <source>Hello</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/myaccount/myaccount.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <note priority="1" from="description">Greater on My Account page</note>
+        <note priority="1" from="meaning">My Account Hello</note>
+      </trans-unit>
+      <trans-unit id="signinLoginL" datatype="html">
+        <source>Login</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signin/signin.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">Signin Form Login Label</note>
+        <note priority="1" from="meaning">Signin Form Login Label</note>
+      </trans-unit>
+      <trans-unit id="signinLoginErr" datatype="html">
+        <source>Login is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signin/signin.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="description">Signin Form Login Error</note>
+        <note priority="1" from="meaning">Signin Form Login Error</note>
+      </trans-unit>
+      <trans-unit id="signinPwdL" datatype="html">
+        <source>Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signin/signin.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <note priority="1" from="description">Signin Form Pwd Label</note>
+        <note priority="1" from="meaning">Signin Form Pwd Label</note>
+      </trans-unit>
+      <trans-unit id="signinPwdErr" datatype="html">
+        <source>Password is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signin/signin.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <note priority="1" from="description">Signin Form Pwd Error</note>
+        <note priority="1" from="meaning">Signin Form Pwd Error</note>
+      </trans-unit>
+      <trans-unit id="signinConfirm" datatype="html">
+        <source>Sign in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signin/signin.component.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+        <note priority="1" from="description">Button for confirming signin</note>
+        <note priority="1" from="meaning">Signin confirm</note>
+      </trans-unit>
+      <trans-unit id="signupNameL" datatype="html">
+        <source>Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">Signup Form Name Label</note>
+        <note priority="1" from="meaning">Signup Form Name Label</note>
+      </trans-unit>
+      <trans-unit id="signupNameP" datatype="html">
+        <source>John Doe</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="description">Signup Form Name Placeholder</note>
+        <note priority="1" from="meaning">Signup Form Name Placeholder</note>
+      </trans-unit>
+      <trans-unit id="signupNameErr" datatype="html">
+        <source>Name is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">Signup Form Name Error</note>
+        <note priority="1" from="meaning">Signup Form Name Error</note>
+      </trans-unit>
+      <trans-unit id="signupLoginL" datatype="html">
+        <source>Login</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="description">Signup Form Login Label</note>
+        <note priority="1" from="meaning">Signup Form Login Label</note>
+      </trans-unit>
+      <trans-unit id="signupLoginP" datatype="html">
+        <source>johndoe00</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <note priority="1" from="description">Signup Form Login Placeholder</note>
+        <note priority="1" from="meaning">Signup Form Login Placeholder</note>
+      </trans-unit>
+      <trans-unit id="signupLoginErr" datatype="html">
+        <source>Login is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <note priority="1" from="description">Signup Form Login Error</note>
+        <note priority="1" from="meaning">Signup Form Login Error</note>
+      </trans-unit>
+      <trans-unit id="signupEmailL" datatype="html">
+        <source>Email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">Signup Form Email Label</note>
+        <note priority="1" from="meaning">Signup Form Email Label</note>
+      </trans-unit>
+      <trans-unit id="signupEmailP" datatype="html">
+        <source>johndoe@example.com</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <note priority="1" from="description">Signup Form Email Placeholder</note>
+        <note priority="1" from="meaning">Signup Form Email Placeholder</note>
+      </trans-unit>
+      <trans-unit id="signupEmailErr" datatype="html">
+        <source>Email is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="description">Signup Form Email Error</note>
+        <note priority="1" from="meaning">Signup Form Email Error</note>
+      </trans-unit>
+      <trans-unit id="signupPwdL" datatype="html">
+        <source>Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <note priority="1" from="description">Signup Form Pwd Label</note>
+        <note priority="1" from="meaning">Signup Form Pwd Label</note>
+      </trans-unit>
+      <trans-unit id="signupPwdErr" datatype="html">
+        <source>Password is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <note priority="1" from="description">Signup Form Pwd Error</note>
+        <note priority="1" from="meaning">Signup Form Pwd Error</note>
+      </trans-unit>
+      <trans-unit id="signupRPwdL" datatype="html">
+        <source>Repeat password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">54,55</context>
+        </context-group>
+        <note priority="1" from="description">Signup Form Repeated Pwd Label</note>
+        <note priority="1" from="meaning">Signup Form Repeat Pwd Label</note>
+      </trans-unit>
+      <trans-unit id="signupRPwdErr" datatype="html">
+        <source>Passwords don&apos;t match</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <note priority="1" from="description">Signup Form RPwd Error</note>
+        <note priority="1" from="meaning">Signup Form RPwd Error</note>
+      </trans-unit>
+      <trans-unit id="signupCreate" datatype="html">
+        <source>Create an account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/signup/signup.component.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+        <note priority="1" from="description">Button for confirming signup form</note>
+        <note priority="1" from="meaning">Signup Create Acc</note>
+      </trans-unit>
+      <trans-unit id="toolbarSignin" datatype="html">
+        <source>Sign in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/toolbar/toolbar.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="description">Toolbar signin button</note>
+        <note priority="1" from="meaning">Toolbar Signin</note>
+      </trans-unit>
+      <trans-unit id="toolbarSignup" datatype="html">
+        <source>Create an account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/toolbar/toolbar.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="description">Toolbar signup button</note>
+        <note priority="1" from="meaning">Toolbar Signup</note>
+      </trans-unit>
+      <trans-unit id="toolbarAccount" datatype="html">
+        <source>My account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/toolbar/toolbar.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">Toolbar myaccount button</note>
+        <note priority="1" from="meaning">Toolbar My Account</note>
+      </trans-unit>
+      <trans-unit id="toolbarSignout" datatype="html">
+        <source>Sign out</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/toolbar/toolbar.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <note priority="1" from="description">Toolbar signout button</note>
+        <note priority="1" from="meaning">Toolbar Signout</note>
+      </trans-unit>
+      <trans-unit id="grammarHeader" datatype="html">
+        <source>Grammar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/topicslist/topicslist.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Grammar topics header</note>
+        <note priority="1" from="meaning">Grammar header</note>
+      </trans-unit>
+      <trans-unit id="lexicalHeader" datatype="html">
+        <source>Lexical</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/topicslist/topicslist.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="description">Lexical topics header</note>
+        <note priority="1" from="meaning">Lexical header</note>
+      </trans-unit>
+      <trans-unit id="wlistAdd" datatype="html">
+        <source>Add to reviews</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/topicwordlist/topicwordlist.component.html</context>
+          <context context-type="linenumber">10,11</context>
+        </context-group>
+        <note priority="1" from="description">Button to add words to reviews</note>
+        <note priority="1" from="meaning">Word list add</note>
+      </trans-unit>
+      <trans-unit id="reviewsNext" datatype="html">
+        <source>Next</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/translatemode/translatemode.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <note priority="1" from="description">Next button in reviews mode</note>
+        <note priority="1" from="meaning">Reviews next</note>
+      </trans-unit>
+      <trans-unit id="reviewsResult" datatype="html">
+        <source>Result:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/translatemode/translatemode.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="description">Result text in reviews mode</note>
+        <note priority="1" from="meaning">Reviews result</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

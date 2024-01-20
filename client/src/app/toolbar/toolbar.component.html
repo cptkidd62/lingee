@@ -3,12 +3,13 @@
         <mat-icon>home</mat-icon><span>Lingee</span>
     </a>
     <span class="example-spacer"></span>
-    <a *ngIf="!this.authService.isSignedIn()" href="/signin"
-        mat-button><mat-icon>login</mat-icon><span>Sign in</span></a>
-    <a *ngIf="!this.authService.isSignedIn()" href="/signup"
-        mat-button><mat-icon>person_add</mat-icon><span>Create an account</span></a>
-    <a *ngIf="this.authService.isSignedIn()" href="/myaccount"
-        mat-button><mat-icon>account_circle</mat-icon><span>My account</span></a>
+    <a *ngIf="!this.authService.isSignedIn()" href="/signin" mat-button><mat-icon>login</mat-icon><span
+            i18n="Toolbar Signin|Toolbar signin button@@toolbarSignin">Sign in</span></a>
+    <a *ngIf="!this.authService.isSignedIn()" href="/signup" mat-button><mat-icon>person_add</mat-icon><span
+            i18n="Toolbar Signup|Toolbar signup button@@toolbarSignup">Create an account</span></a>
+    <a *ngIf="this.authService.isSignedIn()" href="/myaccount" mat-button><mat-icon>account_circle</mat-icon><span
+            i18n="Toolbar My Account|Toolbar myaccount button@@toolbarAccount">My account</span></a>
     <button *ngIf="this.authService.isSignedIn()" (click)="this.authService.signout()"
-        mat-stroked-button><mat-icon>logout</mat-icon><span>Sign out</span></button>
+        mat-stroked-button><mat-icon>logout</mat-icon><span
+            i18n="Toolbar Signout|Toolbar signout button@@toolbarSignout">Sign out</span></button>
 </mat-toolbar>

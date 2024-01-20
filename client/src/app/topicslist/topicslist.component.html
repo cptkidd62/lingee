@@ -1,9 +1,10 @@
-<mat-progress-bar *ngIf="topics.grammar.length == 0 && topics.lexical.length == 0" mode="query" color="accent"></mat-progress-bar>
-<h3>Grammar</h3>
+<mat-progress-bar *ngIf="topics.grammar.length == 0 && topics.lexical.length == 0" mode="query"
+    color="accent"></mat-progress-bar>
+<h3 i18n="Grammar header|Grammar topics header@@grammarHeader">Grammar</h3>
 <div *ngFor="let topic of topics.grammar">
     <a>{{topic.tg_name}}</a>
 </div>
-<h3>Lexical</h3>
+<h3 i18n="Lexical header|Lexical topics header@@lexicalHeader">Lexical</h3>
 <div *ngFor="let topic of topics.lexical">
     <a href="/topics/lexical/tr/{{topic.tl_id}}">{{topic.tl_name}}</a>
 </div>

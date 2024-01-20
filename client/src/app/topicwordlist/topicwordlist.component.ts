@@ -53,8 +53,8 @@ export class TopicwordlistComponent {
       nlist.push(w.v_id)
     })
     this.learnService.addToReviews(nlist).subscribe({
-      complete: () => { this.loadContents(false); this.wlist[0].word += 'bbbbb' },
-      next: data => { this.loadContents(false); this.wlist[0].word += 'aaaaa' },
+      complete: () => { this.loadContents(false) },
+      next: data => { this.loadContents(false) },
       error: err => { }
     })
   }
