@@ -22,6 +22,6 @@ export class HomeComponent {
       next: data => this.revCount = data
     })
     translate.setDefaultLang('en');
-    translate.use('en');
+    translate.use(localStorage.getItem('lang') || 'en');
   }
 }

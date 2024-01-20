@@ -27,7 +27,7 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
 export class SignupComponent {
   constructor(private router: Router, private translate: TranslateService) {
     translate.setDefaultLang('en');
-    translate.use('en');
+    translate.use(localStorage.getItem('lang') || 'en');
   };
 
   errMsg: string = "";

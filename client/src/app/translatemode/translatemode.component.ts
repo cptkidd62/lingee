@@ -74,7 +74,7 @@ export class TranslatemodeComponent {
 
   constructor(private translate: TranslateService) {
     translate.setDefaultLang('en');
-    translate.use('en');
+    translate.use(localStorage.getItem('lang') || 'en');
 
     this.learnService.getReviews('tr').subscribe({
       next: lst => {

@@ -22,6 +22,6 @@ export class ToolbarComponent {
 
   constructor(private translate: TranslateService) {
     translate.setDefaultLang('en');
-    translate.use('pl');
+    translate.use(localStorage.getItem('lang') || 'en');
   };
 }

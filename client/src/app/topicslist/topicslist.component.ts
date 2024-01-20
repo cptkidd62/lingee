@@ -21,7 +21,7 @@ export class TopicslistComponent {
 
   constructor(private translate: TranslateService) {
     translate.setDefaultLang('en');
-    translate.use('en');
+    translate.use(localStorage.getItem('lang') || 'en');
 
     this.learnService.getTopicsList().subscribe({
       next: topics => { this.topics.grammar = topics.grammar; this.topics.lexical = topics.lexical }

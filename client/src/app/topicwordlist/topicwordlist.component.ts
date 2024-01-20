@@ -24,7 +24,7 @@ export class TopicwordlistComponent {
 
   constructor(private route: ActivatedRoute, private router: Router, private translate: TranslateService) {
     translate.setDefaultLang('en');
-    translate.use('en');
+    translate.use(localStorage.getItem('lang') || 'en');
     this.loadContents(true)
   }
 

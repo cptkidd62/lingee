@@ -23,6 +23,11 @@ export class MyaccountComponent {
       error: err => this.router.navigate(['/'])
     });
     translate.setDefaultLang('en');
-    translate.use('en');
+    translate.use(localStorage.getItem('lang') || 'en');
+  }
+
+  changeLanguage(language: string): void {
+    this.translate.use(language);
+    localStorage.setItem('lang', language)
   }
 }
