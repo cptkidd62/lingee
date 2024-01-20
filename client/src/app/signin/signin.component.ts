@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
 import { Jwtoken } from '../jwtoken';
+import { Langdata } from '../langdata';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -46,7 +47,19 @@ export class SigninComponent {
     console.log(login, pwd);
     this.authService.signin(login!, pwd!).subscribe({
       complete: () => { this.router.navigate(['']) },
-      next: data => { this.authService.setSession(data as Jwtoken); this.errMsg = "" },
+      next: data => {
+        this.authService.setSession((data as { token: Jwtoken }).token);
+        this.errMsg = ""
+        localStorage.setItem('courses', JSON.stringify((data as { courses: Langdata[] }).courses))
+        localStorage.setItem('currcourse', (data as { courses: Langdata[] }).courses[0].l_code)
+        if (localStorage.getItem('currcourse') == localStorage.getItem('lang')) {
+          if (localStorage.getItem('lang') == 'en') {
+            localStorage.setItem('lang', 'pl')
+          } else {
+            localStorage.setItem('lang', 'en')
+          }
+        }
+      },
       error: err => { console.log(err); this.errMsg = err.error.message }
     });
     console.log("done");

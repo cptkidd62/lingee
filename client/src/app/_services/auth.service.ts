@@ -42,6 +42,8 @@ export class AuthService {
   signout() {
     localStorage.removeItem('idToken');
     localStorage.removeItem('expiresAt');
+    localStorage.removeItem('courses');
+    localStorage.removeItem('currcourse');
     this.router.navigate(['/'])
   }
 }

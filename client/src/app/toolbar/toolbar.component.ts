@@ -31,4 +31,16 @@ export class ToolbarComponent {
     this.translate.use(language);
     localStorage.setItem('lang', language)
   }
+
+  changeCourse(language: string): void {
+    localStorage.setItem('currcourse', language)
+  }
+
+  getUILang(): string | null {
+    return localStorage.getItem('lang')
+  }
+
+  getCourseLang(): string | null {
+    return localStorage.getItem('currcourse')
+  }
 }

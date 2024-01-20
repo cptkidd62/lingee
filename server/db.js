@@ -55,6 +55,14 @@ exports.Repository = class Repository {
         }
     }
 
+    async getCoursesForUsr(usrid) {
+        let data = await this.pool.query("select l.l_id, l.l_code, l.l_propname\
+                from user_courses uc\
+                left join langs l ON l.l_id = uc.learn_id\
+                where uc.u_id = $1", [usrid])
+        return data.rows
+    }
+
     async getAllTopics() {
         let data1 = await this.pool.query("SELECT * FROM topics_grammar");
         let data2 = await this.pool.query("SELECT * FROM topics_lexical");
