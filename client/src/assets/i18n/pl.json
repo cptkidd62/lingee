@@ -33,7 +33,13 @@
         "confirm": "Stwórz konto"
     },
     "myaccount": {
-        "hello": "Witaj"
+        "hello": "Witaj",
+        "uilangHeader": "Zmień język interfejsu",
+        "langCS": "czeski",
+        "langEN": "angielski",
+        "langPL": "polski",
+        "langTR": "turecki",
+        "courseChangeHeader": "Zmień aktywny kurs"
     },
     "topics": {
         "grammar": "Gramatyka",

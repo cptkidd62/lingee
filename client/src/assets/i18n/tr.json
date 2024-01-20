@@ -33,7 +33,13 @@
         "confirm": "Hesap oluştur"
     },
     "myaccount": {
-        "hello": "Merhaba"
+        "hello": "Merhaba",
+        "uilangHeader": "Arayüz dilini değiştir",
+        "langCS": "çekçe",
+        "langEN": "ingilizce",
+        "langPL": "lehçe",
+        "langTR": "türkçe",
+        "courseChangeHeader": "Aktif kursu değiştir"
     },
     "topics": {
         "grammar": "Dilbilgisi",

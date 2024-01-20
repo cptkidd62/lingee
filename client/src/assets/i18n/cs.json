@@ -33,7 +33,13 @@
         "confirm": "Vytvořit účet"
     },
     "myaccount": {
-        "hello": "Vítej"
+        "hello": "Vítej",
+        "uilangHeader": "Změnit jazyk rozhraní",
+        "langCS": "česky",
+        "langEN": "anglicky",
+        "langPL": "polsky",
+        "langTR": "turecky",
+        "courseChangeHeader": "Změnit aktivní kurz"
     },
     "topics": {
         "grammar": "Gramatika",
