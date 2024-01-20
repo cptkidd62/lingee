@@ -33,18 +33,18 @@ export class LearnService {
   }
 
   addToReviews(wlist: Array<number>) {
-    return this.http.post(this.url + '/reviews/add', { wlist: wlist, lang: 'tr' }, { responseType: 'json', withCredentials: true })
+    return this.http.post(this.url + '/reviews/add', { wlist: wlist, lang: localStorage.getItem('currcourse') }, { responseType: 'json', withCredentials: true })
   }
 
   getReviewsCount(): Observable<number> {
-    return this.http.get<number>(this.url + '/reviews/tr/count');
+    return this.http.get<number>(this.url + `/reviews/${localStorage.getItem('currcourse')}/count`);
   }
 
-  getReviews(lang: string): Observable<Array<Topicwordview>> {
-    return this.http.get<Array<Topicwordview>>(this.url + '/reviews/' + lang);
+  getReviews(): Observable<Array<Topicwordview>> {
+    return this.http.get<Array<Topicwordview>>(this.url + '/reviews/' + localStorage.getItem('currcourse'));
   }
 
   updateReviews(id: number, correct: boolean) {
-    return this.http.post(this.url + '/reviews/update', { v_id: id, lang: 'tr', corr: correct }, { responseType: 'json', withCredentials: true })
+    return this.http.post(this.url + '/reviews/update', { v_id: id, lang: localStorage.getItem('currcourse'), corr: correct }, { responseType: 'json', withCredentials: true })
   }
 }

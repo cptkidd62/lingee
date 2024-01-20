@@ -8,19 +8,19 @@
                 <span>Active course</span>
         </button>
         <mat-menu #coursemenu="matMenu">
-                <button mat-menu-item (click)="changeLanguage('en')" *ngIf="getUILang() != 'en'">
+                <button mat-menu-item (click)="changeCourse('en')" *ngIf="getUILang() != 'en'">
                         <span class="fi fi-us" style="margin-right: 1em;"></span>
                         <span>{{ "myaccount.langEN" | translate }}</span>
                 </button>
-                <button mat-menu-item (click)="changeLanguage('pl')" *ngIf="getUILang() != 'pl'">
+                <button mat-menu-item (click)="changeCourse('pl')" *ngIf="getUILang() != 'pl'">
                         <span class="fi fi-pl" style="margin-right: 1em;"></span>
                         <span>{{ "myaccount.langPL" | translate }}</span>
                 </button>
-                <button mat-menu-item (click)="changeLanguage('cs')" *ngIf="getUILang() != 'cs'">
+                <button mat-menu-item (click)="changeCourse('cs')" *ngIf="getUILang() != 'cs'">
                         <span class="fi fi-cz" style="margin-right: 1em;"></span>
                         <span>{{ "myaccount.langCS" | translate }}</span>
                 </button>
-                <button mat-menu-item (click)="changeLanguage('tr')" *ngIf="getUILang() != 'tr'">
+                <button mat-menu-item (click)="changeCourse('tr')" *ngIf="getUILang() != 'tr'">
                         <span class="fi fi-tr" style="margin-right: 1em;"></span>
                         <span>{{ "myaccount.langTR" | translate }}</span>
                 </button>

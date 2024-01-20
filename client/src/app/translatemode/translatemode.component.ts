@@ -76,7 +76,7 @@ export class TranslatemodeComponent {
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
 
-    this.learnService.getReviews('tr').subscribe({
+    this.learnService.getReviews().subscribe({
       next: lst => {
         this.wlist = lst
         this.wlist = this.shuffle(this.wlist)
@@ -85,17 +85,18 @@ export class TranslatemodeComponent {
         console.log(this.wlist)
 
         for (let i = 0; i < this.wlist.length; i++) {
-          this.learnService.getSentences(1, [this.wlist[i].speechpart.slice(0, -1) + '=' + this.wlist[i].v_id].concat(['lang=tr'])).subscribe({
-            next: sentences => {
-              this.sentences[i] = sentences[0]
-              console.log(this.wlist[i].word, this.wlist[i].v_id)
-              console.log(this.sentences)
-              console.log(this.size(this.sentences))
-              if (i == 0) {
-                this.makeTokens(this.sentences[0].original)
+          this.learnService.getSentences(1, [this.wlist[i].speechpart.slice(0, -1) + '=' + this.wlist[i].v_id]
+            .concat([`lang=${localStorage.getItem('currcourse')}`])).subscribe({
+              next: sentences => {
+                this.sentences[i] = sentences[0]
+                console.log(this.wlist[i].word, this.wlist[i].v_id)
+                console.log(this.sentences)
+                console.log(this.size(this.sentences))
+                if (i == 0) {
+                  this.makeTokens(this.sentences[0].original)
+                }
               }
-            }
-          });
+            });
         }
         console.log(this.sentences.length)
 

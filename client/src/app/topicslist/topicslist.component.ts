@@ -18,6 +18,7 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
 export class TopicslistComponent {
   topics: { grammar: Array<TopicGrammar>, lexical: Array<TopicLexical> } = { grammar: [], lexical: [] }
   learnService: LearnService = inject(LearnService);
+  lang: string = ''
 
   constructor(private translate: TranslateService) {
     translate.setDefaultLang('en');
@@ -26,6 +27,6 @@ export class TopicslistComponent {
     this.learnService.getTopicsList().subscribe({
       next: topics => { this.topics.grammar = topics.grammar; this.topics.lexical = topics.lexical }
     });
-    console.log(this.topics)
+    this.lang = localStorage.getItem('currcourse') || 'en'
   }
 }
