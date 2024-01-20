@@ -25,9 +25,4 @@ export class MyaccountComponent {
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
   }
-
-  changeLanguage(language: string): void {
-    this.translate.use(language);
-    localStorage.setItem('lang', language)
-  }
 }

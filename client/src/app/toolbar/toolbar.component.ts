@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthService } from '../_services/auth.service';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
@@ -12,6 +13,7 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
   imports: [CommonModule,
     MatToolbarModule,
     MatButtonModule,
+    MatMenuModule,
     MatIconModule,
     TranslateModule],
   templateUrl: './toolbar.component.html',
@@ -24,4 +26,9 @@ export class ToolbarComponent {
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
   };
+
+  changeLanguage(language: string): void {
+    this.translate.use(language);
+    localStorage.setItem('lang', language)
+  }
 }

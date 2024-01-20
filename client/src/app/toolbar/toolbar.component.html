@@ -1,14 +1,36 @@
 <mat-toolbar color="primary">
-    <a mat-button href="/">
-        <mat-icon>home</mat-icon><span>Lingee</span>
-    </a>
-    <span class="example-spacer"></span>
-    <a *ngIf="!this.authService.isSignedIn()" href="/signin" mat-button><mat-icon>login</mat-icon><span>{{
-            "toolbar.signin" | translate }}</span></a>
-    <a *ngIf="!this.authService.isSignedIn()" href="/signup" mat-button><mat-icon>person_add</mat-icon><span>{{
-            "toolbar.signup" | translate }}</span></a>
-    <a *ngIf="this.authService.isSignedIn()" href="/myaccount" mat-button><mat-icon>account_circle</mat-icon><span>{{
-            "toolbar.myaccount" | translate }}</span></a>
-    <button *ngIf="this.authService.isSignedIn()" (click)="this.authService.signout()"
-        mat-stroked-button><mat-icon>logout</mat-icon><span>{{ "toolbar.signout" | translate }}</span></button>
+        <a mat-button href="/">
+                <mat-icon>home</mat-icon><span>Lingee</span>
+        </a>
+        <span class="example-spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="langmenu" aria-label="UI language selection menu">
+                <mat-icon>language</mat-icon>
+        </button>
+        <mat-menu #langmenu="matMenu">
+                <button mat-menu-item (click)="changeLanguage('en')">
+                        <span class="fi fi-us" style="margin-right: 1em;"></span>
+                        <span>{{ "myaccount.langEN" | translate }}</span>
+                </button>
+                <button mat-menu-item (click)="changeLanguage('pl')">
+                        <span class="fi fi-pl" style="margin-right: 1em;"></span>
+                        <span>{{ "myaccount.langPL" | translate }}</span>
+                </button>
+                <button mat-menu-item (click)="changeLanguage('cs')">
+                        <span class="fi fi-cz" style="margin-right: 1em;"></span>
+                        <span>{{ "myaccount.langCS" | translate }}</span>
+                </button>
+                <button mat-menu-item (click)="changeLanguage('tr')">
+                        <span class="fi fi-tr" style="margin-right: 1em;"></span>
+                        <span>{{ "myaccount.langTR" | translate }}</span>
+                </button>
+        </mat-menu>
+        <a *ngIf="!this.authService.isSignedIn()" href="/signin" mat-button><mat-icon>login</mat-icon><span>{{
+                        "toolbar.signin" | translate }}</span></a>
+        <a *ngIf="!this.authService.isSignedIn()" href="/signup" mat-button><mat-icon>person_add</mat-icon><span>{{
+                        "toolbar.signup" | translate }}</span></a>
+        <a *ngIf="this.authService.isSignedIn()" href="/myaccount"
+                mat-button><mat-icon>account_circle</mat-icon><span>{{
+                        "toolbar.myaccount" | translate }}</span></a>
+        <button *ngIf="this.authService.isSignedIn()" (click)="this.authService.signout()"
+                mat-stroked-button><mat-icon>logout</mat-icon><span>{{ "toolbar.signout" | translate }}</span></button>
 </mat-toolbar>
