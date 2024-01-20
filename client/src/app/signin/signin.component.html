@@ -1,22 +1,20 @@
 <form [formGroup]="signinForm">
     <p>
         <mat-form-field appearance="fill" color="accent">
-            <mat-label i18n="Signin Form Login Label|Signin Form Login Label@@signinLoginL">Login</mat-label>
+            <mat-label>Login</mat-label>
             <input matInput id="login" type="text" formControlName="login">
             <mat-error *ngIf="signinForm.controls['login'].invalid 
                 && (signinForm.controls['login'].dirty || signinForm.controls['login'].touched) 
-                && signinForm.controls['login'].errors?.['required']"
-                i18n="Signin Form Login Error|Signin Form Login Error@@signinLoginErr">Login is required</mat-error>
+                && signinForm.controls['login'].errors?.['required']">Login is required</mat-error>
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="fill" color="accent">
-            <mat-label i18n="Signin Form Pwd Label|Signin Form Pwd Label@@signinPwdL">Password</mat-label>
+            <mat-label>Password</mat-label>
             <input matInput id="pwd" [type]="hide ? 'password' : 'text'" formControlName="pwd">
             <mat-error *ngIf="signinForm.controls['pwd'].invalid 
                     && (signinForm.controls['pwd'].dirty || signinForm.controls['pwd'].touched) 
-                    && signinForm.controls['pwd'].errors?.['required']"
-                i18n="Signin Form Pwd Error|Signin Form Pwd Error@@signinPwdErr">Password is required</mat-error>
+                    && signinForm.controls['pwd'].errors?.['required']">Password is required</mat-error>
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -24,7 +22,6 @@
         </mat-form-field>
     </p>
     <div *ngIf="errMsg != ''" class="form-alert-msg">{{errMsg}}</div>
-    <button mat-raised-button color="accent" type="submit" [disabled]="!signinForm.valid" (click)="signinSubmit()"
-        i18n="Signin confirm|Button for confirming signin@@signinConfirm">Sign
+    <button mat-raised-button color="accent" type="submit" [disabled]="!signinForm.valid" (click)="signinSubmit()">Sign
         in</button>
 </form>

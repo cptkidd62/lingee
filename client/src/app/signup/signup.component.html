@@ -1,48 +1,38 @@
 <form [formGroup]="signupForm">
     <p>
         <mat-form-field appearance="fill" color="accent">
-            <mat-label i18n="Signup Form Name Label|Signup Form Name Label@@signupNameL">Name</mat-label>
-            <input matInput id="name" type="text"
-                i18n-placeholder="Signup Form Name Placeholder|Signup Form Name Placeholder@@signupNameP"
-                placeholder="John Doe" formControlName="name">
+            <mat-label>Name</mat-label>
+            <input matInput id="name" type="text" placeholder="John Doe" formControlName="name">
             <mat-error *ngIf="signupForm.controls['name'].invalid 
                     && (signupForm.controls['name'].dirty || signupForm.controls['name'].touched) 
-                    && signupForm.controls['name'].errors?.['required']"
-                i18n="Signup Form Name Error|Signup Form Name Error@@signupNameErr">Name is required</mat-error>
+                    && signupForm.controls['name'].errors?.['required']">Name is required</mat-error>
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="fill" color="accent">
-            <mat-label i18n="Signup Form Login Label|Signup Form Login Label@@signupLoginL">Login</mat-label>
-            <input matInput id="login" type="text"
-                i18n-placeholder="Signup Form Login Placeholder|Signup Form Login Placeholder@@signupLoginP"
-                placeholder="johndoe00" formControlName="login">
+            <mat-label>Login</mat-label>
+            <input matInput id="login" type="text" placeholder="johndoe00" formControlName="login">
             <mat-error *ngIf="signupForm.controls['login'].invalid 
                     && (signupForm.controls['login'].dirty || signupForm.controls['login'].touched) 
-                    && signupForm.controls['login'].errors?.['required']"
-                i18n="Signup Form Login Error|Signup Form Login Error@@signupLoginErr">Login is required</mat-error>
+                    && signupForm.controls['login'].errors?.['required']">Login is required</mat-error>
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="fill" color="accent">
-            <mat-label i18n="Signup Form Email Label|Signup Form Email Label@@signupEmailL">Email</mat-label>
-            <input matInput id="email" type="email"
-                i18n-placeholder="Signup Form Email Placeholder|Signup Form Email Placeholder@@signupEmailP"
-                placeholder="johndoe@example.com" formControlName="email">
+            <mat-label>Email</mat-label>
+            <input matInput id="email" type="email" placeholder="johndoe@example.com" formControlName="email">
             <mat-error *ngIf="signupForm.controls['email'].invalid 
                     && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched) 
-                    && signupForm.controls['email'].errors?.['required']"
-                i18n="Signup Form Email Error|Signup Form Email Error@@signupEmailErr">Email is required</mat-error>
+                    && signupForm.controls['email'].errors?.['required']">Email is required</mat-error>
         </mat-form-field>
     </p>
     <p>
         <mat-form-field appearance="fill" color="accent">
-            <mat-label i18n="Signup Form Pwd Label|Signup Form Pwd Label@@signupPwdL">Password</mat-label>
+            <mat-label>Password</mat-label>
             <input matInput id="pwd" [type]="hide ? 'password' : 'text'" formControlName="pwd">
             <mat-error *ngIf="signupForm.controls['pwd'].invalid 
                     && (signupForm.controls['pwd'].dirty || signupForm.controls['pwd'].touched) 
-                    && signupForm.controls['pwd'].errors?.['required']"
-                i18n="Signup Form Pwd Error|Signup Form Pwd Error@@signupPwdErr">Password is required</mat-error>
+                    && signupForm.controls['pwd'].errors?.['required']">Password is required</mat-error>
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -51,13 +41,11 @@
     </p>
     <p>
         <mat-form-field appearance="fill" color="accent">
-            <mat-label i18n="Signup Form Repeat Pwd Label|Signup Form Repeated Pwd Label@@signupRPwdL">Repeat
-                password</mat-label>
+            <mat-label>Repeat password</mat-label>
             <input matInput id="rpwd" [type]="hide ? 'password' : 'text'" formControlName="rpwd">
             <mat-error *ngIf="signupForm.invalid 
                     && (signupForm.dirty || signupForm.touched) 
-                    && signupForm.errors?.['notEqual']"
-                i18n="Signup Form RPwd Error|Signup Form RPwd Error@@signupRPwdErr">Passwords don't match</mat-error>
+                    && signupForm.errors?.['notEqual']">Passwords don't match</mat-error>
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -65,6 +53,6 @@
         </mat-form-field>
     </p>
     <div *ngIf="errMsg != ''" class="form-alert-msg">{{errMsg}}</div>
-    <button mat-raised-button color="accent" type="submit" [disabled]="!signupForm.valid" (click)="signupSubmit()"
-        i18n="Signup Create Acc|Button for confirming signup form@@signupCreate">Create an account</button>
+    <button mat-raised-button color="accent" type="submit" [disabled]="!signupForm.valid"
+        (click)="signupSubmit()">Create an account</button>
 </form>
