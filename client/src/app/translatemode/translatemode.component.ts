@@ -80,7 +80,7 @@ export class TranslatemodeComponent {
         console.log(this.wlist)
 
         for (let i = 0; i < this.wlist.length; i++) {
-          this.learnService.getSentences(1, [this.wlist[i].speechpart.slice(0, -1) + '=' + this.wlist[i].v_id]).subscribe({
+          this.learnService.getSentences(1, [this.wlist[i].speechpart.slice(0, -1) + '=' + this.wlist[i].v_id].concat(['lang=tr'])).subscribe({
             next: sentences => {
               this.sentences[i] = sentences[0]
               console.log(this.wlist[i].word, this.wlist[i].v_id)
