@@ -51,7 +51,6 @@ app.use((err, req, res, next) => {
 });
 
 app.get("/user", async (req, res) => {
-    console.log("Got request");
     let id = req.auth.id;
     let usr = await repo.getAccountForUsr(id);
     res.json(usr)
@@ -63,8 +62,6 @@ app.post("/user/prefs", async (req, res) => {
 })
 
 app.post("/auth/signin", async (req, res) => {
-    console.log("login attempt");
-    console.log(req.body.login, req.body.password);
     let login = req.body.login;
     let pwd = req.body.password;
     let { id, pwdHsh } = await repo.getPasswordForUsr(login);
@@ -89,9 +86,7 @@ app.post("/auth/signin", async (req, res) => {
 });
 
 app.post("/auth/signup", async (req, res) => {
-    console.log("login attempt");
     let sdata = req.body.sdata;
-    console.log(sdata);
     if (await repo.loginExists(sdata.login)) {
         return res.status(403).send({
             success: false,

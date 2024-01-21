@@ -107,7 +107,6 @@ exports.Generator = class Generator {
     }
     async getRandomSentence(lang1, lang2, uid, noun, verb, adj, adv, num) {
         let p = await genRandomPattern(uid, noun, verb, adj, adv, num)
-        // console.log(p)
         return {
             original: await this.langs[lang1].run(p),
             translation: await this.langs[lang2].run(p)

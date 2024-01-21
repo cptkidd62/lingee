@@ -33,16 +33,12 @@ export class TopicwordlistComponent {
       next: lst => {
         this.wlist = lst
         this.toLearn = !(this.wlist.every(w => w.progress && w.progress > 0))
-        console.log(this.toLearn)
-        console.log(this.wlist)
 
         if (all) {
           for (let i = 0; i < this.wlist.length; i++) {
             this.learnService.getSentences(1, [this.wlist[i].speechpart + '=' + this.wlist[i].v_id, 'lang=' + this.route.snapshot.params['lang']]).subscribe({
               next: sentences => {
                 this.sentences[i] = sentences[0]
-                console.log(this.wlist[i].word, this.wlist[i].v_id)
-                console.log(sentences)
               }
             });
           }
@@ -58,8 +54,8 @@ export class TopicwordlistComponent {
       nlist.push(w.v_id)
     })
     this.learnService.addToReviews(nlist).subscribe({
-      complete: () => { this.loadContents(false); this.wlist[0].word += 'bbbbb' },
-      next: data => { this.loadContents(false); this.wlist[0].word += 'aaaaa' },
+      complete: () => { this.loadContents(false); },
+      next: data => { this.loadContents(false); },
       error: err => { }
     })
   }

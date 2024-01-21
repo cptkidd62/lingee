@@ -78,7 +78,6 @@ export class SignupComponent {
       },
       error: err => { console.log(err); this.errMsg = err.error.message }
     });
-    console.log("done");
   }
 
   getUILang(): string | null {

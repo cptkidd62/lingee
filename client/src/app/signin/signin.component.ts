@@ -58,11 +58,9 @@ export class SigninComponent {
       },
       error: err => { console.log(err); this.errMsg = err.error.message }
     });
-    console.log("done");
   }
 
   signoutSubmit() {
-    console.log("signout attempt");
     this.authService.signout();
   }
 }
