@@ -13,6 +13,8 @@ const dbrepo = require("./db");
 var repo;
 const sentgen = require("./sentgen");
 var sgen;
+const gpt = require('./gptconnector')
+var gptconn
 
 const expirytm = 60 * 60 * 24 * 30
 
@@ -33,6 +35,7 @@ app.use(cookieParser('1QVIQ7F7tJNa2fGwORfvl6bf6dfYoj63'));
 app.use((req, res, next) => {
     repo = new dbrepo.Repository();
     sgen = new sentgen.Generator(repo);
+    gptconn = new gpt.gptConnector()
     next();
 });
 
@@ -155,6 +158,16 @@ app.post("/reviews/update", async (req, res) => {
     let corr = req.body.corr
     await repo.updateWordReviews(lang, req.auth.id, v_id, corr)
     res.json({ status: 'ok' })
+})
+
+app.post("/validate", async (req, res) => {
+    let s1 = req.body.s1
+    let s2 = req.body.s2
+    let l1 = req.body.l1
+    let l2 = req.body.l2
+
+    let ans = await gptconn.checkTranslation(s1, s2, l1, l2)
+    res.json(ans)
 })
 
 app.listen(3000, () => {

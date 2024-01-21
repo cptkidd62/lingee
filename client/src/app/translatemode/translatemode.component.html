@@ -1,7 +1,11 @@
 <mat-progress-bar *ngIf="!(current < total && size(sentences) == total) && current == 0" mode="query"
     color="accent"></mat-progress-bar>
 <div class="rev-box">
-    <form *ngIf="current < total && size(sentences) == total" [formGroup]="translateForm" (ngSubmit)="next()">
+    <div *ngIf="checked">
+        <p>{{currvalidation?.explanation}}</p>
+        <button mat-flat-button color="primary" (click)="next()">{{ "reviews.next" | translate }}</button>
+    </div>
+    <form *ngIf="current < total && size(sentences) == total && active" [formGroup]="translateForm" (ngSubmit)="checkAnswer()">
         <p>{{sentences[current].translation}}</p>
         <p>{{sentences[current].original}}</p>
         <div *ngIf="enterText">

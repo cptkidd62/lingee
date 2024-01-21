@@ -3,6 +3,7 @@ import { Sentence } from '../sentence';
 import { TopicGrammar } from '../topicgrammar';
 import { TopicLexical } from '../topiclexical';
 import { Topicwordview } from '../topicwordview';
+import { Validationresponse } from '../validationresponse';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -50,5 +51,9 @@ export class LearnService {
 
   updateReviews(id: number, correct: boolean) {
     return this.http.post(this.url + '/reviews/update', { v_id: id, lang: localStorage.getItem('currcourse'), corr: correct }, { responseType: 'json', withCredentials: true })
+  }
+
+  validateAnswer(s1: string, s2: string) {
+    return this.http.post(this.url + '/validate', { s1, s2, l1: localStorage.getItem('currcourse'), l2: localStorage.getItem('lang') });
   }
 }

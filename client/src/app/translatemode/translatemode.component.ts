@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Topicwordview } from '../topicwordview';
 import { Sentence } from '../sentence';
+import { Validationresponse } from '../validationresponse';
 import { LearnService } from '../_services/learn.service';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 
@@ -31,6 +32,7 @@ export class TranslatemodeComponent {
   sentences: Array<Sentence> = [];
   learnService: LearnService = inject(LearnService);
   sentTokens: Array<string> = []
+  currvalidation: Validationresponse | null = null
 
   translateForm: FormGroup = new FormGroup({
     res: new FormControl('')
@@ -42,6 +44,8 @@ export class TranslatemodeComponent {
   current: number = 0
   correct: number = 0
   enterText: boolean = true
+  checked: boolean = false
+  active: boolean = true
 
   shuffle = (array: Array<any>) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -51,25 +55,33 @@ export class TranslatemodeComponent {
     return array;
   };
 
-  checkAnswer(ans: string) {
-    this.answersCorrect[this.current] = ans == this.sentences[this.current].original;
-    this.correct += this.answersCorrect[this.current] ? 1 : 0
-    this.learnService.updateReviews(this.wlist[this.current].v_id, this.answersCorrect[this.current]).subscribe({})
-  }
-
-  next() {
-    let ans
+  checkAnswer() {
+    this.active = false
+    let ans = ''
     if (this.enterText) {
       ans = this.translateForm.value.res;
     } else {
       ans = this.sentTokens.join(' ')
     }
-    this.checkAnswer(ans)
+    this.learnService.validateAnswer(ans, this.sentences[this.current].translation).subscribe({
+      next: data => {
+        this.currvalidation = data as Validationresponse
+        this.answersCorrect[this.current] = this.currvalidation.correct
+        this.correct += this.answersCorrect[this.current] ? 1 : 0
+        this.learnService.updateReviews(this.wlist[this.current].v_id, this.answersCorrect[this.current]).subscribe({})
+        this.checked = true
+      }
+    })
+  }
+
+  next() {
+    this.checked = false
     this.current++
     if (this.current < this.total) {
       this.makeTokens(this.sentences[this.current].original)
     }
     this.translateForm.controls['res'].reset()
+    this.active = true
   }
 
   makeTokens(sent: string) {
