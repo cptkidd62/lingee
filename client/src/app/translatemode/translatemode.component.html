@@ -1,18 +1,22 @@
 <mat-progress-bar *ngIf="!(current < total && size(sentences) == total) && current == 0" mode="query"
     color="accent"></mat-progress-bar>
-<form *ngIf="current < total && size(sentences) == total" [formGroup]="translateForm" (ngSubmit)="next()">
-    <p>{{sentences[current].translation}}</p>
-    <p>{{sentences[current].original}}</p>
-    <div *ngIf="enterText">
-        <input id="res" type="text" formControlName="res" autocomplete="off">
-    </div>
-    <div *ngIf="!enterText">
-        <div cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
-            <div class="example-box" *ngFor="let tok of sentTokens" cdkDrag>{{tok}}</div>
+<div class="rev-box">
+    <form *ngIf="current < total && size(sentences) == total" [formGroup]="translateForm" (ngSubmit)="next()">
+        <p>{{sentences[current].translation}}</p>
+        <p>{{sentences[current].original}}</p>
+        <div *ngIf="enterText">
+            <mat-form-field appearance="fill" color="accent">
+                <input matInput id="res" type="text" formControlName="res" autocomplete="off">
+            </mat-form-field>
         </div>
-    </div>
-    <button type="submit">{{ "reviews.next" | translate }}</button>
-</form>
-
-<div *ngIf="current == total">{{ "reviews.result" | translate }}: {{correct}} / {{total}}</div>
-<div *ngIf="current != total">{{current + 1}} / {{total}}</div>
+        <div *ngIf="!enterText">
+            <div cdkDropList cdkDropListOrientation="horizontal" class="dd-list"
+                (cdkDropListDropped)="drop($event)">
+                <div class="dd-box" *ngFor="let tok of sentTokens" cdkDrag>{{tok}}</div>
+            </div>
+        </div>
+        <button mat-flat-button color="primary" type="submit">{{ "reviews.next" | translate }}</button>
+    </form>
+    <div *ngIf="current == total">{{ "reviews.result" | translate }}: {{correct}} / {{total}}</div>
+    <div *ngIf="current != total">{{current + 1}} / {{total}}</div>
+</div>

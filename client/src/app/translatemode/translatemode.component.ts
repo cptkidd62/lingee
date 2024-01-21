@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CdkDragDrop, CdkDrag, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { Topicwordview } from '../topicwordview';
 import { Sentence } from '../sentence';
 import { LearnService } from '../_services/learn.service';
@@ -16,6 +19,9 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
     CdkDropList,
     CdkDrag,
     MatProgressBarModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
     TranslateModule],
   templateUrl: './translatemode.component.html',
   styleUrls: ['./translatemode.component.scss']
