@@ -3,11 +3,16 @@
         "signin": "Přihlásit se",
         "signup": "Registrovat",
         "signout": "Odhlásit se",
-        "myaccount": "Můj učet"
+        "myaccount": "Můj učet",
+        "active": "Vybraný kurz"
     },
     "main": {
         "reviews": "Opakování",
-        "topics": "Témata"
+        "topics": "Témata",
+        "practice": "Procvičte",
+        "fortoday": "Pro dnes",
+        "planned": "Naplánované",
+        "msg": "Připojte se a naučte se 4 jazyky"
     },
     "signin": {
         "loginlabel": "Uživatelské jméno",
@@ -18,18 +23,19 @@
     },
     "signup": {
         "namelabel": "Jméno",
-        "nameph": "John Doe",
+        "nameph": "Jan Novák",
         "nameerror": "Jméno je povinné",
         "loginlabel": "Uživatelské jméno",
-        "loginph": "johndoe00",
+        "loginph": "jannovak00",
         "loginerror": "Uživatelské jméno je povinné",
         "emaillabel": "E-mailová adresa",
-        "emailph": "johndoe@example.com",
+        "emailph": "jannovak@priklad.cz",
         "emailerror": "E-mailová adresa je povinná",
         "pwdlabel": "Heslo",
         "pwderror": "Heslo je povinné",
         "rpwdlabel": "Potvrzení hesla",
         "rpwderror": "Hesla jsou různá",
+        "course": "Vyberte svůj první kurz",
         "confirm": "Vytvořit účet"
     },
     "myaccount": {
@@ -49,5 +55,25 @@
     "reviews": {
         "next": "Další",
         "result": "Výsledek"
+    },
+    "lexical": {
+        "1": "Barvy",
+        "2": "Lidský Vzhled",
+        "3": "Lidské Vlastnosti a Emoce",
+        "4": "Vlastnosti Objektů",
+        "5": "Místa",
+        "6": "Rodina",
+        "7": "Jídlo",
+        "8": "Nápoje",
+        "9": "Školní Předměty",
+        "10": "Každodenní Předměty",
+        "11": "Média",
+        "12": "Slovesa Líbí/ Nelíbí",
+        "13": "Slovesa Pohybu",
+        "14": "Obecná Slovesa",
+        "15": "Místo Příslovce",
+        "16": "Časové Příslovce",
+        "17": "Způsob Příslovce",
+        "18": "Čísla"
     }
 }

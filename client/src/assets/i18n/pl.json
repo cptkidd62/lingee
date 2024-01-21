@@ -3,11 +3,16 @@
         "signin": "Zaloguj się",
         "signup": "Dołącz",
         "signout": "Wyloguj się",
-        "myaccount": "Moje konto"
+        "myaccount": "Moje konto",
+        "active": "Wybrany kurs"
     },
     "main": {
         "reviews": "Powtórki",
-        "topics": "Zagadnienia"
+        "topics": "Zagadnienia",
+        "practice": "Ćwicz",
+        "fortoday": "Na dzisiaj",
+        "planned": "Zaplanowane",
+        "msg": "Dołącz, żeby uczyć się 4 języków"
     },
     "signin": {
         "loginlabel": "Login",
@@ -30,6 +35,7 @@
         "pwderror": "Hasło jest wymagane",
         "rpwdlabel": "Powtórz hasło",
         "rpwderror": "Hasła się różnią",
+        "course": "Wybierz swój pierwszy kurs",
         "confirm": "Stwórz konto"
     },
     "myaccount": {
@@ -49,5 +55,25 @@
     "reviews": {
         "next": "Dalej",
         "result": "Wynik"
+    },
+    "lexical": {
+        "1": "Kolory",
+        "2": "Wygląd Człowieka",
+        "3": "Cechy i Emocje Człowieka",
+        "4": "Cechy Obiektów",
+        "5": "Miejsca",
+        "6": "Rodzina",
+        "7": "Jedzenie",
+        "8": "Napoje",
+        "9": "Przedmioty Szkolne",
+        "10": "Codzienne Przedmioty",
+        "11": "Media",
+        "12": "Czynności Lubię/Nie Lubię",
+        "13": "Czynności Ruchu",
+        "14": "Czynności Ogólne",
+        "15": "Przysłówki Miejsca",
+        "16": "Przysłówki Czasu",
+        "17": "Przysłówki Sposobu",
+        "18": "Liczby"
     }
 }

@@ -3,11 +3,16 @@
         "signin": "Sign in",
         "signup": "Join",
         "signout": "Sign out",
-        "myaccount": "My account"
+        "myaccount": "My account",
+        "active": "Selected course"
     },
     "main": {
         "reviews": "Reviews",
-        "topics": "Topics"
+        "topics": "Topics",
+        "practice": "Practice",
+        "fortoday": "For today",
+        "planned": "Planned",
+        "msg": "Join to learn 4 languages"
     },
     "signin": {
         "loginlabel": "Login",
@@ -30,6 +35,7 @@
         "pwderror": "Password is required",
         "rpwdlabel": "Repeat password",
         "rpwderror": "Passwords don't match",
+        "course": "Select your first course",
         "confirm": "Create an account"
     },
     "myaccount": {
@@ -49,5 +55,25 @@
     "reviews": {
         "next": "Next",
         "result": "Result"
+    },
+    "lexical": {
+        "1": "Colors",
+        "2": "Human Appearance",
+        "3": "Human Traits & Emotions",
+        "4": "Objects Trais",
+        "5": "Places",
+        "6": "Family",
+        "7": "Food",
+        "8": "Drinks",
+        "9": "School Objects",
+        "10": "Everyday Objects",
+        "11": "Media",
+        "12": "Like/Dislike Verbs",
+        "13": "Motion Verbs",
+        "14": "General Verbs",
+        "15": "Place Adverbs",
+        "16": "Time Adverbs",
+        "17": "Manner Adverbs",
+        "18": "Numbers"
     }
 }

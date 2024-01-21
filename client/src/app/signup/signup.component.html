@@ -4,7 +4,8 @@
             <p>
                 <mat-form-field appearance="fill" color="accent">
                     <mat-label>{{ "signup.namelabel" | translate }}</mat-label>
-                    <input matInput id="name" type="text" placeholder="John Doe" formControlName="name">
+                    <input matInput id="name" type="text" [placeholder]='"signup.nameph" | translate'
+                        formControlName="name">
                     <mat-error *ngIf="signupForm.controls['name'].invalid 
                     && (signupForm.controls['name'].dirty || signupForm.controls['name'].touched) 
                     && signupForm.controls['name'].errors?.['required']">{{ "signup.nameerror" | translate
@@ -14,7 +15,8 @@
             <p>
                 <mat-form-field appearance="fill" color="accent">
                     <mat-label>{{ "signup.loginlabel" | translate }}</mat-label>
-                    <input matInput id="login" type="text" placeholder="johndoe00" formControlName="login">
+                    <input matInput id="login" type="text" [placeholder]='"signup.loginph" | translate'
+                        formControlName="login">
                     <mat-error *ngIf="signupForm.controls['login'].invalid 
                     && (signupForm.controls['login'].dirty || signupForm.controls['login'].touched) 
                     && signupForm.controls['login'].errors?.['required']">{{ "signup.loginerror" | translate
@@ -24,7 +26,8 @@
             <p>
                 <mat-form-field appearance="fill" color="accent">
                     <mat-label>{{ "signup.emaillabel" | translate }}</mat-label>
-                    <input matInput id="email" type="email" placeholder="johndoe@example.com" formControlName="email">
+                    <input matInput id="email" type="email" [placeholder]='"signup.emailph" | translate'
+                        formControlName="email">
                     <mat-error *ngIf="signupForm.controls['email'].invalid 
                     && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched) 
                     && signupForm.controls['email'].errors?.['required']">{{ "signup.emailerror" | translate
@@ -59,12 +62,16 @@
             </p>
             <p>
                 <mat-form-field color="accent">
-                    <mat-label>Select your first course</mat-label>
+                    <mat-label>{{ "signup.course" | translate }}</mat-label>
                     <mat-select id="lang" formControlName="lang">
-                        <mat-option value="en" *ngIf="getUILang() != 'en'">{{ "myaccount.langEN" | translate }}</mat-option>
-                        <mat-option value="pl" *ngIf="getUILang() != 'pl'">{{ "myaccount.langPL" | translate }}</mat-option>
-                        <mat-option value="cs" *ngIf="getUILang() != 'cs'">{{ "myaccount.langCS" | translate }}</mat-option>
-                        <mat-option value="tr" *ngIf="getUILang() != 'tr'">{{ "myaccount.langTR" | translate }}</mat-option>
+                        <mat-option value="en" *ngIf="getUILang() != 'en'">{{ "myaccount.langEN" | translate
+                            }}</mat-option>
+                        <mat-option value="pl" *ngIf="getUILang() != 'pl'">{{ "myaccount.langPL" | translate
+                            }}</mat-option>
+                        <mat-option value="cs" *ngIf="getUILang() != 'cs'">{{ "myaccount.langCS" | translate
+                            }}</mat-option>
+                        <mat-option value="tr" *ngIf="getUILang() != 'tr'">{{ "myaccount.langTR" | translate
+                            }}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </p>
