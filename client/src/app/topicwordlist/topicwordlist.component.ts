@@ -36,7 +36,8 @@ export class TopicwordlistComponent {
 
         if (all) {
           for (let i = 0; i < this.wlist.length; i++) {
-            this.learnService.getSentences(1, [this.wlist[i].speechpart + '=' + this.wlist[i].v_id, 'lang=' + this.route.snapshot.params['lang']]).subscribe({
+            this.learnService.getSentences(1, [this.wlist[i].speechpart + '=' + this.wlist[i].v_id,
+            'lang=' + this.route.snapshot.params['lang'], 'uilang=' + localStorage.getItem('lang')]).subscribe({
               next: sentences => {
                 this.sentences[i] = sentences[0]
               }
