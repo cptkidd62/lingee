@@ -83,9 +83,9 @@ exports.Repository = class Repository {
         let data2 = await this.pool.query("select ta.v_id, ta.word, uvp.progress, v.v_speechpart as speechpart from " +
             table + " ta\
                     join vocab_topics vt on ta.v_id = vt.v_id\
-                    left join (select * from user_vocab_progress uvp where uvp.u_id = $1) as uvp on uvp.v_id = ta.v_id\
+                    left join (select * from user_vocab_progress uvp where uvp.u_id = $1 and uvp.l_code = $2) as uvp on uvp.v_id = ta.v_id\
                     join vocab v on v.v_id = vt.v_id\
-                    where vt.tl_id = $2", [u_id, tl_id])
+                    where vt.tl_id = $3", [u_id, lang, tl_id])
         return data2.rows
     }
 
