@@ -7,7 +7,7 @@ exports.gptConnector = class gptConnector {
 
     async genSentence(lang, sent, words) {
         const response = await this.openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4",
             messages: [
                 {
                     "role": "user",
@@ -20,7 +20,9 @@ exports.gptConnector = class gptConnector {
             frequency_penalty: 0,
             presence_penalty: 0,
         });
-        return response.choices[0].message.content
+        let res = response.choices[0].message.content
+        res = res.replace(/\"/g, "")
+        return res
     }
 
     async checkTranslation() {}
