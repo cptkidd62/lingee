@@ -3,9 +3,11 @@
                 <mat-icon>home</mat-icon><span>Lingee</span>
         </a>
         <span class="example-spacer"></span>
-        <button mat-button [matMenuTriggerFor]="coursemenu" aria-label="Course language selection menu">
+        <button *ngIf="this.authService.isSignedIn()" mat-raised-button [matMenuTriggerFor]="coursemenu" aria-label="Course language selection menu" color="accent">
                 <mat-icon>school</mat-icon>
-                <span>Active course</span>
+                <span>Active course:</span>
+                <span class="fi fi-{{getCourseLang() == 'cs' ? 'cz' : getCourseLang()}}"
+                        style="margin-left: 1em;"></span>
         </button>
         <mat-menu #coursemenu="matMenu">
                 <button mat-menu-item (click)="changeCourse('en')" *ngIf="getUILang() != 'en'">
