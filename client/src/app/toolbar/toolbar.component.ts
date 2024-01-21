@@ -67,8 +67,4 @@ export class ToolbarComponent {
       })
     }
   }
-
-  test() {
-    console.log('click')
-  }
 }
