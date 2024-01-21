@@ -1,61 +1,66 @@
-<form [formGroup]="signupForm">
-    <p>
-        <mat-form-field appearance="fill" color="accent">
-            <mat-label>{{ "signup.namelabel" | translate }}</mat-label>
-            <input matInput id="name" type="text" placeholder="John Doe" formControlName="name">
-            <mat-error *ngIf="signupForm.controls['name'].invalid 
+<mat-card class="signup-card">
+    <mat-card-content>
+        <form [formGroup]="signupForm">
+            <p>
+                <mat-form-field appearance="fill" color="accent">
+                    <mat-label>{{ "signup.namelabel" | translate }}</mat-label>
+                    <input matInput id="name" type="text" placeholder="John Doe" formControlName="name">
+                    <mat-error *ngIf="signupForm.controls['name'].invalid 
                     && (signupForm.controls['name'].dirty || signupForm.controls['name'].touched) 
                     && signupForm.controls['name'].errors?.['required']">{{ "signup.nameerror" | translate
-                }}</mat-error>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="fill" color="accent">
-            <mat-label>{{ "signup.loginlabel" | translate }}</mat-label>
-            <input matInput id="login" type="text" placeholder="johndoe00" formControlName="login">
-            <mat-error *ngIf="signupForm.controls['login'].invalid 
+                        }}</mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="fill" color="accent">
+                    <mat-label>{{ "signup.loginlabel" | translate }}</mat-label>
+                    <input matInput id="login" type="text" placeholder="johndoe00" formControlName="login">
+                    <mat-error *ngIf="signupForm.controls['login'].invalid 
                     && (signupForm.controls['login'].dirty || signupForm.controls['login'].touched) 
                     && signupForm.controls['login'].errors?.['required']">{{ "signup.loginerror" | translate
-                }}</mat-error>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="fill" color="accent">
-            <mat-label>{{ "signup.emaillabel" | translate }}</mat-label>
-            <input matInput id="email" type="email" placeholder="johndoe@example.com" formControlName="email">
-            <mat-error *ngIf="signupForm.controls['email'].invalid 
+                        }}</mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="fill" color="accent">
+                    <mat-label>{{ "signup.emaillabel" | translate }}</mat-label>
+                    <input matInput id="email" type="email" placeholder="johndoe@example.com" formControlName="email">
+                    <mat-error *ngIf="signupForm.controls['email'].invalid 
                     && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched) 
                     && signupForm.controls['email'].errors?.['required']">{{ "signup.emailerror" | translate
-                }}</mat-error>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="fill" color="accent">
-            <mat-label>{{ "signup.pwdlabel" | translate }}</mat-label>
-            <input matInput id="pwd" [type]="hide ? 'password' : 'text'" formControlName="pwd">
-            <mat-error *ngIf="signupForm.controls['pwd'].invalid 
+                        }}</mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="fill" color="accent">
+                    <mat-label>{{ "signup.pwdlabel" | translate }}</mat-label>
+                    <input matInput id="pwd" [type]="hide ? 'password' : 'text'" formControlName="pwd">
+                    <mat-error *ngIf="signupForm.controls['pwd'].invalid 
                     && (signupForm.controls['pwd'].dirty || signupForm.controls['pwd'].touched) 
                     && signupForm.controls['pwd'].errors?.['required']">{{ "signup.pwderror" | translate }}</mat-error>
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="fill" color="accent">
-            <mat-label>{{ "signup.rpwdlabel" | translate }}</mat-label>
-            <input matInput id="rpwd" [type]="hide ? 'password' : 'text'" formControlName="rpwd">
-            <mat-error *ngIf="signupForm.invalid 
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="fill" color="accent">
+                    <mat-label>{{ "signup.rpwdlabel" | translate }}</mat-label>
+                    <input matInput id="rpwd" [type]="hide ? 'password' : 'text'" formControlName="rpwd">
+                    <mat-error *ngIf="signupForm.invalid 
                     && (signupForm.dirty || signupForm.touched) 
                     && signupForm.errors?.['notEqual']">{{ "signup.rpwderror" | translate }}</mat-error>
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-        </mat-form-field>
-    </p>
-    <div *ngIf="errMsg != ''" class="form-alert-msg">{{errMsg}}</div>
-    <button mat-raised-button color="accent" type="submit" [disabled]="!signupForm.valid" (click)="signupSubmit()">{{
-        "signup.confirm" | translate }}</button>
-</form>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+            </p>
+            <div *ngIf="errMsg != ''" class="form-alert-msg">{{errMsg}}</div>
+            <button mat-raised-button color="accent" type="submit" [disabled]="!signupForm.valid"
+                (click)="signupSubmit()">{{
+                "signup.confirm" | translate }}</button>
+        </form>
+    </mat-card-content>
+</mat-card>

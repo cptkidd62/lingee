@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 
 @Component({
@@ -20,6 +21,7 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatCardModule,
     TranslateModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
