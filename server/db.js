@@ -105,6 +105,14 @@ exports.Repository = class Repository {
                 VALUES ($1, $2, 1, $3) on conflict (u_id, v_id, l_code) do nothing", [u_id, v_id, lang])
     }
 
+    async getAllReviewsCount(u_id) {
+        let data = await this.pool.query("select l_code, count(*)\
+                from user_vocab_progress\
+                where u_id = $1 and next_review <= current_date\
+                group by l_code", [u_id])
+        return data.rows
+    }
+
     async getReviewsCount(lang, u_id) {
         let data = await this.pool.query("SELECT COUNT(v_id) FROM user_vocab_progress\
                 WHERE u_id = $1 AND l_code = $2 AND next_review <= current_date", [u_id, lang])

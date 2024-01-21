@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthService } from '../_services/auth.service';
 import { UserService } from '../_services/user.service';
+import { LearnService } from '../_services/learn.service';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 
 @Component({
@@ -23,10 +24,14 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
 export class ToolbarComponent {
   authService: AuthService = inject(AuthService);
   userService: UserService = inject(UserService)
+  learnService: LearnService = inject(LearnService)
+
+  revs: { l_code: string, count: number }[] = []
 
   constructor(private translate: TranslateService) {
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
+    this.refresh()
   };
 
   changeLanguage(language: string): void {
@@ -46,5 +51,20 @@ export class ToolbarComponent {
 
   getCourseLang(): string | null {
     return localStorage.getItem('currcourse')
+  }
+
+  getRevs(lang: string): number {
+    let v = this.revs.find(e => e.l_code == lang)
+    return v ? v.count : 0
+  }
+
+  refresh() {
+    if (this.authService.isSignedIn()) {
+      this.learnService.getAllReviewsCount().subscribe({
+        next: data => {
+          this.revs = data
+        }
+      })
+    }
   }
 }

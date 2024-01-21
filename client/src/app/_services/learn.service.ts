@@ -40,6 +40,10 @@ export class LearnService {
     return this.http.get<number>(this.url + `/reviews/${localStorage.getItem('currcourse')}/count`);
   }
 
+  getAllReviewsCount(): Observable<{ l_code: string, count: number }[]> {
+    return this.http.get<{ l_code: string, count: number }[]>(this.url + '/reviews/count/all');
+  }
+
   getReviews(): Observable<Array<Topicwordview>> {
     return this.http.get<Array<Topicwordview>>(this.url + '/reviews/' + localStorage.getItem('currcourse'));
   }

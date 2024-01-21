@@ -144,6 +144,11 @@ app.get("/reviews/:lang", async (req, res) => {
     res.json(data)
 })
 
+app.get("/reviews/count/all", async (req, res) => {
+    let data = await repo.getAllReviewsCount(req.auth.id)
+    res.json(data)
+})
+
 app.get("/reviews/:lang/count", async (req, res) => {
     let cnt = await repo.getReviewsCount(req.params.lang, req.auth.id)
     res.json(cnt)
