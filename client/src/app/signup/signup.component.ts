@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 
 @Component({
@@ -22,6 +23,7 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
     MatButtonModule,
     MatIconModule,
     MatCardModule,
+    MatSelectModule,
     TranslateModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
@@ -43,6 +45,7 @@ export class SignupComponent {
     email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
     pwd: new FormControl('', Validators.required),
     rpwd: new FormControl('', Validators.required),
+    lang: new FormControl('', Validators.required),
   }, [this.passwordEqualityValidator()])
 
   passwordEqualityValidator(): ValidatorFn {
@@ -66,11 +69,19 @@ export class SignupComponent {
       password: this.signupForm.value.pwd!
     };
     console.log(sdata);
-    this.authService.signup(sdata).subscribe({
+    this.authService.signup(sdata, this.signupForm.value.lang!, localStorage.getItem('lang')!).subscribe({
       complete: () => { this.router.navigate(['']) },
-      next: data => { this.authService.setSession(data as Jwtoken); this.errMsg = "" },
+      next: data => {
+        this.authService.setSession(data as Jwtoken);
+        localStorage.setItem('currcourse', this.signupForm.value.lang!)
+        this.errMsg = ""
+      },
       error: err => { console.log(err); this.errMsg = err.error.message }
     });
     console.log("done");
+  }
+
+  getUILang(): string | null {
+    return localStorage.getItem('lang')
   }
 }

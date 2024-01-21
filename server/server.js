@@ -106,10 +106,12 @@ app.post("/auth/signup", async (req, res) => {
         let hash = await bcrypt.hash(sdata.password, 12);
         sdata.password = hash;
         await repo.addUsr(sdata);
-        const jwtBearer = jwt.sign({ id: sdata.id }, process.env.RSA_PRIVATE_KEY, {
+        let { id, _ } = await repo.getPasswordForUsr(sdata.login);
+        const jwtBearer = jwt.sign({ id: id }, process.env.RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
             expiresIn: expirytm
         })
+        await repo.addUsrPreferences(id, req.body.l1, req.body.l2)
         res.json({ idToken: jwtBearer, expiresIn: expirytm });
     }
 });

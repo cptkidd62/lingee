@@ -57,6 +57,17 @@
                     </button>
                 </mat-form-field>
             </p>
+            <p>
+                <mat-form-field color="accent">
+                    <mat-label>Select your first course</mat-label>
+                    <mat-select id="lang" formControlName="lang">
+                        <mat-option value="en" *ngIf="getUILang() != 'en'">{{ "myaccount.langEN" | translate }}</mat-option>
+                        <mat-option value="pl" *ngIf="getUILang() != 'pl'">{{ "myaccount.langPL" | translate }}</mat-option>
+                        <mat-option value="cs" *ngIf="getUILang() != 'cs'">{{ "myaccount.langCS" | translate }}</mat-option>
+                        <mat-option value="tr" *ngIf="getUILang() != 'tr'">{{ "myaccount.langTR" | translate }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </p>
             <div *ngIf="errMsg != ''" class="form-alert-msg">{{errMsg}}</div>
             <button mat-raised-button color="accent" type="submit" [disabled]="!signupForm.valid"
                 (click)="signupSubmit()">{{
