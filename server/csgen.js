@@ -25,11 +25,11 @@ exports.Czech = class Czech {
                     usedwords.push(await repo.getWordInfo('cs', 'adverb', a))
                     return a
                 }))
-                usedwords.push('być')
+                usedwords.push('být')
                 break
             case 'tohave':
                 let np2 = pattern[1]
-                usedwords.push(await repo.getWordInfo('pl', 'noun', np2[1]))
+                usedwords.push(await repo.getWordInfo('cs', 'noun', np2[1]))
                 await Promise.all(np2[0].adjectives.map(async a => {
                     usedwords.push(await repo.getWordInfo('cs', 'adjective', a))
                     return a
@@ -38,7 +38,7 @@ exports.Czech = class Czech {
                     usedwords.push(await repo.getWordInfo('cs', 'adverb', a))
                     return a
                 }))
-                usedwords.push('mieć')
+                usedwords.push('mít')
                 break
             case 'dosth':
                 let np3 = pattern[1]
