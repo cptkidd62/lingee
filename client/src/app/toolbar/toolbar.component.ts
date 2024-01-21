@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthService } from '../_services/auth.service';
+import { UserService } from '../_services/user.service';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 
 @Component({
@@ -21,6 +22,7 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
 })
 export class ToolbarComponent {
   authService: AuthService = inject(AuthService);
+  userService: UserService = inject(UserService)
 
   constructor(private translate: TranslateService) {
     translate.setDefaultLang('en');
@@ -30,10 +32,12 @@ export class ToolbarComponent {
   changeLanguage(language: string): void {
     this.translate.use(language);
     localStorage.setItem('lang', language)
+    this.userService.setPreferences().subscribe({})
   }
 
   changeCourse(language: string): void {
     localStorage.setItem('currcourse', language)
+    this.userService.setPreferences().subscribe({})
   }
 
   getUILang(): string | null {

@@ -57,6 +57,11 @@ app.get("/user", async (req, res) => {
     res.json(usr)
 });
 
+app.post("/user/prefs", async (req, res) => {
+    await repo.setUsrPreferences(req.auth.id, req.body.last_course_code, req.body.ui_code)
+    res.json({ status: 'ok' })
+})
+
 app.post("/auth/signin", async (req, res) => {
     console.log("login attempt");
     console.log(req.body.login, req.body.password);

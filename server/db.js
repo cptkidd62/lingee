@@ -62,6 +62,10 @@ exports.Repository = class Repository {
         return data.rows[0]
     }
 
+    async setUsrPreferences(usrid, c_code, ui_code) {
+        await this.pool.query("update user_preferences set last_course_code = $1, ui_code = $2 where u_id = $3", [c_code, ui_code, usrid])
+    }
+
     async getAllTopics() {
         let data1 = await this.pool.query("SELECT * FROM topics_grammar");
         let data2 = await this.pool.query("SELECT * FROM topics_lexical");
