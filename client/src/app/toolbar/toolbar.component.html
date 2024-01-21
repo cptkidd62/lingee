@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-        <a mat-button href="/">
+        <a mat-button href="/" (click)="test()">
                 <mat-icon>home</mat-icon><span>Lingee</span>
         </a>
         <span class="example-spacer"></span>
@@ -11,26 +11,26 @@
                         style="margin-left: 1em;"></span>
         </button>
         <mat-menu #coursemenu="matMenu">
-                <button mat-menu-item (click)="changeCourse('en')" *ngIf="getUILang() != 'en'">
+                <a mat-menu-item href="/" (click)="changeCourse('en')" *ngIf="getUILang() != 'en'">
                         <span class="fi fi-us" style="margin-right: 1em;"></span>
                         <span>{{ "myaccount.langEN" | translate }} {{getRevs('en') ? '(' + getRevs('en') + ')' :
                                 ''}}</span>
-                </button>
-                <button mat-menu-item (click)="changeCourse('pl')" *ngIf="getUILang() != 'pl'">
+                </a>
+                <a mat-menu-item href="/" (click)="changeCourse('pl')" *ngIf="getUILang() != 'pl'">
                         <span class="fi fi-pl" style="margin-right: 1em;"></span>
                         <span>{{ "myaccount.langPL" | translate }} {{getRevs('pl') ? '(' + getRevs('pl') + ')' :
                                 ''}}</span>
-                </button>
-                <button mat-menu-item (click)="changeCourse('cs')" *ngIf="getUILang() != 'cs'">
+                </a>
+                <a mat-menu-item href="/" (click)="changeCourse('cs')" *ngIf="getUILang() != 'cs'">
                         <span class="fi fi-cz" style="margin-right: 1em;"></span>
                         <span>{{ "myaccount.langCS" | translate }} {{getRevs('cs') ? '(' + getRevs('cs') + ')' :
                                 ''}}</span>
-                </button>
-                <button mat-menu-item (click)="changeCourse('tr')" *ngIf="getUILang() != 'tr'">
+                </a>
+                <a mat-menu-item href="/" (click)="changeCourse('tr')" *ngIf="getUILang() != 'tr'">
                         <span class="fi fi-tr" style="margin-right: 1em;"></span>
                         <span>{{ "myaccount.langTR" | translate }} {{getRevs('tr') ? '(' + getRevs('tr') + ')' :
                                 ''}}</span>
-                </button>
+                </a>
         </mat-menu>
         <button mat-icon-button [matMenuTriggerFor]="langmenu" aria-label="UI language selection menu">
                 <mat-icon>language</mat-icon>
