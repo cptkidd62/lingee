@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatListModule } from '@angular/material/list';
 import { LearnService } from '../_services/learn.service';
+import { AuthService } from '../_services/auth.service';
 import { TopicGrammar } from '../topicgrammar';
 import { TopicLexical } from '../topiclexical';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
@@ -27,6 +28,7 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
 })
 export class HomeComponent {
   learnService: LearnService = inject(LearnService)
+  authService: AuthService = inject(AuthService)
   revs: { next_review: string, count: number }[] = []
   srevs: number = 0
   topics: { grammar: Array<TopicGrammar>, lexical: Array<TopicLexical> } = { grammar: [], lexical: [] }

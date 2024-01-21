@@ -1,4 +1,4 @@
-<mat-tab-group dynamicHeight color="accent">
+<mat-tab-group dynamicHeight color="accent" *ngIf="authService.isSignedIn()">
     <mat-tab [label]="'main.reviews' | translate">
         <div class="home-tab">
             <h3>For today: {{srevs}}</h3>
@@ -28,3 +28,4 @@
         </div>
     </mat-tab>
 </mat-tab-group>
+<div class="msg-cont" *ngIf="!authService.isSignedIn()">Join to learn 4 languages!</div>
