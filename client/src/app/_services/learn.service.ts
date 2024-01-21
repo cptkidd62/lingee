@@ -36,8 +36,8 @@ export class LearnService {
     return this.http.post(this.url + '/reviews/add', { wlist: wlist, lang: localStorage.getItem('currcourse') }, { responseType: 'json', withCredentials: true })
   }
 
-  getReviewsCount(): Observable<number> {
-    return this.http.get<number>(this.url + `/reviews/${localStorage.getItem('currcourse')}/count`);
+  getReviewsCount(): Observable<{ next_review: string, count: number }[]> {
+    return this.http.get<{ next_review: string, count: number }[]>(this.url + `/reviews/${localStorage.getItem('currcourse')}/count`);
   }
 
   getAllReviewsCount(): Observable<{ l_code: string, count: number }[]> {

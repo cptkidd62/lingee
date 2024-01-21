@@ -114,9 +114,13 @@ exports.Repository = class Repository {
     }
 
     async getReviewsCount(lang, u_id) {
-        let data = await this.pool.query("SELECT COUNT(v_id) FROM user_vocab_progress\
-                WHERE u_id = $1 AND l_code = $2 AND next_review <= current_date", [u_id, lang])
-        return data.rows[0].count
+        let data = await this.pool.query("select next_review, count(*)\
+                from user_vocab_progress\
+                where u_id = $1 and l_code = $2\
+                group by next_review\
+                order by next_review asc\
+                limit 20", [u_id, lang])
+        return data.rows
     }
 
     async getReviews(lang, u_id) {

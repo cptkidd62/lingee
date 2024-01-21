@@ -15,11 +15,11 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
 })
 export class HomeComponent {
   learnService: LearnService = inject(LearnService)
-  revCount: number = 0
+  revs: { next_review: string, count: number }[] = []
 
   constructor(private translate: TranslateService) {
     this.learnService.getReviewsCount().subscribe({
-      next: data => this.revCount = data
+      next: data => this.revs = data
     })
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');

@@ -1,2 +1,3 @@
-<nav><a routerLink="/review">{{ "main.reviews" | translate }} ({{revCount}})</a></nav>
+<nav><a routerLink="/review">{{ "main.reviews" | translate }}</a></nav>
+<p *ngFor="let r of revs">{{r.next_review.slice(0, 10)}}, {{r.count}}</p>
 <nav><a routerLink="/topics">{{ "main.topics" | translate }}</a></nav>
