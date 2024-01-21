@@ -73,8 +73,8 @@ app.post("/auth/signin", async (req, res) => {
             algorithm: 'RS256',
             expiresIn: expirytm
         })
-        const crs = await repo.getCoursesForUsr(id)
-        res.json({ token: { idToken: jwtBearer, expiresIn: expirytm }, courses: crs });
+        const prf = await repo.getUsrPreferences(id)
+        res.json({ token: { idToken: jwtBearer, expiresIn: expirytm }, preferences: prf });
     } else {
         return res.status(403).send({
             success: false,

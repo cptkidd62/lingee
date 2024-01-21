@@ -55,12 +55,11 @@ exports.Repository = class Repository {
         }
     }
 
-    async getCoursesForUsr(usrid) {
-        let data = await this.pool.query("select l.l_id, l.l_code, l.l_propname\
-                from user_courses uc\
-                left join langs l ON l.l_id = uc.learn_id\
-                where uc.u_id = $1", [usrid])
-        return data.rows
+    async getUsrPreferences(usrid) {
+        let data = await this.pool.query("select last_course_code, ui_code\
+                from user_preferences\
+                where u_id = $1", [usrid])
+        return data.rows[0]
     }
 
     async getAllTopics() {
@@ -93,39 +92,33 @@ exports.Repository = class Repository {
     }
 
     async addWordToReviews(lang, u_id, v_id) {
-        let data = await this.pool.query("SELECT l_id FROM langs WHERE l_code = $1", [lang])
-        let lid = data.rows[0].l_id
-        await this.pool.query("INSERT INTO user_vocab_progress (u_id, v_id, progress, l_id) VALUES ($1, $2, 1, $3) on conflict (u_id, v_id, l_id) do nothing", [u_id, v_id, lid])
+        await this.pool.query("INSERT INTO user_vocab_progress (u_id, v_id, progress, l_code)\
+                VALUES ($1, $2, 1, $3) on conflict (u_id, v_id, l_code) do nothing", [u_id, v_id, lang])
     }
 
     async getReviewsCount(lang, u_id) {
-        let data1 = await this.pool.query("SELECT l_id FROM langs WHERE l_code = $1", [lang])
-        let lid = data1.rows[0].l_id
-        let data2 = await this.pool.query("SELECT COUNT(v_id) FROM user_vocab_progress WHERE u_id = $1 AND l_id = $2 AND next_review <= current_date", [u_id, lid])
-        return data2.rows[0].count
+        let data = await this.pool.query("SELECT COUNT(v_id) FROM user_vocab_progress\
+                WHERE u_id = $1 AND l_code = $2 AND next_review <= current_date", [u_id, lang])
+        return data.rows[0].count
     }
 
     async getReviews(lang, u_id) {
-        let data1 = await this.pool.query("SELECT l_id FROM langs WHERE l_code = $1", [lang])
-        let lid = data1.rows[0].l_id
-        let data2 = await this.pool.query("select uvp.v_id, null as word, uvp.progress, tl.tl_type as speechpart from\
+        let data = await this.pool.query("select uvp.v_id, null as word, uvp.progress, tl.tl_type as speechpart from\
                 (select uvp.v_id as v_id, uvp.progress as progress from user_vocab_progress uvp\
-                where uvp.u_id = $1 and uvp.l_id = $2 and uvp.next_review <= current_date) as uvp\
+                where uvp.u_id = $1 and uvp.l_code = $2 and uvp.next_review <= current_date) as uvp\
                 join vocab_topics vt on uvp.v_id = vt.v_id\
-                join topics_lexical tl on vt.tl_id = tl.tl_id", [u_id, lid])
-        return data2.rows
+                join topics_lexical tl on vt.tl_id = tl.tl_id", [u_id, lang])
+        return data.rows
     }
 
     async updateWordReviews(lang, u_id, v_id, correct) {
-        let data1 = await this.pool.query("SELECT l_id FROM langs WHERE l_code = $1", [lang])
-        let lid = data1.rows[0].l_id
         if (correct) {
             await this.pool.query("UPDATE user_vocab_progress SET next_review = next_review + progress * progress, progress = progress + 1\
-                                    WHERE l_id = $1 AND u_id = $2 AND v_id = $3", [lid, u_id, v_id])
+                                    WHERE l_code = $1 AND u_id = $2 AND v_id = $3", [lang, u_id, v_id])
         }
         else {
             await this.pool.query("UPDATE user_vocab_progress SET next_review = current_date, progress = 1\
-                                    WHERE l_id = $1 AND u_id = $2 AND v_id = $3", [lid, u_id, v_id])
+                                    WHERE l_code = $1 AND u_id = $2 AND v_id = $3", [lang, u_id, v_id])
         }
     }
 }

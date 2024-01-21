@@ -152,35 +152,12 @@ ALTER TABLE public.en_verbs OWNER TO cptkidd;
 --
 
 CREATE TABLE public.langs (
-    l_id integer NOT NULL,
     l_code character varying NOT NULL,
     l_propname character varying NOT NULL
 );
 
 
 ALTER TABLE public.langs OWNER TO cptkidd;
-
---
--- Name: langs_l_id_seq; Type: SEQUENCE; Schema: public; Owner: cptkidd
---
-
-CREATE SEQUENCE public.langs_l_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.langs_l_id_seq OWNER TO cptkidd;
-
---
--- Name: langs_l_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: cptkidd
---
-
-ALTER SEQUENCE public.langs_l_id_seq OWNED BY public.langs.l_id;
-
 
 --
 -- Name: pl_adjectives; Type: TABLE; Schema: public; Owner: cptkidd
@@ -376,19 +353,6 @@ CREATE TABLE public.tr_verbs (
 ALTER TABLE public.tr_verbs OWNER TO cptkidd;
 
 --
--- Name: user_courses; Type: TABLE; Schema: public; Owner: cptkidd
---
-
-CREATE TABLE public.user_courses (
-    u_id integer NOT NULL,
-    learn_id integer NOT NULL,
-    from_id integer NOT NULL
-);
-
-
-ALTER TABLE public.user_courses OWNER TO cptkidd;
-
---
 -- Name: user_grammar_progress; Type: TABLE; Schema: public; Owner: cptkidd
 --
 
@@ -401,6 +365,19 @@ CREATE TABLE public.user_grammar_progress (
 
 
 ALTER TABLE public.user_grammar_progress OWNER TO cptkidd;
+
+--
+-- Name: user_preferences; Type: TABLE; Schema: public; Owner: cptkidd
+--
+
+CREATE TABLE public.user_preferences (
+    u_id integer NOT NULL,
+    last_course_code character varying,
+    ui_code character varying
+);
+
+
+ALTER TABLE public.user_preferences OWNER TO cptkidd;
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: cptkidd
@@ -448,7 +425,7 @@ CREATE TABLE public.user_vocab_progress (
     v_id integer NOT NULL,
     progress integer DEFAULT 1 NOT NULL,
     next_review date DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    l_id integer NOT NULL
+    l_code character varying NOT NULL
 );
 
 
@@ -499,13 +476,6 @@ ALTER SEQUENCE public.vocab_v_id_seq OWNER TO cptkidd;
 --
 
 ALTER SEQUENCE public.vocab_v_id_seq OWNED BY public.vocab.v_id;
-
-
---
--- Name: langs l_id; Type: DEFAULT; Schema: public; Owner: cptkidd
---
-
-ALTER TABLE ONLY public.langs ALTER COLUMN l_id SET DEFAULT nextval('public.langs_l_id_seq'::regclass);
 
 
 --
@@ -932,11 +902,11 @@ COPY public.en_verbs (v_id, present, third, gerund, past, prep, word) FROM stdin
 -- Data for Name: langs; Type: TABLE DATA; Schema: public; Owner: cptkidd
 --
 
-COPY public.langs (l_id, l_code, l_propname) FROM stdin;
-1	tr	türkçe
-2	en	English
-3	pl	polski
-4	cs	čeština
+COPY public.langs (l_code, l_propname) FROM stdin;
+tr	türkçe
+en	English
+pl	polski
+cs	čeština
 \.
 
 
@@ -1382,18 +1352,6 @@ COPY public.tr_verbs (v_id, root, "case", aorist, word) FROM stdin;
 
 
 --
--- Data for Name: user_courses; Type: TABLE DATA; Schema: public; Owner: cptkidd
---
-
-COPY public.user_courses (u_id, learn_id, from_id) FROM stdin;
-1	1	2
-2	2	1
-3	2	1
-4	1	2
-\.
-
-
---
 -- Data for Name: user_grammar_progress; Type: TABLE DATA; Schema: public; Owner: cptkidd
 --
 
@@ -1402,27 +1360,41 @@ COPY public.user_grammar_progress (u_id, tg_id, progress, next_review) FROM stdi
 
 
 --
+-- Data for Name: user_preferences; Type: TABLE DATA; Schema: public; Owner: cptkidd
+--
+
+COPY public.user_preferences (u_id, last_course_code, ui_code) FROM stdin;
+1	tr	en
+2	pl	cs
+3	cs	tr
+4	en	pl
+\.
+
+
+--
 -- Data for Name: user_vocab_progress; Type: TABLE DATA; Schema: public; Owner: cptkidd
 --
 
-COPY public.user_vocab_progress (u_id, v_id, progress, next_review, l_id) FROM stdin;
-1	9	6	2024-02-11	1
-1	112	1	2024-01-17	1
-1	110	1	2024-01-17	1
-1	1	3	2024-01-18	1
-2	1	4	2024-01-17	1
-1	2	2	2024-01-18	1
-1	5	6	2024-01-19	1
-1	6	4	2024-01-19	1
-1	7	5	2024-01-19	1
-1	8	5	2024-01-19	1
-1	11	2	2024-01-20	1
-1	10	1	2024-01-17	1
-1	12	3	2024-01-20	1
-1	3	3	2024-01-21	1
-1	111	2	2024-01-18	1
-1	4	3	2024-01-21	1
-1	109	3	2024-01-21	1
+COPY public.user_vocab_progress (u_id, v_id, progress, next_review, l_code) FROM stdin;
+1	9	6	2024-02-11	tr
+1	112	1	2024-01-17	tr
+1	110	1	2024-01-17	tr
+2	1	4	2024-01-17	tr
+1	2	2	2024-01-18	tr
+1	5	6	2024-01-19	tr
+1	6	4	2024-01-19	tr
+1	7	5	2024-01-19	tr
+1	12	3	2024-01-20	tr
+1	3	3	2024-01-21	tr
+1	111	2	2024-01-18	tr
+1	4	3	2024-01-21	tr
+1	10	1	2024-01-21	tr
+1	129	1	2024-01-21	tr
+1	130	1	2024-01-21	tr
+1	109	1	2024-01-21	tr
+1	8	1	2024-01-21	tr
+1	1	1	2024-01-21	tr
+1	11	1	2024-01-21	tr
 \.
 
 
@@ -1770,13 +1742,6 @@ COPY public.vocab_topics (v_id, tl_id) FROM stdin;
 
 
 --
--- Name: langs_l_id_seq; Type: SEQUENCE SET; Schema: public; Owner: cptkidd
---
-
-SELECT pg_catalog.setval('public.langs_l_id_seq', 4, true);
-
-
---
 -- Name: topics_grammar_tg_id_seq; Type: SEQUENCE SET; Schema: public; Owner: cptkidd
 --
 
@@ -1809,7 +1774,7 @@ SELECT pg_catalog.setval('public.vocab_v_id_seq', 156, true);
 --
 
 ALTER TABLE ONLY public.langs
-    ADD CONSTRAINT langs_pk PRIMARY KEY (l_id);
+    ADD CONSTRAINT langs_pk PRIMARY KEY (l_code);
 
 
 --
@@ -1833,7 +1798,7 @@ ALTER TABLE ONLY public.topics_lexical
 --
 
 ALTER TABLE ONLY public.user_vocab_progress
-    ADD CONSTRAINT user_vocab_progress_pk PRIMARY KEY (u_id, v_id, l_id);
+    ADD CONSTRAINT user_vocab_progress_pk PRIMARY KEY (u_id, v_id, l_code);
 
 
 --
@@ -2013,30 +1978,6 @@ ALTER TABLE ONLY public.tr_verbs
 
 
 --
--- Name: user_courses user_courses_langs_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
---
-
-ALTER TABLE ONLY public.user_courses
-    ADD CONSTRAINT user_courses_langs_fk FOREIGN KEY (learn_id) REFERENCES public.langs(l_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: user_courses user_courses_langs_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
---
-
-ALTER TABLE ONLY public.user_courses
-    ADD CONSTRAINT user_courses_langs_fk_1 FOREIGN KEY (from_id) REFERENCES public.langs(l_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: user_courses user_courses_users_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
---
-
-ALTER TABLE ONLY public.user_courses
-    ADD CONSTRAINT user_courses_users_fk FOREIGN KEY (u_id) REFERENCES public.users(u_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
 -- Name: user_grammar_progress user_grammar_vocab_topics_grammar_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
 --
 
@@ -2050,6 +1991,30 @@ ALTER TABLE ONLY public.user_grammar_progress
 
 ALTER TABLE ONLY public.user_grammar_progress
     ADD CONSTRAINT user_grammar_vocab_users_fk FOREIGN KEY (u_id) REFERENCES public.users(u_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: user_preferences user_preferences_langs_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.user_preferences
+    ADD CONSTRAINT user_preferences_langs_fk FOREIGN KEY (last_course_code) REFERENCES public.langs(l_code) ON UPDATE SET NULL ON DELETE SET NULL;
+
+
+--
+-- Name: user_preferences user_preferences_langs_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.user_preferences
+    ADD CONSTRAINT user_preferences_langs_fk_1 FOREIGN KEY (ui_code) REFERENCES public.langs(l_code) ON UPDATE SET NULL ON DELETE SET NULL;
+
+
+--
+-- Name: user_preferences user_preferences_users_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.user_preferences
+    ADD CONSTRAINT user_preferences_users_fk FOREIGN KEY (u_id) REFERENCES public.users(u_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -2073,7 +2038,7 @@ ALTER TABLE ONLY public.user_vocab_progress
 --
 
 ALTER TABLE ONLY public.user_vocab_progress
-    ADD CONSTRAINT user_vocab_progress_langs_fk FOREIGN KEY (l_id) REFERENCES public.langs(l_id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT user_vocab_progress_langs_fk FOREIGN KEY (l_code) REFERENCES public.langs(l_code) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
