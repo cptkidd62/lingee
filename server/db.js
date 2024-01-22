@@ -4,10 +4,12 @@ exports.Repository = class Repository {
     pool = null;
     constructor() {
         this.pool = new Pool({
-            user: "cptkidd",
-            host: "localhost",
-            database: "lingeedb",
+            user: process.env.DB_USER,
+            host: process.env.DB_HOST,
+            password: process.env.DB_PWD,
+            database: process.env.DB_NAME,
             port: 5432,
+            ssl: true
         });
     }
 
