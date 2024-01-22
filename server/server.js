@@ -23,14 +23,14 @@ const app = express();
 const verifyAuthenticated = ejwt({ secret: process.env.RSA_PUBLIC_KEY, algorithms: ["RS256"] });
 
 app.use(cors({
-    origin: 'http://localhost:4200',
+    origin: process.env.CLIENT_URL,
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser('1QVIQ7F7tJNa2fGwORfvl6bf6dfYoj63'));
+app.use(cookieParser(process.env.COOKIE));
 
 app.use((req, res, next) => {
     repo = new dbrepo.Repository();
