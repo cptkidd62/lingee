@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Topicwordview } from '../topicwordview';
 import { Sentence } from '../sentence';
 import { LearnService } from '../_services/learn.service';
@@ -12,6 +14,8 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
   standalone: true,
   imports: [CommonModule,
     MatProgressBarModule,
+    MatButtonModule,
+    MatIconModule,
     TranslateModule],
   templateUrl: './topicwordlist.component.html',
   styleUrls: ['./topicwordlist.component.scss']
