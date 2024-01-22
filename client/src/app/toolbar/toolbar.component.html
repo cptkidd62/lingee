@@ -7,7 +7,7 @@
                 aria-label="Course language selection menu" color="accent" (click)="refresh()">
                 <mat-icon>school</mat-icon>
                 <span>{{ "toolbar.active" | translate }}:</span>
-                <span class="fi fi-{{getCourseLang() == 'cs' ? 'cz' : getCourseLang()}}"
+                <span class="fi fi-{{getCourseLang() == 'cs' ? 'cz' : (getCourseLang() == 'en' ? 'us' : getCourseLang())}}"
                         style="margin-left: 1em;"></span>
         </button>
         <mat-menu #coursemenu="matMenu">
