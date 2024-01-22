@@ -170,6 +170,11 @@ app.post("/validate", async (req, res) => {
     res.json(ans)
 })
 
-app.listen(3000, () => {
+let port = process.env.PORT
+if (!port || port == '') {
+    port = 3000
+}
+
+app.listen(port, () => {
     console.log("Working on port 3000");
 });
