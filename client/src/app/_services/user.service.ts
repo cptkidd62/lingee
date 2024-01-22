@@ -11,7 +11,7 @@ export class UserService {
   constructor(
     private http: HttpClient) { }
 
-  url = 'http://localhost:3000/user';
+  url = 'https://lingee.onrender.com/user';
 
   getUser(): Observable<UserAccount> {
     return this.http.get<UserAccount>(this.url);

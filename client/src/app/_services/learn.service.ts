@@ -15,7 +15,7 @@ export class LearnService {
   constructor(
     private http: HttpClient) { }
 
-  url = 'http://localhost:3000';
+  url = 'https://lingee.onrender.com';
 
   getSentences(n: number, prms?: string[]): Observable<Array<Sentence>> {
     let extra: string = ''

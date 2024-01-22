@@ -13,7 +13,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  url = 'http://localhost:3000/auth';
+  url = 'https://lingee.onrender.com/auth';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
