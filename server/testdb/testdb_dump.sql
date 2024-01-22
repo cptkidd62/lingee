@@ -1364,10 +1364,11 @@ COPY public.user_grammar_progress (u_id, tg_id, progress, next_review) FROM stdi
 --
 
 COPY public.user_preferences (u_id, last_course_code, ui_code) FROM stdin;
-1	tr	en
 2	pl	cs
 3	cs	tr
 4	en	pl
+11	cs	en
+1	en	pl
 \.
 
 
@@ -1388,13 +1389,37 @@ COPY public.user_vocab_progress (u_id, v_id, progress, next_review, l_code) FROM
 1	3	3	2024-01-21	tr
 1	111	2	2024-01-18	tr
 1	4	3	2024-01-21	tr
-1	10	1	2024-01-21	tr
 1	129	1	2024-01-21	tr
 1	130	1	2024-01-21	tr
 1	109	1	2024-01-21	tr
 1	8	1	2024-01-21	tr
 1	1	1	2024-01-21	tr
 1	11	1	2024-01-21	tr
+11	109	1	2024-01-21	cs
+11	110	1	2024-01-21	cs
+11	111	1	2024-01-21	cs
+11	112	1	2024-01-21	cs
+1	130	2	2024-01-22	cs
+1	129	2	2024-01-22	cs
+1	115	2	2024-01-22	pl
+1	117	2	2024-01-22	pl
+1	113	2	2024-01-22	pl
+1	114	2	2024-01-22	pl
+1	10	2	2024-01-22	tr
+1	118	2	2024-01-22	pl
+1	116	2	2024-01-22	pl
+1	130	1	2024-01-21	pl
+1	129	1	2024-01-21	pl
+1	119	1	2024-01-22	en
+1	120	1	2024-01-22	en
+1	121	1	2024-01-22	en
+1	122	1	2024-01-22	en
+1	123	1	2024-01-22	en
+1	124	1	2024-01-22	en
+1	125	1	2024-01-22	en
+1	126	1	2024-01-22	en
+1	128	1	2024-01-22	en
+1	127	1	2024-01-22	en
 \.
 
 
@@ -1407,6 +1432,7 @@ COPY public.users (u_id, u_login, u_displayname, u_email, u_password) FROM stdin
 2	adam	Adam Erkek	erad@ben.tr	$2a$12$DxLwm3b3ckIGauOk9F/Xp.Jlo145Qxq03Z/uXCkOurlpMmK7J7GLy
 3	tina12	Tina T	tina@mail.com	$2a$12$v08dv5EKmtIy4jaTQgJVC.56n4mJ.1FILxPaCnkABAcpCqhk7BoxW
 4	livia	Liwia	liwia@mail.com	$2b$12$WtsE6y3209T48AGKBeDt3up6kUe3e9hRvjUh7eaYdq18eKFio.3uS
+11	anna	Anna	anna@mail.com	$2b$12$00W1.qmkqCjLwRo91/.GLuqkDJ/stpvQa3HXcxo2hq4m/ISoDmUsC
 \.
 
 
@@ -1759,7 +1785,7 @@ SELECT pg_catalog.setval('public.topics_lexical_tl_id_seq', 18, true);
 -- Name: user_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: cptkidd
 --
 
-SELECT pg_catalog.setval('public.user_user_id_seq', 5, true);
+SELECT pg_catalog.setval('public.user_user_id_seq', 11, true);
 
 
 --
@@ -1791,6 +1817,14 @@ ALTER TABLE ONLY public.topics_grammar
 
 ALTER TABLE ONLY public.topics_lexical
     ADD CONSTRAINT topics_lexical_pk PRIMARY KEY (tl_id);
+
+
+--
+-- Name: user_preferences user_preferences_un; Type: CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.user_preferences
+    ADD CONSTRAINT user_preferences_un UNIQUE (u_id);
 
 
 --
