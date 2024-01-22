@@ -21,6 +21,66 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: cs_adjectives; Type: TABLE; Schema: public; Owner: cptkidd
+--
+
+CREATE TABLE public.cs_adjectives (
+    v_id integer NOT NULL,
+    word character varying NOT NULL
+);
+
+
+ALTER TABLE public.cs_adjectives OWNER TO cptkidd;
+
+--
+-- Name: cs_adverbs; Type: TABLE; Schema: public; Owner: cptkidd
+--
+
+CREATE TABLE public.cs_adverbs (
+    v_id integer NOT NULL,
+    word character varying NOT NULL
+);
+
+
+ALTER TABLE public.cs_adverbs OWNER TO cptkidd;
+
+--
+-- Name: cs_nouns; Type: TABLE; Schema: public; Owner: cptkidd
+--
+
+CREATE TABLE public.cs_nouns (
+    v_id integer NOT NULL,
+    word character varying NOT NULL
+);
+
+
+ALTER TABLE public.cs_nouns OWNER TO cptkidd;
+
+--
+-- Name: cs_numerals; Type: TABLE; Schema: public; Owner: cptkidd
+--
+
+CREATE TABLE public.cs_numerals (
+    v_id integer NOT NULL,
+    word character varying NOT NULL
+);
+
+
+ALTER TABLE public.cs_numerals OWNER TO cptkidd;
+
+--
+-- Name: cs_verbs; Type: TABLE; Schema: public; Owner: cptkidd
+--
+
+CREATE TABLE public.cs_verbs (
+    v_id integer NOT NULL,
+    word character varying NOT NULL
+);
+
+
+ALTER TABLE public.cs_verbs OWNER TO cptkidd;
+
+--
 -- Name: en_adjectives; Type: TABLE; Schema: public; Owner: cptkidd
 --
 
@@ -92,7 +152,6 @@ ALTER TABLE public.en_verbs OWNER TO cptkidd;
 --
 
 CREATE TABLE public.langs (
-    l_id integer NOT NULL,
     l_code character varying NOT NULL,
     l_propname character varying NOT NULL
 );
@@ -101,26 +160,64 @@ CREATE TABLE public.langs (
 ALTER TABLE public.langs OWNER TO cptkidd;
 
 --
--- Name: langs_l_id_seq; Type: SEQUENCE; Schema: public; Owner: cptkidd
+-- Name: pl_adjectives; Type: TABLE; Schema: public; Owner: cptkidd
 --
 
-CREATE SEQUENCE public.langs_l_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+CREATE TABLE public.pl_adjectives (
+    v_id integer NOT NULL,
+    word character varying NOT NULL
+);
 
 
-ALTER SEQUENCE public.langs_l_id_seq OWNER TO cptkidd;
+ALTER TABLE public.pl_adjectives OWNER TO cptkidd;
 
 --
--- Name: langs_l_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: cptkidd
+-- Name: pl_adverbs; Type: TABLE; Schema: public; Owner: cptkidd
 --
 
-ALTER SEQUENCE public.langs_l_id_seq OWNED BY public.langs.l_id;
+CREATE TABLE public.pl_adverbs (
+    v_id integer NOT NULL,
+    word character varying NOT NULL
+);
 
+
+ALTER TABLE public.pl_adverbs OWNER TO cptkidd;
+
+--
+-- Name: pl_nouns; Type: TABLE; Schema: public; Owner: cptkidd
+--
+
+CREATE TABLE public.pl_nouns (
+    v_id integer NOT NULL,
+    word character varying NOT NULL
+);
+
+
+ALTER TABLE public.pl_nouns OWNER TO cptkidd;
+
+--
+-- Name: pl_numerals; Type: TABLE; Schema: public; Owner: cptkidd
+--
+
+CREATE TABLE public.pl_numerals (
+    v_id integer NOT NULL,
+    word character varying NOT NULL
+);
+
+
+ALTER TABLE public.pl_numerals OWNER TO cptkidd;
+
+--
+-- Name: pl_verbs; Type: TABLE; Schema: public; Owner: cptkidd
+--
+
+CREATE TABLE public.pl_verbs (
+    v_id integer NOT NULL,
+    word character varying NOT NULL
+);
+
+
+ALTER TABLE public.pl_verbs OWNER TO cptkidd;
 
 --
 -- Name: topics_grammar; Type: TABLE; Schema: public; Owner: cptkidd
@@ -256,19 +353,6 @@ CREATE TABLE public.tr_verbs (
 ALTER TABLE public.tr_verbs OWNER TO cptkidd;
 
 --
--- Name: user_courses; Type: TABLE; Schema: public; Owner: cptkidd
---
-
-CREATE TABLE public.user_courses (
-    u_id integer NOT NULL,
-    learn_id integer NOT NULL,
-    from_id integer NOT NULL
-);
-
-
-ALTER TABLE public.user_courses OWNER TO cptkidd;
-
---
 -- Name: user_grammar_progress; Type: TABLE; Schema: public; Owner: cptkidd
 --
 
@@ -281,6 +365,19 @@ CREATE TABLE public.user_grammar_progress (
 
 
 ALTER TABLE public.user_grammar_progress OWNER TO cptkidd;
+
+--
+-- Name: user_preferences; Type: TABLE; Schema: public; Owner: cptkidd
+--
+
+CREATE TABLE public.user_preferences (
+    u_id integer NOT NULL,
+    last_course_code character varying,
+    ui_code character varying
+);
+
+
+ALTER TABLE public.user_preferences OWNER TO cptkidd;
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: cptkidd
@@ -328,7 +425,7 @@ CREATE TABLE public.user_vocab_progress (
     v_id integer NOT NULL,
     progress integer DEFAULT 1 NOT NULL,
     next_review date DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    l_id integer NOT NULL
+    l_code character varying NOT NULL
 );
 
 
@@ -382,13 +479,6 @@ ALTER SEQUENCE public.vocab_v_id_seq OWNED BY public.vocab.v_id;
 
 
 --
--- Name: langs l_id; Type: DEFAULT; Schema: public; Owner: cptkidd
---
-
-ALTER TABLE ONLY public.langs ALTER COLUMN l_id SET DEFAULT nextval('public.langs_l_id_seq'::regclass);
-
-
---
 -- Name: topics_grammar tg_id; Type: DEFAULT; Schema: public; Owner: cptkidd
 --
 
@@ -414,6 +504,202 @@ ALTER TABLE ONLY public.users ALTER COLUMN u_id SET DEFAULT nextval('public.user
 --
 
 ALTER TABLE ONLY public.vocab ALTER COLUMN v_id SET DEFAULT nextval('public.vocab_v_id_seq'::regclass);
+
+
+--
+-- Data for Name: cs_adjectives; Type: TABLE DATA; Schema: public; Owner: cptkidd
+--
+
+COPY public.cs_adjectives (v_id, word) FROM stdin;
+1	červený
+2	žlutý
+3	modrý
+4	zelený
+5	oranžový
+6	černý
+7	bílý
+8	fialový
+9	růžový
+10	šedý
+11	hnědý
+12	barevný
+13	vysoký
+14	malý
+15	otylý
+16	štíhly
+17	hezký
+18	ošklivý
+19	šťastný
+20	smutný
+21	nervózní
+22	tvrdohlavý
+23	rozzlobený
+24	dobrý
+25	špatný
+26	směšný
+27	unavený
+28	mladý
+29	starý
+30	velký
+31	malý
+32	levný
+33	drahý
+34	nový
+35	starý
+36	zajímavý
+37	nudný
+38	dlouhý
+39	krátký
+\.
+
+
+--
+-- Data for Name: cs_adverbs; Type: TABLE DATA; Schema: public; Owner: cptkidd
+--
+
+COPY public.cs_adverbs (v_id, word) FROM stdin;
+129	tady
+130	tam
+131	teď
+132	tehdy
+133	pozdě
+134	brzy
+135	včera
+136	dnes
+137	zítra
+138	loni
+139	minulý týden
+140	příští rok
+141	příští týden
+142	rychle
+143	pomalu
+144	hodně
+145	špatně
+\.
+
+
+--
+-- Data for Name: cs_nouns; Type: TABLE DATA; Schema: public; Owner: cptkidd
+--
+
+COPY public.cs_nouns (v_id, word) FROM stdin;
+40	škola
+41	univerzita
+42	obhod
+43	supermarket
+44	dům
+45	letiště
+46	nádraží
+47	bazén
+48	posilovna
+49	pláž
+50	hotel
+51	museum
+52	matka
+53	otec
+54	babička
+55	dědeček
+56	těta
+57	strýc
+58	dcera
+59	syn
+60	sestra
+61	bratr
+62	sestřenice
+63	manžel
+64	manželka
+65	polévka
+66	maso
+67	jablko
+68	banán
+69	hruška
+70	švestka
+71	mrkev
+72	brambor
+73	rajče
+74	chleba
+75	ryba
+76	sendvič
+77	hamburger
+78	vejce
+79	sýr
+80	voda
+81	káva
+82	čaj
+83	džus
+84	mléko
+85	pivo
+86	víno
+87	kola
+88	kniha
+89	sešit
+90	učebnice
+91	propiska
+92	tužka
+93	nůžky
+94	pravítko
+95	kalkulačka
+96	telefon
+97	počítač
+98	auto
+99	židle
+100	lampa
+101	psací stůl
+102	postel
+103	taška
+104	krabice
+105	hra
+106	film
+107	hudba
+108	komiks
+\.
+
+
+--
+-- Data for Name: cs_numerals; Type: TABLE DATA; Schema: public; Owner: cptkidd
+--
+
+COPY public.cs_numerals (v_id, word) FROM stdin;
+146	nula
+147	jeden
+148	dva
+149	tři
+150	čtyři
+151	pět
+152	šest
+153	sedm
+154	osm
+155	devět
+156	deset
+\.
+
+
+--
+-- Data for Name: cs_verbs; Type: TABLE DATA; Schema: public; Owner: cptkidd
+--
+
+COPY public.cs_verbs (v_id, word) FROM stdin;
+109	mít rád
+110	nenávidět
+111	milovat
+112	adorovat
+113	jít
+114	běhat
+115	jet
+116	chodit
+117	plavat
+118	přichodit
+119	poslouchat
+120	slyšet
+121	vidět
+122	podívat se
+123	jíst
+124	pít
+125	kupovat
+126	prodávat
+127	brát
+128	používat
+\.
 
 
 --
@@ -616,9 +902,207 @@ COPY public.en_verbs (v_id, present, third, gerund, past, prep, word) FROM stdin
 -- Data for Name: langs; Type: TABLE DATA; Schema: public; Owner: cptkidd
 --
 
-COPY public.langs (l_id, l_code, l_propname) FROM stdin;
-1	tr	türkçe
-2	en	English
+COPY public.langs (l_code, l_propname) FROM stdin;
+tr	türkçe
+en	English
+pl	polski
+cs	čeština
+\.
+
+
+--
+-- Data for Name: pl_adjectives; Type: TABLE DATA; Schema: public; Owner: cptkidd
+--
+
+COPY public.pl_adjectives (v_id, word) FROM stdin;
+1	czerwony
+2	żółty
+3	niebieski
+4	zielony
+5	pomarańczowy
+6	czarny
+7	biały
+8	fioletowy
+9	różowy
+10	szary
+11	brązowy
+12	kolorowy
+13	wysoki
+14	niski
+15	otyły
+16	szczupły
+17	ładny
+18	brzydki
+19	szczęśliwy
+20	smutny
+21	nerwowy
+22	uparty
+23	wściekły
+24	dobry
+25	zły
+26	zabawny
+27	zmęczony
+28	młody
+29	stary
+30	duży
+31	mały
+32	tani
+33	drogi
+34	nowy
+35	stary
+36	ciekawy
+37	nudny
+38	długi
+39	krótki
+\.
+
+
+--
+-- Data for Name: pl_adverbs; Type: TABLE DATA; Schema: public; Owner: cptkidd
+--
+
+COPY public.pl_adverbs (v_id, word) FROM stdin;
+129	tutaj
+130	tam
+131	teraz
+132	wtedy
+133	późno
+134	wcześnie
+135	wczoraj
+136	dzisiaj
+137	jutro
+138	w zeszłym roku
+139	w zeszłym tygodniu
+140	w przyszłym roku
+141	w przyszłym tygodniu
+142	szybko
+143	powoli
+144	dobrze
+145	źle
+\.
+
+
+--
+-- Data for Name: pl_nouns; Type: TABLE DATA; Schema: public; Owner: cptkidd
+--
+
+COPY public.pl_nouns (v_id, word) FROM stdin;
+40	szkoła
+41	uniwersytet
+42	sklep
+43	supermarket
+44	dom
+45	lotnisko
+46	dworzec kolejowy
+47	basen
+48	siłownia
+49	plaża
+50	hotel
+51	muzeum
+52	matka
+53	ojciec
+54	babcia
+55	dziadek
+56	ciotka
+57	wujek
+58	córka
+59	syn
+60	siostra
+61	brat
+62	kuzyn
+63	mąż
+64	żona
+65	zupa
+66	mięso
+67	jabłko
+68	banan
+69	gruszka
+70	śliwka
+71	marchewka
+72	ziemniak
+73	pomidor
+74	chleb
+75	ryba
+76	kanapka
+77	hamburger
+78	jajko
+79	ser
+80	woda
+81	kawa
+82	herbata
+83	sok
+84	mleko
+85	piwo
+86	wino
+87	cola
+88	książka
+89	zeszyt
+90	podręcznik
+91	długopis
+92	ołówek
+93	nożyczki
+94	linijka
+95	kalkulator
+96	telefon
+97	komputer
+98	auto
+99	krzesło
+100	lampa
+101	biurko
+102	łóżko
+103	torba
+104	pudełko
+105	gra
+106	film
+107	muzyka
+108	komiks
+\.
+
+
+--
+-- Data for Name: pl_numerals; Type: TABLE DATA; Schema: public; Owner: cptkidd
+--
+
+COPY public.pl_numerals (v_id, word) FROM stdin;
+146	zero
+147	jeden
+148	dwa
+149	trzy
+150	cztery
+151	pięć
+152	sześć
+153	siedem
+154	osiem
+155	dziewięć
+156	dziesięć
+\.
+
+
+--
+-- Data for Name: pl_verbs; Type: TABLE DATA; Schema: public; Owner: cptkidd
+--
+
+COPY public.pl_verbs (v_id, word) FROM stdin;
+109	lubić
+110	nienawidzić
+111	kochać
+112	uwielbiać
+113	iść
+114	biec
+115	jechać
+116	chodzić
+117	pływać
+118	przychodzić
+119	słuchać
+120	słyszeć
+121	widzieć
+122	oglądać
+123	jeść
+124	pić
+125	kupować
+126	sprzedawać
+127	brać
+128	używać
 \.
 
 
@@ -868,18 +1352,6 @@ COPY public.tr_verbs (v_id, root, "case", aorist, word) FROM stdin;
 
 
 --
--- Data for Name: user_courses; Type: TABLE DATA; Schema: public; Owner: cptkidd
---
-
-COPY public.user_courses (u_id, learn_id, from_id) FROM stdin;
-1	1	2
-2	2	1
-3	2	1
-4	1	2
-\.
-
-
---
 -- Data for Name: user_grammar_progress; Type: TABLE DATA; Schema: public; Owner: cptkidd
 --
 
@@ -888,27 +1360,66 @@ COPY public.user_grammar_progress (u_id, tg_id, progress, next_review) FROM stdi
 
 
 --
+-- Data for Name: user_preferences; Type: TABLE DATA; Schema: public; Owner: cptkidd
+--
+
+COPY public.user_preferences (u_id, last_course_code, ui_code) FROM stdin;
+2	pl	cs
+3	cs	tr
+4	en	pl
+11	cs	en
+1	en	pl
+\.
+
+
+--
 -- Data for Name: user_vocab_progress; Type: TABLE DATA; Schema: public; Owner: cptkidd
 --
 
-COPY public.user_vocab_progress (u_id, v_id, progress, next_review, l_id) FROM stdin;
-1	9	6	2024-02-11	1
-1	112	1	2024-01-17	1
-1	110	1	2024-01-17	1
-1	1	3	2024-01-18	1
-2	1	4	2024-01-17	1
-1	2	2	2024-01-18	1
-1	5	6	2024-01-19	1
-1	6	4	2024-01-19	1
-1	7	5	2024-01-19	1
-1	8	5	2024-01-19	1
-1	11	2	2024-01-20	1
-1	10	1	2024-01-17	1
-1	12	3	2024-01-20	1
-1	3	3	2024-01-21	1
-1	111	2	2024-01-18	1
-1	4	3	2024-01-21	1
-1	109	3	2024-01-21	1
+COPY public.user_vocab_progress (u_id, v_id, progress, next_review, l_code) FROM stdin;
+1	9	6	2024-02-11	tr
+1	112	1	2024-01-17	tr
+1	110	1	2024-01-17	tr
+2	1	4	2024-01-17	tr
+1	2	2	2024-01-18	tr
+1	5	6	2024-01-19	tr
+1	6	4	2024-01-19	tr
+1	7	5	2024-01-19	tr
+1	12	3	2024-01-20	tr
+1	3	3	2024-01-21	tr
+1	111	2	2024-01-18	tr
+1	4	3	2024-01-21	tr
+1	129	1	2024-01-21	tr
+1	130	1	2024-01-21	tr
+1	109	1	2024-01-21	tr
+1	8	1	2024-01-21	tr
+1	1	1	2024-01-21	tr
+1	11	1	2024-01-21	tr
+11	109	1	2024-01-21	cs
+11	110	1	2024-01-21	cs
+11	111	1	2024-01-21	cs
+11	112	1	2024-01-21	cs
+1	130	2	2024-01-22	cs
+1	129	2	2024-01-22	cs
+1	115	2	2024-01-22	pl
+1	117	2	2024-01-22	pl
+1	113	2	2024-01-22	pl
+1	114	2	2024-01-22	pl
+1	10	2	2024-01-22	tr
+1	118	2	2024-01-22	pl
+1	116	2	2024-01-22	pl
+1	130	1	2024-01-21	pl
+1	129	1	2024-01-21	pl
+1	119	1	2024-01-22	en
+1	120	1	2024-01-22	en
+1	121	1	2024-01-22	en
+1	122	1	2024-01-22	en
+1	123	1	2024-01-22	en
+1	124	1	2024-01-22	en
+1	125	1	2024-01-22	en
+1	126	1	2024-01-22	en
+1	128	1	2024-01-22	en
+1	127	1	2024-01-22	en
 \.
 
 
@@ -921,6 +1432,7 @@ COPY public.users (u_id, u_login, u_displayname, u_email, u_password) FROM stdin
 2	adam	Adam Erkek	erad@ben.tr	$2a$12$DxLwm3b3ckIGauOk9F/Xp.Jlo145Qxq03Z/uXCkOurlpMmK7J7GLy
 3	tina12	Tina T	tina@mail.com	$2a$12$v08dv5EKmtIy4jaTQgJVC.56n4mJ.1FILxPaCnkABAcpCqhk7BoxW
 4	livia	Liwia	liwia@mail.com	$2b$12$WtsE6y3209T48AGKBeDt3up6kUe3e9hRvjUh7eaYdq18eKFio.3uS
+11	anna	Anna	anna@mail.com	$2b$12$00W1.qmkqCjLwRo91/.GLuqkDJ/stpvQa3HXcxo2hq4m/ISoDmUsC
 \.
 
 
@@ -1256,13 +1768,6 @@ COPY public.vocab_topics (v_id, tl_id) FROM stdin;
 
 
 --
--- Name: langs_l_id_seq; Type: SEQUENCE SET; Schema: public; Owner: cptkidd
---
-
-SELECT pg_catalog.setval('public.langs_l_id_seq', 2, true);
-
-
---
 -- Name: topics_grammar_tg_id_seq; Type: SEQUENCE SET; Schema: public; Owner: cptkidd
 --
 
@@ -1280,7 +1785,7 @@ SELECT pg_catalog.setval('public.topics_lexical_tl_id_seq', 18, true);
 -- Name: user_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: cptkidd
 --
 
-SELECT pg_catalog.setval('public.user_user_id_seq', 4, true);
+SELECT pg_catalog.setval('public.user_user_id_seq', 11, true);
 
 
 --
@@ -1295,7 +1800,7 @@ SELECT pg_catalog.setval('public.vocab_v_id_seq', 156, true);
 --
 
 ALTER TABLE ONLY public.langs
-    ADD CONSTRAINT langs_pk PRIMARY KEY (l_id);
+    ADD CONSTRAINT langs_pk PRIMARY KEY (l_code);
 
 
 --
@@ -1315,11 +1820,19 @@ ALTER TABLE ONLY public.topics_lexical
 
 
 --
+-- Name: user_preferences user_preferences_un; Type: CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.user_preferences
+    ADD CONSTRAINT user_preferences_un UNIQUE (u_id);
+
+
+--
 -- Name: user_vocab_progress user_vocab_progress_pk; Type: CONSTRAINT; Schema: public; Owner: cptkidd
 --
 
 ALTER TABLE ONLY public.user_vocab_progress
-    ADD CONSTRAINT user_vocab_progress_pk PRIMARY KEY (u_id, v_id, l_id);
+    ADD CONSTRAINT user_vocab_progress_pk PRIMARY KEY (u_id, v_id, l_code);
 
 
 --
@@ -1336,6 +1849,46 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.vocab
     ADD CONSTRAINT vocab_pk PRIMARY KEY (v_id);
+
+
+--
+-- Name: cs_adjectives cs_adjectives_vocab_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.cs_adjectives
+    ADD CONSTRAINT cs_adjectives_vocab_fk FOREIGN KEY (v_id) REFERENCES public.vocab(v_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: cs_adverbs cs_adverbs_vocab_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.cs_adverbs
+    ADD CONSTRAINT cs_adverbs_vocab_fk FOREIGN KEY (v_id) REFERENCES public.vocab(v_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: cs_nouns cs_nouns_vocab_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.cs_nouns
+    ADD CONSTRAINT cs_nouns_vocab_fk FOREIGN KEY (v_id) REFERENCES public.vocab(v_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: cs_numerals cs_numerals_vocab_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.cs_numerals
+    ADD CONSTRAINT cs_numerals_vocab_fk FOREIGN KEY (v_id) REFERENCES public.vocab(v_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: cs_verbs cs_verbs_vocab_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.cs_verbs
+    ADD CONSTRAINT cs_verbs_vocab_fk FOREIGN KEY (v_id) REFERENCES public.vocab(v_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1379,6 +1932,46 @@ ALTER TABLE ONLY public.en_verbs
 
 
 --
+-- Name: pl_adjectives pl_adjectives_vocab_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.pl_adjectives
+    ADD CONSTRAINT pl_adjectives_vocab_fk FOREIGN KEY (v_id) REFERENCES public.vocab(v_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: pl_adverbs pl_adverbs_vocab_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.pl_adverbs
+    ADD CONSTRAINT pl_adverbs_vocab_fk FOREIGN KEY (v_id) REFERENCES public.vocab(v_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: pl_nouns pl_nouns_vocab_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.pl_nouns
+    ADD CONSTRAINT pl_nouns_vocab_fk FOREIGN KEY (v_id) REFERENCES public.vocab(v_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: pl_numerals pl_numerals_vocab_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.pl_numerals
+    ADD CONSTRAINT pl_numerals_vocab_fk FOREIGN KEY (v_id) REFERENCES public.vocab(v_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: pl_verbs pl_verbs_vocab_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.pl_verbs
+    ADD CONSTRAINT pl_verbs_vocab_fk FOREIGN KEY (v_id) REFERENCES public.vocab(v_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: tr_adjectives tr_adjectives_vocab_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
 --
 
@@ -1419,30 +2012,6 @@ ALTER TABLE ONLY public.tr_verbs
 
 
 --
--- Name: user_courses user_courses_langs_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
---
-
-ALTER TABLE ONLY public.user_courses
-    ADD CONSTRAINT user_courses_langs_fk FOREIGN KEY (learn_id) REFERENCES public.langs(l_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: user_courses user_courses_langs_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
---
-
-ALTER TABLE ONLY public.user_courses
-    ADD CONSTRAINT user_courses_langs_fk_1 FOREIGN KEY (from_id) REFERENCES public.langs(l_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: user_courses user_courses_users_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
---
-
-ALTER TABLE ONLY public.user_courses
-    ADD CONSTRAINT user_courses_users_fk FOREIGN KEY (u_id) REFERENCES public.users(u_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
 -- Name: user_grammar_progress user_grammar_vocab_topics_grammar_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
 --
 
@@ -1456,6 +2025,30 @@ ALTER TABLE ONLY public.user_grammar_progress
 
 ALTER TABLE ONLY public.user_grammar_progress
     ADD CONSTRAINT user_grammar_vocab_users_fk FOREIGN KEY (u_id) REFERENCES public.users(u_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: user_preferences user_preferences_langs_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.user_preferences
+    ADD CONSTRAINT user_preferences_langs_fk FOREIGN KEY (last_course_code) REFERENCES public.langs(l_code) ON UPDATE SET NULL ON DELETE SET NULL;
+
+
+--
+-- Name: user_preferences user_preferences_langs_fk_1; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.user_preferences
+    ADD CONSTRAINT user_preferences_langs_fk_1 FOREIGN KEY (ui_code) REFERENCES public.langs(l_code) ON UPDATE SET NULL ON DELETE SET NULL;
+
+
+--
+-- Name: user_preferences user_preferences_users_fk; Type: FK CONSTRAINT; Schema: public; Owner: cptkidd
+--
+
+ALTER TABLE ONLY public.user_preferences
+    ADD CONSTRAINT user_preferences_users_fk FOREIGN KEY (u_id) REFERENCES public.users(u_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1479,7 +2072,7 @@ ALTER TABLE ONLY public.user_vocab_progress
 --
 
 ALTER TABLE ONLY public.user_vocab_progress
-    ADD CONSTRAINT user_vocab_progress_langs_fk FOREIGN KEY (l_id) REFERENCES public.langs(l_id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT user_vocab_progress_langs_fk FOREIGN KEY (l_code) REFERENCES public.langs(l_code) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

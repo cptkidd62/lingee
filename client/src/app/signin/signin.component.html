@@ -1,16 +1,31 @@
-<form [formGroup]="signinForm" (ngSubmit)="signinSubmit()">
-    <label for="login">Login: </label>
-    <input id="login" type="text" formControlName="login">
-    <span *ngIf="signinForm.controls['login'].invalid 
-        && (signinForm.controls['login'].dirty || signinForm.controls['login'].touched) 
-        && signinForm.controls['login'].errors?.['required']" class="form-alert-msg">Login is required.</span>
-    <br>
-    <label for="pwd">Password: </label>
-    <input id="pwd" type="password" formControlName="pwd">
-    <span *ngIf="signinForm.controls['pwd'].invalid 
-        && (signinForm.controls['pwd'].dirty || signinForm.controls['pwd'].touched) 
-        && signinForm.controls['pwd'].errors?.['required']" class="form-alert-msg">Password is required.</span>
-    <br>
-    <div *ngIf="errMsg != ''" class="form-alert-msg">{{errMsg}}</div>
-    <button type="submit" [disabled]="!signinForm.valid">Sign in</button>
-</form>
+<mat-card class="signin-card">
+    <mat-card-content>
+        <form [formGroup]="signinForm">
+            <p>
+                <mat-form-field appearance="fill" color="accent">
+                    <mat-label>{{ "signin.loginlabel" | translate }}</mat-label>
+                    <input matInput id="login" type="text" formControlName="login">
+                    <mat-error *ngIf="signinForm.controls['login'].invalid 
+                        && (signinForm.controls['login'].dirty || signinForm.controls['login'].touched) 
+                        && signinForm.controls['login'].errors?.['required']">{{ "signin.loginerror" | translate }}</mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="fill" color="accent">
+                    <mat-label>{{ "signin.pwdlabel" | translate }}</mat-label>
+                    <input matInput id="pwd" [type]="hide ? 'password' : 'text'" formControlName="pwd">
+                    <mat-error *ngIf="signinForm.controls['pwd'].invalid 
+                            && (signinForm.controls['pwd'].dirty || signinForm.controls['pwd'].touched) 
+                            && signinForm.controls['pwd'].errors?.['required']">{{ "signin.pwderror" | translate }}</mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+            </p>
+            <div *ngIf="errMsg != ''" class="form-alert-msg">{{errMsg}}</div>
+            <button mat-raised-button color="accent" type="submit" [disabled]="!signinForm.valid" (click)="signinSubmit()">{{
+                "signin.confirm" | translate }}</button>
+        </form>
+    </mat-card-content>
+</mat-card>

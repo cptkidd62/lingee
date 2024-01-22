@@ -1,14 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Topicwordview } from '../topicwordview';
 import { Sentence } from '../sentence';
 import { LearnService } from '../_services/learn.service';
+import { TranslateService, TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: 'app-topicwordlist',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,
+    MatProgressBarModule,
+    MatButtonModule,
+    MatIconModule,
+    TranslateModule],
   templateUrl: './topicwordlist.component.html',
   styleUrls: ['./topicwordlist.component.scss']
 })
@@ -18,7 +26,9 @@ export class TopicwordlistComponent {
   toLearn: boolean = true
   learnService: LearnService = inject(LearnService);
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private translate: TranslateService) {
+    translate.setDefaultLang('en');
+    translate.use(localStorage.getItem('lang') || 'en');
     this.loadContents(true)
   }
 
@@ -27,16 +37,13 @@ export class TopicwordlistComponent {
       next: lst => {
         this.wlist = lst
         this.toLearn = !(this.wlist.every(w => w.progress && w.progress > 0))
-        console.log(this.toLearn)
-        console.log(this.wlist)
 
         if (all) {
           for (let i = 0; i < this.wlist.length; i++) {
-            this.learnService.getSentences(1, [this.wlist[i].speechpart + '=' + this.wlist[i].v_id]).subscribe({
+            this.learnService.getSentences(1, [this.wlist[i].speechpart + '=' + this.wlist[i].v_id,
+            'lang=' + this.route.snapshot.params['lang'], 'uilang=' + localStorage.getItem('lang')]).subscribe({
               next: sentences => {
                 this.sentences[i] = sentences[0]
-                console.log(this.wlist[i].word, this.wlist[i].v_id)
-                console.log(sentences)
               }
             });
           }
@@ -52,8 +59,8 @@ export class TopicwordlistComponent {
       nlist.push(w.v_id)
     })
     this.learnService.addToReviews(nlist).subscribe({
-      complete: () => { this.loadContents(false); this.wlist[0].word += 'bbbbb' },
-      next: data => { this.loadContents(false); this.wlist[0].word += 'aaaaa' },
+      complete: () => { this.loadContents(false); },
+      next: data => { this.loadContents(false); },
       error: err => { }
     })
   }

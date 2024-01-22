@@ -23,8 +23,8 @@ export class AuthService {
     return this.http.post(this.url + '/signin', { login, password }, { responseType: 'json', withCredentials: true });
   }
 
-  signup(sdata: SignupData) {
-    return this.http.post(this.url + '/signup', { sdata }, { responseType: 'json', withCredentials: true })
+  signup(sdata: SignupData, l1: string, l2: string) {
+    return this.http.post(this.url + '/signup', { sdata, l1, l2 }, { responseType: 'json', withCredentials: true })
   }
 
   isSignedIn() {
@@ -42,6 +42,7 @@ export class AuthService {
   signout() {
     localStorage.removeItem('idToken');
     localStorage.removeItem('expiresAt');
+    localStorage.removeItem('currcourse');
     this.router.navigate(['/'])
   }
 }

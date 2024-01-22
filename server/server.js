@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require('body-parser');
@@ -12,15 +13,14 @@ const dbrepo = require("./db");
 var repo;
 const sentgen = require("./sentgen");
 var sgen;
+const gpt = require('./gptconnector')
+var gptconn
 
 const expirytm = 60 * 60 * 24 * 30
 
-const RSA_PRIVATE_KEY = fs.readFileSync('./keys/jwtRS256.key');
-const RSA_PUBLIC_KEY = fs.readFileSync('./keys/jwtRS256.key.pub');
-
 const app = express();
 
-const verifyAuthenticated = ejwt({ secret: RSA_PUBLIC_KEY, algorithms: ["RS256"] });
+const verifyAuthenticated = ejwt({ secret: process.env.RSA_PUBLIC_KEY, algorithms: ["RS256"] });
 
 app.use(cors({
     origin: 'http://localhost:4200',
@@ -35,10 +35,14 @@ app.use(cookieParser('1QVIQ7F7tJNa2fGwORfvl6bf6dfYoj63'));
 app.use((req, res, next) => {
     repo = new dbrepo.Repository();
     sgen = new sentgen.Generator(repo);
+    gptconn = new gpt.gptConnector()
     next();
 });
 
-app.use("/", verifyAuthenticated.unless({ path: ['/', '/auth/signin', '/auth/signup', '/topics', '/topics/lexical/:lang/:id'] }));
+app.use("/", verifyAuthenticated.unless({
+    path: ['/', '/auth/signin', '/auth/signup',
+        '/topics', '/topics/lexical/:lang/:id', '/aitest']
+}));
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
@@ -50,15 +54,17 @@ app.use((err, req, res, next) => {
 });
 
 app.get("/user", async (req, res) => {
-    console.log("Got request");
     let id = req.auth.id;
     let usr = await repo.getAccountForUsr(id);
     res.json(usr)
 });
 
+app.post("/user/prefs", async (req, res) => {
+    await repo.setUsrPreferences(req.auth.id, req.body.last_course_code, req.body.ui_code)
+    res.json({ status: 'ok' })
+})
+
 app.post("/auth/signin", async (req, res) => {
-    console.log("login attempt");
-    console.log(req.body.login, req.body.password);
     let login = req.body.login;
     let pwd = req.body.password;
     let { id, pwdHsh } = await repo.getPasswordForUsr(login);
@@ -68,11 +74,12 @@ app.post("/auth/signin", async (req, res) => {
             message: 'Incorrect login'
         });
     } else if (await bcrypt.compare(pwd, pwdHsh)) {
-        const jwtBearer = jwt.sign({ id: id }, RSA_PRIVATE_KEY, {
+        const jwtBearer = jwt.sign({ id: id }, process.env.RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
             expiresIn: expirytm
         })
-        res.json({ idToken: jwtBearer, expiresIn: expirytm });
+        const prf = await repo.getUsrPreferences(id)
+        res.json({ token: { idToken: jwtBearer, expiresIn: expirytm }, preferences: prf });
     } else {
         return res.status(403).send({
             success: false,
@@ -82,9 +89,7 @@ app.post("/auth/signin", async (req, res) => {
 });
 
 app.post("/auth/signup", async (req, res) => {
-    console.log("login attempt");
     let sdata = req.body.sdata;
-    console.log(sdata);
     if (await repo.loginExists(sdata.login)) {
         return res.status(403).send({
             success: false,
@@ -99,16 +104,18 @@ app.post("/auth/signup", async (req, res) => {
         let hash = await bcrypt.hash(sdata.password, 12);
         sdata.password = hash;
         await repo.addUsr(sdata);
-        const jwtBearer = jwt.sign({ id: sdata.id }, RSA_PRIVATE_KEY, {
+        let { id, _ } = await repo.getPasswordForUsr(sdata.login);
+        const jwtBearer = jwt.sign({ id: id }, process.env.RSA_PRIVATE_KEY, {
             algorithm: 'RS256',
             expiresIn: expirytm
         })
+        await repo.addUsrPreferences(id, req.body.l1, req.body.l2)
         res.json({ idToken: jwtBearer, expiresIn: expirytm });
     }
 });
 
 app.get("/random", async (req, res) => {
-    res.json(await sgen.getNRandomSentences(req.query.count ? req.query.count : 1, 'tr', 'en', req.auth.id, req.query.noun, req.query.verb, req.query.adjective, req.query.adverb, req.query.numeral))
+    res.json(await sgen.getNRandomSentences(req.query.count ? req.query.count : 1, req.query.lang, req.query.uilang, req.auth.id, req.query.noun, req.query.verb, req.query.adjective, req.query.adverb, req.query.numeral))
 });
 
 app.get("/topics", async (req, res) => {
@@ -135,6 +142,11 @@ app.get("/reviews/:lang", async (req, res) => {
     res.json(data)
 })
 
+app.get("/reviews/count/all", async (req, res) => {
+    let data = await repo.getAllReviewsCount(req.auth.id)
+    res.json(data)
+})
+
 app.get("/reviews/:lang/count", async (req, res) => {
     let cnt = await repo.getReviewsCount(req.params.lang, req.auth.id)
     res.json(cnt)
@@ -148,6 +160,21 @@ app.post("/reviews/update", async (req, res) => {
     res.json({ status: 'ok' })
 })
 
-app.listen(3000, () => {
+app.post("/validate", async (req, res) => {
+    let s1 = req.body.s1
+    let s2 = req.body.s2
+    let l1 = req.body.l1
+    let l2 = req.body.l2
+
+    let ans = await gptconn.checkTranslation(s1, s2, l1, l2)
+    res.json(ans)
+})
+
+let port = process.env.PORT
+if (!port || port == '') {
+    port = 3000
+}
+
+app.listen(port, () => {
     console.log("Working on port 3000");
 });

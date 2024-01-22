@@ -1,0 +1,79 @@
+{
+    "toolbar": {
+        "signin": "Oturum aç",
+        "signup": "Katıl",
+        "signout": "Oturum kap",
+        "myaccount": "Hesabım",
+        "active": "Seçilen kurs"
+    },
+    "main": {
+        "reviews": "İncelemeler",
+        "topics": "Konular",
+        "practice": "Pratik yap",
+        "fortoday": "Bügün için",
+        "planned": "Planlanmış",
+        "msg": "4 dil öğrenmek için katılın"
+    },
+    "signin": {
+        "loginlabel": "Kullanıcı adı",
+        "loginerror": "Kullanıcı adı gereklidir",
+        "pwdlabel": "Şifre",
+        "pwderror": "Şifre gereklidir",
+        "confirm": "Giriş yap"
+    },
+    "signup": {
+        "namelabel": "Ad",
+        "nameph": "Mehmet Yılmaz",
+        "nameerror": "Ad gereklidir",
+        "loginlabel": "Kullanıcı adı",
+        "loginph": "mehmetyilmaz00",
+        "loginerror": "Kullanıcı adı gereklidir",
+        "emaillabel": "E-posta",
+        "emailph": "mehmetyilmaz@ornek.tr",
+        "emailerror": "E-posta gereklidir",
+        "pwdlabel": "Şifre",
+        "pwderror": "Şifre gereklidir",
+        "rpwdlabel": "Şifreyi tekrarla",
+        "rpwderror": "Şifreler eşleşmiyor",
+        "course": "İlk kursunu seç",
+        "confirm": "Hesap oluştur"
+    },
+    "myaccount": {
+        "hello": "Merhaba",
+        "uilangHeader": "Arayüz dilini değiştir",
+        "langCS": "çekçe",
+        "langEN": "ingilizce",
+        "langPL": "lehçe",
+        "langTR": "türkçe",
+        "courseChangeHeader": "Aktif kursu değiştir"
+    },
+    "topics": {
+        "grammar": "Dilbilgisi",
+        "lexical": "Leksik",
+        "addrevs": "İncelemelere ekle"
+    },
+    "reviews": {
+        "next": "Sonraki",
+        "result": "Sonuç"
+    },
+    "lexical": {
+        "1": "Renkler",
+        "2": "İnsan Görünümü",
+        "3": "İnsan Özellikleri ve Duyguları",
+        "4": "Objelerin Özellikleri",
+        "5": "Mekanlar",
+        "6": "Aile",
+        "7": "Yiyecek",
+        "8": "İçecekler",
+        "9": "Okul Objeleri",
+        "10": "Günlük Objeler",
+        "11": "Medya",
+        "12": "Beğenme/Hoşlanmama Fiilleri",
+        "13": "Hareket Fiilleri",
+        "14": "Genel Fiiller",
+        "15": "Yer Zarfı",
+        "16": "Zaman Zarfı",
+        "17": "Şekil Zarfı",
+        "18": "Sayılar"
+    }
+}

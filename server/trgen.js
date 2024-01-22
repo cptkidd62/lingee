@@ -365,7 +365,6 @@ exports.Turkish = class Turkish {
         if (descriptions.negation) {
             nv = verbneg(nv)
         }
-        console.log('conj', verb.aorist)
         nv = this.tenses[descriptions.tense](nv, p, sing, verb.aorist)
         if (descriptions.adverbs && descriptions.adverbs.length > 0) {
             nv = this.addadverbs(descriptions.adverbs) + ' ' + nv
@@ -373,7 +372,6 @@ exports.Turkish = class Turkish {
         return nv;
     }
     verbpressimple(word, p, sing, aor) {
-        console.log('pressimple', aor)
         return verbconj(verbaorist(word, p, sing, aor), p, sing)
     }
     verbprescont(word, p, sing) {

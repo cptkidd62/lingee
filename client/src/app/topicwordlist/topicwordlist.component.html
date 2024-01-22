@@ -1,9 +1,15 @@
-<div *ngIf="size(sentences) == size(wlist)">
-    <div *ngFor="let s of sentences; let i = index">
-        <h2>{{wlist[i].word}}</h2>
-        <p>{{wlist[i].progress}}</p>
-        <p>{{s.original}}</p>
-        <p>{{s.translation}}</p>
+<mat-progress-bar *ngIf="size(sentences) != size(wlist)" mode="query" color="accent"></mat-progress-bar>
+<div class="wlist-box">
+    <div *ngIf="size(sentences) == size(wlist)">
+        <div *ngFor="let s of sentences; let i = index">
+            <h2>{{wlist[i].word}}</h2>
+            <p>{{wlist[i].progress}}</p>
+            <p>{{s.original}}</p>
+            <p>{{s.translation}}</p>
+        </div>
     </div>
+    <button mat-raised-button color="accent" *ngIf="toLearn" (click)="addWordsToReviews()">
+        <mat-icon>add</mat-icon>
+        {{ "topics.addrevs" | translate }}
+    </button>
 </div>
-<button *ngIf="toLearn" (click)="addWordsToReviews()">Add to reviews</button>

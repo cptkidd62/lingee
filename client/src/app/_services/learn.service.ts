@@ -3,6 +3,7 @@ import { Sentence } from '../sentence';
 import { TopicGrammar } from '../topicgrammar';
 import { TopicLexical } from '../topiclexical';
 import { Topicwordview } from '../topicwordview';
+import { Validationresponse } from '../validationresponse';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -16,7 +17,7 @@ export class LearnService {
 
   url = 'http://localhost:3000';
 
-  getSentences(n: number, prms?: [string]): Observable<Array<Sentence>> {
+  getSentences(n: number, prms?: string[]): Observable<Array<Sentence>> {
     let extra: string = ''
     if (prms) {
       extra = '&' + prms.join('&')
@@ -33,18 +34,26 @@ export class LearnService {
   }
 
   addToReviews(wlist: Array<number>) {
-    return this.http.post(this.url + '/reviews/add', { wlist: wlist, lang: 'tr' }, { responseType: 'json', withCredentials: true })
+    return this.http.post(this.url + '/reviews/add', { wlist: wlist, lang: localStorage.getItem('currcourse') }, { responseType: 'json', withCredentials: true })
   }
 
-  getReviewsCount(): Observable<number> {
-    return this.http.get<number>(this.url + '/reviews/tr/count');
+  getReviewsCount(): Observable<{ next_review: string, count: number }[]> {
+    return this.http.get<{ next_review: string, count: number }[]>(this.url + `/reviews/${localStorage.getItem('currcourse')}/count`);
   }
 
-  getReviews(lang: string): Observable<Array<Topicwordview>> {
-    return this.http.get<Array<Topicwordview>>(this.url + '/reviews/' + lang);
+  getAllReviewsCount(): Observable<{ l_code: string, count: number }[]> {
+    return this.http.get<{ l_code: string, count: number }[]>(this.url + '/reviews/count/all');
+  }
+
+  getReviews(): Observable<Array<Topicwordview>> {
+    return this.http.get<Array<Topicwordview>>(this.url + '/reviews/' + localStorage.getItem('currcourse'));
   }
 
   updateReviews(id: number, correct: boolean) {
-    return this.http.post(this.url + '/reviews/update', { v_id: id, lang: 'tr', corr: correct }, { responseType: 'json', withCredentials: true })
+    return this.http.post(this.url + '/reviews/update', { v_id: id, lang: localStorage.getItem('currcourse'), corr: correct }, { responseType: 'json', withCredentials: true })
+  }
+
+  validateAnswer(s1: string, s2: string) {
+    return this.http.post(this.url + '/validate', { s1, s2, l1: localStorage.getItem('currcourse'), l2: localStorage.getItem('lang') });
   }
 }
