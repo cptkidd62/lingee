@@ -50,7 +50,9 @@ export class ToolbarComponent {
   changeLanguage(language: string): void {
     this.translate.use(language);
     localStorage.setItem('lang', language)
-    this.userService.setPreferences().subscribe({})
+    if (this.authService.isSignedIn()) {
+      this.userService.setPreferences().subscribe({})
+    }
   }
 
   changeCourse(language: string): void {
