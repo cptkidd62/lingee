@@ -2,9 +2,10 @@
     <mat-tab [label]="'main.reviews' | translate">
         <div class="home-tab">
             <h3>{{ "main.fortoday" | translate }}: {{srevs}}</h3>
-            <button mat-raised-button aria-label="Go to reviews button" color="accent" routerLink="/review">{{
+            <button mat-raised-button aria-label="Go to reviews button" color="accent" routerLink="/review"
+                [disabled]="srevs == 0">{{
                 "main.practice" | translate }}!</button>
-            <h3>{{ "main.planned" | translate }}</h3>
+            <h3 *ngIf="srevs != 0">{{ "main.planned" | translate }}</h3>
             <mat-list>
                 <mat-list-item *ngFor="let r of revs">
                     <mat-icon matListItemIcon>keyboard_double_arrow_right</mat-icon>{{r.next_review.slice(0, 10)}}:
