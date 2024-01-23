@@ -2,7 +2,13 @@
     color="accent"></mat-progress-bar>
 <div class="rev-box">
     <div *ngIf="checked">
+        <p>{{sentences[current].translation}}</p>
+        <p>{{ "reviews.myans" | translate }}: {{ans}} <mat-icon *ngIf="answersCorrect[current]"
+                color="accent">check</mat-icon><mat-icon *ngIf="!answersCorrect[current]" color="warn">close</mat-icon>
+        </p>
         <p>{{currvalidation?.explanation}}</p>
+        <button mat-flat-button color="accent" (click)="markascorrect()" [disabled]="answersCorrect[current]">{{
+            "reviews.mark" | translate }}</button>
         <button mat-flat-button color="primary" (click)="next()">{{ "reviews.next" | translate }}</button>
     </div>
     <form *ngIf="current < total && sentences[current] && active" [formGroup]="translateForm"

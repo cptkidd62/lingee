@@ -54,7 +54,9 @@
     },
     "reviews": {
         "next": "Dalej",
-        "result": "Wynik"
+        "result": "Wynik",
+        "mark": "Oznacz jako poprawne",
+        "myans": "Moja odpowiedz"
     },
     "lexical": {
         "1": "Kolory",

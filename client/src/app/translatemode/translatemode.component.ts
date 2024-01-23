@@ -7,6 +7,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { Topicwordview } from '../topicwordview';
 import { Sentence } from '../sentence';
 import { Validationresponse } from '../validationresponse';
@@ -26,6 +27,7 @@ import { environment } from 'src/environments/environment';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
+    MatIconModule,
     TranslateModule],
   templateUrl: './translatemode.component.html',
   styleUrls: ['./translatemode.component.scss']
@@ -53,6 +55,8 @@ export class TranslatemodeComponent {
 
   handset = false
 
+  ans = ''
+
   shuffle = (array: Array<any>) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -63,24 +67,28 @@ export class TranslatemodeComponent {
 
   checkAnswer() {
     this.active = false
-    let ans = ''
+    this.ans = ''
     if (this.enterText) {
-      ans = this.translateForm.value.res;
+      this.ans = this.translateForm.value.res;
     } else {
-      ans = this.sentTokens.join(' ')
+      this.ans = this.sentTokens.join(' ')
     }
-    this.learnService.validateAnswer(ans, this.sentences[this.current].translation).subscribe({
+    this.learnService.validateAnswer(this.ans, this.sentences[this.current].translation).subscribe({
       next: data => {
         this.currvalidation = data as Validationresponse
         this.answersCorrect[this.current] = this.currvalidation.correct
-        this.correct += this.answersCorrect[this.current] ? 1 : 0
-        this.learnService.updateReviews(this.wlist[this.current].v_id, this.answersCorrect[this.current]).subscribe({})
         this.checked = true
       }
     })
   }
 
+  markascorrect() {
+    this.answersCorrect[this.current] = true
+  }
+
   next() {
+    this.correct += this.answersCorrect[this.current] ? 1 : 0
+    this.learnService.updateReviews(this.wlist[this.current].v_id, this.answersCorrect[this.current]).subscribe({})
     this.checked = false
     this.current++
     if (this.current < this.total) {

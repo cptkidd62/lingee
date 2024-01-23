@@ -54,7 +54,9 @@
     },
     "reviews": {
         "next": "Sonraki",
-        "result": "Sonuç"
+        "result": "Sonuç",
+        "mark": "Doğru olarak işaretle",
+        "myans": "Cevabım"
     },
     "lexical": {
         "1": "Renkler",
