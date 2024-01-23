@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CdkDragDrop, CdkDrag, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -11,6 +12,7 @@ import { Sentence } from '../sentence';
 import { Validationresponse } from '../validationresponse';
 import { LearnService } from '../_services/learn.service';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-translatemode',
@@ -28,6 +30,7 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
   styleUrls: ['./translatemode.component.scss']
 })
 export class TranslatemodeComponent {
+  env = environment
   wlist: Array<Topicwordview> = []
   sentences: Array<Sentence> = [];
   learnService: LearnService = inject(LearnService);
@@ -90,7 +93,7 @@ export class TranslatemodeComponent {
     this.enterText = this.wlist[this.current].progress >= 5
   }
 
-  constructor(private translate: TranslateService) {
+  constructor(private router: Router, private translate: TranslateService) {
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
 
@@ -99,6 +102,9 @@ export class TranslatemodeComponent {
         this.wlist = lst
         this.wlist = this.shuffle(this.wlist)
         this.total = this.wlist.length
+        if (this.total == 0) {
+          this.router.navigate(['/'])
+        }
         this.answersCorrect = new Array(this.wlist.length).fill(false)
 
         for (let i = 0; i < this.wlist.length; i++) {

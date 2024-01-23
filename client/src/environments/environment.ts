@@ -1,3 +1,4 @@
 export const environment = {
-    API_PREFIX: 'http://localhost:3000'
+    API_PREFIX: 'http://localhost:3000',
+    DEBUG: true
 }
