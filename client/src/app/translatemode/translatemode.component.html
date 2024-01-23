@@ -1,4 +1,4 @@
-<mat-progress-bar *ngIf="!(current < total && sentences[current]) && current == 0" mode="query"
+<mat-progress-bar *ngIf="!(current < total && sentences[current]) && current == 0 || !(active || checked)" mode="query"
     color="accent"></mat-progress-bar>
 <div class="rev-box">
     <div *ngIf="checked">
