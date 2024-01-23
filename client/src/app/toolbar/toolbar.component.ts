@@ -8,6 +8,8 @@ import { AuthService } from '../_services/auth.service';
 import { UserService } from '../_services/user.service';
 import { LearnService } from '../_services/learn.service';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-toolbar',
@@ -28,11 +30,22 @@ export class ToolbarComponent {
 
   revs: { l_code: string, count: number }[] = []
 
-  constructor(private translate: TranslateService) {
+  handset = false
+
+  constructor(private responsive: BreakpointObserver, private translate: TranslateService) {
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
     this.refresh()
   };
+
+  ngOnInit() {
+    this.responsive.observe([Breakpoints.Handset]).subscribe(res => {
+      this.handset = res.matches
+      if (environment.DEBUG) {
+        console.log("small", this.handset)
+      }
+    })
+  }
 
   changeLanguage(language: string): void {
     this.translate.use(language);
