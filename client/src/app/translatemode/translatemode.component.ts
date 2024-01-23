@@ -12,6 +12,7 @@ import { Sentence } from '../sentence';
 import { Validationresponse } from '../validationresponse';
 import { LearnService } from '../_services/learn.service';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -49,6 +50,8 @@ export class TranslatemodeComponent {
   enterText: boolean = true
   checked: boolean = false
   active: boolean = true
+
+  handset = false
 
   shuffle = (array: Array<any>) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -93,7 +96,7 @@ export class TranslatemodeComponent {
     this.enterText = this.wlist[this.current].progress >= 5
   }
 
-  constructor(private router: Router, private translate: TranslateService) {
+  constructor(private responsive: BreakpointObserver, private router: Router, private translate: TranslateService) {
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
 
@@ -123,6 +126,15 @@ export class TranslatemodeComponent {
         }
       }
     });
+  }
+
+  ngOnInit() {
+    this.responsive.observe([Breakpoints.Handset]).subscribe(res => {
+      this.handset = res.matches
+      if (environment.DEBUG) {
+        console.log("small", this.handset)
+      }
+    })
   }
 
   size(arr: Array<any>): number {
