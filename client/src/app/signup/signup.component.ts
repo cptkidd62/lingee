@@ -69,11 +69,13 @@ export class SignupComponent {
       password: this.signupForm.value.pwd!
     };
     console.log(sdata);
-    this.authService.signup(sdata, this.signupForm.value.lang!, localStorage.getItem('lang')!).subscribe({
+    let course = this.signupForm.value.lang!
+    localStorage.setItem('lang', this.translate.currentLang)
+    this.authService.signup(sdata, course, localStorage.getItem('lang')!).subscribe({
       complete: () => { this.router.navigate(['']) },
       next: data => {
         this.authService.setSession(data as Jwtoken);
-        localStorage.setItem('currcourse', this.signupForm.value.lang!)
+        localStorage.setItem('currcourse', course)
         this.errMsg = ""
       },
       error: err => { console.log(err); this.errMsg = err.error.message }
