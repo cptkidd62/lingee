@@ -35,17 +35,19 @@ export class HomeComponent {
   lang: string = ''
 
   constructor(private translate: TranslateService) {
-    this.learnService.getReviewsCount().subscribe({
-      next: data => this.revs = data
-    })
-    this.learnService.getAllReviewsCount().subscribe({
-      next: data => {
-        this.srevs = data.find(e => e.l_code == localStorage.getItem('currcourse'))?.count || 0
-      }
-    })
-    this.learnService.getTopicsList().subscribe({
-      next: topics => { this.topics.grammar = topics.grammar; this.topics.lexical = topics.lexical }
-    });
+    if (this.authService.isSignedIn()) {
+      this.learnService.getReviewsCount().subscribe({
+        next: data => this.revs = data
+      })
+      this.learnService.getAllReviewsCount().subscribe({
+        next: data => {
+          this.srevs = data.find(e => e.l_code == localStorage.getItem('currcourse'))?.count || 0
+        }
+      })
+      this.learnService.getTopicsList().subscribe({
+        next: topics => { this.topics.grammar = topics.grammar; this.topics.lexical = topics.lexical }
+      });
+    }
     this.lang = localStorage.getItem('currcourse') || 'en'
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');

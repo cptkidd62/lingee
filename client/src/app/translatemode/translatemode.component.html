@@ -1,22 +1,30 @@
-<mat-progress-bar *ngIf="!(current < total && size(sentences) == total) && current == 0" mode="query"
+<mat-progress-bar *ngIf="!(current < total && sentences[current]) && current == 0 || !(active || checked)" mode="query"
     color="accent"></mat-progress-bar>
 <div class="rev-box">
     <div *ngIf="checked">
+        <p>{{sentences[current].translation}}</p>
+        <p>{{ "reviews.myans" | translate }}: {{ans}} <mat-icon *ngIf="answersCorrect[current]"
+                color="accent">check</mat-icon><mat-icon *ngIf="!answersCorrect[current]" color="warn">close</mat-icon>
+        </p>
         <p>{{currvalidation?.explanation}}</p>
+        <button mat-flat-button color="accent" (click)="markascorrect()" [disabled]="answersCorrect[current]">{{
+            "reviews.mark" | translate }}</button>
         <button mat-flat-button color="primary" (click)="next()">{{ "reviews.next" | translate }}</button>
     </div>
-    <form *ngIf="current < total && size(sentences) == total && active" [formGroup]="translateForm" (ngSubmit)="checkAnswer()">
+    <form *ngIf="current < total && sentences[current] && active" [formGroup]="translateForm"
+        (ngSubmit)="checkAnswer()">
         <p>{{sentences[current].translation}}</p>
-        <p>{{sentences[current].original}}</p>
+        <p *ngIf="env.DEBUG">{{sentences[current].original}}</p>
         <div *ngIf="enterText">
             <mat-form-field appearance="fill" color="accent">
                 <input matInput id="res" type="text" formControlName="res" autocomplete="off">
             </mat-form-field>
         </div>
         <div *ngIf="!enterText">
-            <div cdkDropList cdkDropListOrientation="horizontal" class="dd-list"
-                (cdkDropListDropped)="drop($event)">
-                <div class="dd-box" *ngFor="let tok of sentTokens" cdkDrag>{{tok}}</div>
+            <div cdkDropList [cdkDropListOrientation]="handset ? 'vertical' : 'horizontal'" class="dd-list"
+                (cdkDropListDropped)="drop($event)" [ngClass]="handset ? 'dd-list-v' : 'dd-list-h'">
+                <div class="dd-box" *ngFor="let tok of sentTokens" cdkDrag
+                    [ngClass]="handset ? 'dd-box-v' : 'dd-box-h'">{{tok}}</div>
             </div>
         </div>
         <button mat-flat-button color="primary" type="submit">{{ "reviews.next" | translate }}</button>

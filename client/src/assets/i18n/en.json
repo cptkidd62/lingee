@@ -54,7 +54,9 @@
     },
     "reviews": {
         "next": "Next",
-        "result": "Result"
+        "result": "Result",
+        "mark": "Mark as correct",
+        "myans": "My answer"
     },
     "lexical": {
         "1": "Colors",

@@ -6,6 +6,7 @@ import { Topicwordview } from '../topicwordview';
 import { Validationresponse } from '../validationresponse';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class LearnService {
   constructor(
     private http: HttpClient) { }
 
-  url = 'https://lingee.onrender.com';
+  url = environment.API_PREFIX;
 
   getSentences(n: number, prms?: string[]): Observable<Array<Sentence>> {
     let extra: string = ''

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { SignupData } from '../signupdata';
 import { Jwtoken } from '../jwtoken';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  url = 'https://lingee.onrender.com/auth';
+  url = environment.API_PREFIX + '/auth';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

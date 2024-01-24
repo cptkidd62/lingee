@@ -17,31 +17,69 @@ function getRandomNum(b, e) {
 }
 
 async function genRandomPattern(uid, noun, verb, adjective, adverb, numeral) {
-    let p, n, v, adj, adv, num
+    let p, n, v, adj, adv, num, tense
     if (verb || adverb) {
         p = 'dosth'
     } else {
         p = getRandomElement(patterns)
     }
-    if (verb) {
-        v = verb
-    } else {
-        v = getRandomElement(await repo.getSpeechPartIDs('verb')).v_id
-    }
-    if (noun) {
-        n = noun
-    } else {
-        n = getRandomElement(await repo.getSpeechPartIDs('noun')).v_id
-    }
-    if (adjective) {
-        adj = adjective
-    } else {
-        adj = getRandomElement(await repo.getSpeechPartIDs('adjective')).v_id
-    }
     if (adverb) {
         adv = adverb
     } else {
         adv = getRandomElement(await repo.getSpeechPartIDs('adverb')).v_id
+    }
+    if ([135, 138, 139].includes(adv)) {
+        tense = getRandomElement(['pastsimple', 'pastcont'])
+    } else if ([140, 141, 137].includes(adv)) {
+        tense = 'futuresimple'
+    } else {
+        if (p == 'dosth') {
+            tense = getRandomElement(tenses)
+        } else {
+            tense = getRandomElement(tensessimple)
+        }
+    }
+    if (adjective) {
+        adj = adjective
+        n = getRandomElement(await repo.getNounsMatchingAdj(adj)).noun_id
+        v = getRandomElement(await repo.getVerbsMatchingNoun(n)).verb_id
+    } else if (noun) {
+        n = noun
+        aas = await repo.getAdjsMatchingNoun(n)
+        if (aas.length != 0) {
+            adj = getRandomElement(aas).adj_id
+        } else {
+            adj = getRandomElement(await repo.getSpeechPartIDs('adjective')).v_id
+        }
+        v = getRandomElement(await repo.getVerbsMatchingNoun(n)).verb_id
+    } else if (verb) {
+        v = verb
+        nns = await repo.getNounsMatchingVerb(v)
+        if (nns.length != 0) {
+            n = getRandomElement(nns).noun_id
+        } else {
+            n = getRandomElement(await repo.getSpeechPartIDs('noun')).v_id
+        }
+        aas = await repo.getAdjsMatchingNoun(n)
+        if (aas.length != 0) {
+            adj = getRandomElement(aas).adj_id
+        } else {
+            adj = getRandomElement(await repo.getSpeechPartIDs('adjective')).v_id
+        }
+    } else {
+        v = getRandomElement(await repo.getSpeechPartIDs('verb')).v_id
+        nns = await repo.getNounsMatchingVerb(v)
+        if (nns.length != 0) {
+            n = getRandomElement(nns).noun_id
+        } else {
+            n = getRandomElement(await repo.getSpeechPartIDs('noun')).v_id
+        }
+        aas = await repo.getAdjsMatchingNoun(n)
+        if (aas.length != 0) {
+            adj = getRandomElement(aas).adj_id
+        } else {
+            adj = getRandomElement(await repo.getSpeechPartIDs('adjective')).v_id
+        }
     }
     if (numeral) {
         num = numeral
@@ -58,7 +96,7 @@ async function genRandomPattern(uid, noun, verb, adjective, adverb, numeral) {
                 possession: undefined,
                 case: undefined
             }, n], {
-                    tense: getRandomElement(tensessimple),
+                    tense: tense,
                     negation: getRandomNum(0, 1),
                     person: getRandomNum(1, 4),
                     singular: getRandomNum(0, 2),
@@ -73,7 +111,7 @@ async function genRandomPattern(uid, noun, verb, adjective, adverb, numeral) {
                 possession: undefined,
                 case: undefined
             }, n], {
-                    tense: getRandomElement(tensessimple),
+                    tense: tense,
                     negation: getRandomNum(0, 1),
                     adverbs: []
                 }, [getRandomNum(1, 4), getRandomNum(0, 2)]]
@@ -86,7 +124,7 @@ async function genRandomPattern(uid, noun, verb, adjective, adverb, numeral) {
                 possession: undefined,
                 case: undefined
             }, n], {
-                    tense: getRandomElement(tenses),
+                    tense: tense,
                     negation: getRandomNum(0, 1),
                     person: getRandomNum(1, 4),
                     singular: getRandomNum(0, 2),

@@ -167,6 +167,7 @@ app.post("/validate", async (req, res) => {
     let l2 = req.body.l2
 
     let ans = await gptconn.checkTranslation(s1, s2, l1, l2)
+    console.log(ans)
     res.json(ans)
 })
 

@@ -54,7 +54,9 @@
     },
     "reviews": {
         "next": "Další",
-        "result": "Výsledek"
+        "result": "Výsledek",
+        "mark": "Označit jako správné",
+        "myans": "Moje odpověď"
     },
     "lexical": {
         "1": "Barvy",

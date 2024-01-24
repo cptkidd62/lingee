@@ -1,4 +1,4 @@
 export interface Validationresponse {
-    correct: boolean,
+    isCorrect: boolean,
     explanation: string
 }
