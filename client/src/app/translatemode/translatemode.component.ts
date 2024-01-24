@@ -76,7 +76,7 @@ export class TranslatemodeComponent {
     this.learnService.validateAnswer(this.ans, this.sentences[this.current].translation).subscribe({
       next: data => {
         this.currvalidation = data as Validationresponse
-        this.answersCorrect[this.current] = this.currvalidation.correct
+        this.answersCorrect[this.current] = this.currvalidation.isCorrect
         this.checked = true
       }
     })
