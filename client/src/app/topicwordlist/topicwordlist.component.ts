@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Topicwordview } from '../topicwordview';
 import { Sentence } from '../sentence';
 import { LearnService } from '../_services/learn.service';
+import { AuthService } from '../_services/auth.service';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 
 @Component({
@@ -25,8 +26,12 @@ export class TopicwordlistComponent {
   sentences: Array<Sentence> = []
   toLearn: boolean = true
   learnService: LearnService = inject(LearnService);
+  authService: AuthService = inject(AuthService);
 
   constructor(private route: ActivatedRoute, private router: Router, private translate: TranslateService) {
+    if (!this.authService.isSignedIn()) {
+      this.router.navigate(['/'])
+    }
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
     this.loadContents(true)

@@ -27,6 +27,9 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
 })
 export class SigninComponent {
   constructor(private router: Router, private translate: TranslateService) {
+    if (this.authService.isSignedIn()) {
+      this.router.navigate(['/'])
+    }
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
   };
