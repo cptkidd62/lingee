@@ -96,6 +96,30 @@ exports.Repository = class Repository {
         return data.rows
     }
 
+    async getAdjsMatchingNoun(n_id) {
+        console.log(n_id)
+        let data = await this.pool.query("SELECT adj_id FROM noun_adj_constraints WHERE noun_id = $1", [n_id])
+        return data.rows
+    }
+
+    async getNounsMatchingAdj(a_id) {
+        console.log(a_id)
+        let data = await this.pool.query("SELECT noun_id FROM noun_adj_constraints WHERE adj_id = $1", [a_id])
+        return data.rows
+    }
+
+    async getNounsMatchingVerb(v_id) {
+        console.log(v_id)
+        let data = await this.pool.query("SELECT noun_id FROM verb_noun_constraints WHERE verb_id = $1", [v_id])
+        return data.rows
+    }
+
+    async getVerbsMatchingNoun(n_id) {
+        console.log(n_id)
+        let data = await this.pool.query("SELECT verb_id FROM verb_noun_constraints WHERE noun_id = $1", [n_id])
+        return data.rows
+    }
+
     async getWordInfo(lang, sp, id) {
         let table = lang + '_' + sp + 's'
         let data = await this.pool.query("SELECT * FROM " + table + " WHERE v_id = $1", [id])
