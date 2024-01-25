@@ -86,6 +86,6 @@ export class SignupComponent {
   }
 
   getUILang(): string | null {
-    return localStorage.getItem('lang')
+    return this.translate.currentLang
   }
 }
