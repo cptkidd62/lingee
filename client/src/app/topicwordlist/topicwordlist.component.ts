@@ -24,7 +24,7 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
 export class TopicwordlistComponent {
   wlist: Array<Topicwordview> = []
   sentences: Array<Sentence> = []
-  toLearn: boolean = true
+  toLearn: boolean = false
   learnService: LearnService = inject(LearnService);
   authService: AuthService = inject(AuthService);
 
