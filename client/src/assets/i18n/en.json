@@ -45,7 +45,8 @@
         "langEN": "English",
         "langPL": "Polish",
         "langTR": "Turkish",
-        "courseChangeHeader": "Change the active course"
+        "courseChangeHeader": "Change the active course",
+        "pwdChange": "Change your password"
     },
     "topics": {
         "grammar": "Grammar",

@@ -1,1 +1,17 @@
-<p>{{ "myaccount.hello" | translate }} {{myaccount.displayname}}!</p>
+<h2>{{ "myaccount.hello" | translate }} {{myaccount.displayname}}!</h2>
+<h3>{{ "signin.loginlabel" | translate }}: {{myaccount.login}}</h3>
+<h2>{{ "myaccount.pwdChange" | translate }}:</h2>
+<form [formGroup]="pwdChangeForm">
+    <p>
+        <mat-form-field appearance="fill" color="accent">
+            <mat-label>{{ "signin.pwdlabel" | translate }}</mat-label>
+            <input matInput id="pwd" [type]="hide ? 'password' : 'text'" formControlName="pwd">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+    </p>
+    <button mat-raised-button color="accent" type="submit" [disabled]="!pwdChangeForm.valid" (click)="changePwd()">{{
+        "myaccount.pwdChange" | translate }}</button>
+</form>

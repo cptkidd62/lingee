@@ -36,6 +36,11 @@ exports.Repository = class Repository {
         }
     }
 
+    async setPasswordForUsr(uid, pwd) {
+        console.log("pwd change for " + uid)
+        await this.pool.query("UPDATE users SET u_password = $1 WHERE u_id = $2", [pwd, uid])
+    }
+
     async getPasswordForUsr(usrlogin) {
         let data = await this.pool.query("SELECT u_id, u_password FROM users WHERE u_login = $1", [usrlogin]);
         console.log(data.rows);

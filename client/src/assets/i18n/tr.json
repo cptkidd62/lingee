@@ -45,7 +45,8 @@
         "langEN": "ingilizce",
         "langPL": "lehçe",
         "langTR": "türkçe",
-        "courseChangeHeader": "Aktif kursu değiştir"
+        "courseChangeHeader": "Aktif kursu değiştir",
+        "pwdChange": "Şifreni değiştir"
     },
     "topics": {
         "grammar": "Dilbilgisi",

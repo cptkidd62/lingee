@@ -44,8 +44,6 @@ export class SigninComponent {
     pwd: new FormControl('', Validators.required),
   })
 
-  signoutForm = new FormGroup({});
-
   signinSubmit() {
     const { login, pwd } = this.signinForm.value;
     console.log(login, pwd);

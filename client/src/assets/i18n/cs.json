@@ -45,7 +45,8 @@
         "langEN": "anglicky",
         "langPL": "polsky",
         "langTR": "turecky",
-        "courseChangeHeader": "Změnit aktivní kurz"
+        "courseChangeHeader": "Změnit aktivní kurz",
+        "pwdChange": "Změnit heslo"
     },
     "topics": {
         "grammar": "Gramatika",

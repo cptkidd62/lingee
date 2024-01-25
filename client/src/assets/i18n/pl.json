@@ -45,7 +45,8 @@
         "langEN": "angielski",
         "langPL": "polski",
         "langTR": "turecki",
-        "courseChangeHeader": "Zmień aktywny kurs"
+        "courseChangeHeader": "Zmień aktywny kurs",
+        "pwdChange": "Zmień hasło"
     },
     "topics": {
         "grammar": "Gramatyka",

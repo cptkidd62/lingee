@@ -114,6 +114,13 @@ app.post("/auth/signup", async (req, res) => {
     }
 });
 
+app.post("/user/pwdchange", async (req, res) => {
+    let pwd = req.body.pwd
+    let hash = await bcrypt.hash(pwd, 12);
+    await repo.setPasswordForUsr(req.auth.id, hash)
+    res.json({ status: 'ok' })
+})
+
 app.get("/random", async (req, res) => {
     res.json(await sgen.getNRandomSentences(req.query.count ? req.query.count : 1, req.query.lang, req.query.uilang, req.auth.id, req.query.noun, req.query.verb, req.query.adjective, req.query.adverb, req.query.numeral))
 });

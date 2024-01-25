@@ -24,4 +24,8 @@ export class UserService {
       ui_code: localStorage.getItem('lang')
     }, { responseType: 'json', withCredentials: true })
   }
+
+  changePwd(pwd: string) {
+    return this.http.post(this.url + "/pwdchange", { pwd }, { responseType: 'json', withCredentials: true })
+  }
 }
