@@ -73,4 +73,16 @@ export class TopicwordlistComponent {
   size(arr: Array<any>): number {
     return arr.filter(x => x).length
   }
+
+  describeProgress(x: number | null | undefined) {
+    if (!x) {
+      return "---"
+    } else if (x < 5) {
+      return this.translate.instant("topics.learning")
+    } else if (x < 9) {
+      return this.translate.instant("topics.advanced")
+    } else {
+      return this.translate.instant("topics.mastered")
+    }
+  }
 }

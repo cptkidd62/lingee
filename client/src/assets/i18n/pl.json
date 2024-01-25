@@ -50,7 +50,11 @@
     "topics": {
         "grammar": "Gramatyka",
         "lexical": "Słownictwo",
-        "addrevs": "Dodaj do powtórek"
+        "addrevs": "Dodaj do powtórek",
+        "learning": "Uczysz się",
+        "advanced": "Zaawansowane",
+        "mastered": "Nauczone",
+        "progress": "Twój postęp"
     },
     "reviews": {
         "next": "Dalej",

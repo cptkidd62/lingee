@@ -50,7 +50,11 @@
     "topics": {
         "grammar": "Grammar",
         "lexical": "Lexical",
-        "addrevs": "Add to reviews"
+        "addrevs": "Add to reviews",
+        "learning": "Learning",
+        "advanced": "Advanced",
+        "mastered": "Mastered",
+        "progress": "Your progress"
     },
     "reviews": {
         "next": "Next",

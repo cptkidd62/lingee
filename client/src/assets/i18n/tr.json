@@ -50,7 +50,11 @@
     "topics": {
         "grammar": "Dilbilgisi",
         "lexical": "Leksik",
-        "addrevs": "İncelemelere ekle"
+        "addrevs": "İncelemelere ekle",
+        "learning": "Öğrenme",
+        "advanced": "Gelişmiş",
+        "mastered": "Uzmanlaşmış",
+        "progress": "İlerlemeniz"
     },
     "reviews": {
         "next": "Sonraki",
