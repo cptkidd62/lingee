@@ -8,7 +8,9 @@ import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angula
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-myaccount',
@@ -18,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatDividerModule,
     MatIconModule,
     TranslateModule],
   templateUrl: './myaccount.component.html',
@@ -28,17 +31,25 @@ export class MyaccountComponent {
   userService: UserService = inject(UserService);
   hide = true
 
+  handset = false
+
   pwdChangeForm = new FormGroup({
     pwd: new FormControl('', Validators.required),
   })
 
-  constructor(private router: Router, private translate: TranslateService) {
+  constructor(private responsive: BreakpointObserver, private router: Router, private translate: TranslateService) {
     this.userService.getUser().subscribe({
       next: account => this.myaccount = account,
       error: err => this.router.navigate(['/'])
     });
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
+  }
+
+  ngOnInit() {
+    this.responsive.observe([Breakpoints.Handset]).subscribe(res => {
+      this.handset = res.matches
+    })
   }
 
   changePwd() {
