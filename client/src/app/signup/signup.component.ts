@@ -30,6 +30,9 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
 })
 export class SignupComponent {
   constructor(private router: Router, private translate: TranslateService) {
+    if (this.authService.isSignedIn()) {
+      this.router.navigate(['/'])
+    }
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
   };
@@ -83,6 +86,6 @@ export class SignupComponent {
   }
 
   getUILang(): string | null {
-    return localStorage.getItem('lang')
+    return this.translate.currentLang
   }
 }

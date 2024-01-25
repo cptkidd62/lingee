@@ -3,7 +3,7 @@
     <div *ngIf="size(sentences) == size(wlist)">
         <div *ngFor="let s of sentences; let i = index">
             <h2>{{wlist[i].word}}</h2>
-            <p>{{wlist[i].progress}}</p>
+            <p>{{ "topics.progress" | translate }}: {{describeProgress(wlist[i].progress)}}</p>
             <p>{{s.original}}</p>
             <p>{{s.translation}}</p>
         </div>

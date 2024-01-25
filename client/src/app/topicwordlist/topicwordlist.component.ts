@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Topicwordview } from '../topicwordview';
 import { Sentence } from '../sentence';
 import { LearnService } from '../_services/learn.service';
+import { AuthService } from '../_services/auth.service';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 
 @Component({
@@ -23,10 +24,14 @@ import { TranslateService, TranslateModule } from "@ngx-translate/core";
 export class TopicwordlistComponent {
   wlist: Array<Topicwordview> = []
   sentences: Array<Sentence> = []
-  toLearn: boolean = true
+  toLearn: boolean = false
   learnService: LearnService = inject(LearnService);
+  authService: AuthService = inject(AuthService);
 
   constructor(private route: ActivatedRoute, private router: Router, private translate: TranslateService) {
+    if (!this.authService.isSignedIn()) {
+      this.router.navigate(['/'])
+    }
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
     this.loadContents(true)
@@ -67,5 +72,17 @@ export class TopicwordlistComponent {
 
   size(arr: Array<any>): number {
     return arr.filter(x => x).length
+  }
+
+  describeProgress(x: number | null | undefined) {
+    if (!x) {
+      return "---"
+    } else if (x < 5) {
+      return this.translate.instant("topics.learning")
+    } else if (x < 9) {
+      return this.translate.instant("topics.advanced")
+    } else {
+      return this.translate.instant("topics.mastered")
+    }
   }
 }

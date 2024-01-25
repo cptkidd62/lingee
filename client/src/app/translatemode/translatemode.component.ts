@@ -12,6 +12,7 @@ import { Topicwordview } from '../topicwordview';
 import { Sentence } from '../sentence';
 import { Validationresponse } from '../validationresponse';
 import { LearnService } from '../_services/learn.service';
+import { AuthService } from '../_services/auth.service';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { environment } from 'src/environments/environment';
@@ -37,6 +38,7 @@ export class TranslatemodeComponent {
   wlist: Array<Topicwordview> = []
   sentences: Array<Sentence> = [];
   learnService: LearnService = inject(LearnService);
+  authService: AuthService = inject(AuthService);
   sentTokens: Array<string> = []
   currvalidation: Validationresponse | null = null
 
@@ -105,6 +107,9 @@ export class TranslatemodeComponent {
   }
 
   constructor(private responsive: BreakpointObserver, private router: Router, private translate: TranslateService) {
+    if (!this.authService.isSignedIn()) {
+      this.router.navigate(['/'])
+    }
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
 

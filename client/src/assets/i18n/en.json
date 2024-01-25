@@ -45,12 +45,17 @@
         "langEN": "English",
         "langPL": "Polish",
         "langTR": "Turkish",
-        "courseChangeHeader": "Change the active course"
+        "courseChangeHeader": "Change the active course",
+        "pwdChange": "Change your password"
     },
     "topics": {
         "grammar": "Grammar",
         "lexical": "Lexical",
-        "addrevs": "Add to reviews"
+        "addrevs": "Add to reviews",
+        "learning": "Learning",
+        "advanced": "Advanced",
+        "mastered": "Mastered",
+        "progress": "Your progress"
     },
     "reviews": {
         "next": "Next",
