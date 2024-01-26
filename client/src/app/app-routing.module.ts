@@ -37,7 +37,12 @@ const routes: Routes = [
     path: 'topics/lexical/:lang/:id',
     component: TopicwordlistComponent,
     title: 'Topics Word List'
-  },];
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: '/'
+  }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
