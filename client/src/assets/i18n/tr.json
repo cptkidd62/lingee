@@ -12,7 +12,9 @@
         "practice": "Pratik yap",
         "fortoday": "Bügün için",
         "planned": "Planlanmış",
-        "msg": "4 dil öğrenmek için katılın"
+        "msg": "4 dil öğrenmek için katılın",
+        "msgLearn": "Yabancı dillerde kelimeler öğren",
+        "msgRevs": "İlerlemenizi SRS sistemi ile gözden geçirin"
     },
     "signin": {
         "loginlabel": "Kullanıcı adı",

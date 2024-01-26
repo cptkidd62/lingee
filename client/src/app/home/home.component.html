@@ -25,4 +25,26 @@
         </div>
     </mat-tab>
 </mat-tab-group>
-<div class="msg-cont" *ngIf="!authService.isSignedIn()">{{ "main.msg" | translate }}!</div>
+<div class="msg-cont" *ngIf="!authService.isSignedIn()">
+    <h2>{{ "main.msg" | translate }}!</h2>
+    <div class="pics-cont" *ngIf="!handset">
+        <div>
+            <h4>{{ "main.msgLearn" | translate }}</h4>
+            <img src="/assets/img/lingee_word_list_add.png" alt="Word list of Lingee">
+        </div>
+        <div>
+            <h4>{{ "main.msgRevs" | translate }}</h4>
+            <img src="/assets/img/lingee_revs_4.png" alt="Review mode of Lingee">
+        </div>
+    </div>
+    <div class="pics-cont-handset" *ngIf="handset">
+        <div>
+            <h4>{{ "main.msgLearn" | translate }}</h4>
+            <img src="/assets/img/lingee_word_list_mobile.png" alt="Word list of Lingee">
+        </div>
+        <div>
+            <h4>{{ "main.msgRevs" | translate }}</h4>
+            <img src="/assets/img/lingee_revs_4_mobile.png" alt="Review mode of Lingee">
+        </div>
+    </div>
+</div>

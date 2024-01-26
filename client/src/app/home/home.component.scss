@@ -12,3 +12,26 @@ button {
     padding-top: 5em;
     font-size: large;
 }
+
+.pics-cont {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pics-cont-handset {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+img {
+    border: 2px white solid;
+    max-width: 90%;
+}
