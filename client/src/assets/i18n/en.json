@@ -12,7 +12,9 @@
         "practice": "Practice",
         "fortoday": "For today",
         "planned": "Planned",
-        "msg": "Join to learn 4 languages"
+        "msg": "Join to learn 4 languages",
+        "msgLearn": "Learn words in foreign languages",
+        "msgRevs": "Review your progress with SRS system"
     },
     "signin": {
         "loginlabel": "Login",

@@ -12,7 +12,9 @@
         "practice": "Ćwicz",
         "fortoday": "Na dzisiaj",
         "planned": "Zaplanowane",
-        "msg": "Dołącz, żeby uczyć się 4 języków"
+        "msg": "Dołącz, żeby uczyć się 4 języków",
+        "msgLearn": "Ucz się słów w obcych językach",
+        "msgRevs": "Powtarzaj słowa przy pomocy systemu SRS"
     },
     "signin": {
         "loginlabel": "Login",

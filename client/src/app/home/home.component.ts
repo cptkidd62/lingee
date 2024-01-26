@@ -11,6 +11,7 @@ import { AuthService } from '../_services/auth.service';
 import { TopicGrammar } from '../topicgrammar';
 import { TopicLexical } from '../topiclexical';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +35,9 @@ export class HomeComponent {
   topics: { grammar: Array<TopicGrammar>, lexical: Array<TopicLexical> } = { grammar: [], lexical: [] }
   lang: string = ''
 
-  constructor(private translate: TranslateService) {
+  handset = false
+
+  constructor(private responsive: BreakpointObserver, private translate: TranslateService) {
     if (this.authService.isSignedIn()) {
       this.learnService.getReviewsCount().subscribe({
         next: data => this.revs = data
@@ -51,5 +54,11 @@ export class HomeComponent {
     this.lang = localStorage.getItem('currcourse') || 'en'
     translate.setDefaultLang('en');
     translate.use(localStorage.getItem('lang') || 'en');
+  }
+
+  ngOnInit() {
+    this.responsive.observe([Breakpoints.Handset]).subscribe(res => {
+      this.handset = res.matches
+    })
   }
 }

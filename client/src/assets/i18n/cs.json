@@ -12,7 +12,9 @@
         "practice": "Procvič",
         "fortoday": "Pro dnes",
         "planned": "Naplánované",
-        "msg": "Připojte se a naučte se 4 jazyky"
+        "msg": "Připojte se a naučte se 4 jazyky",
+        "msgLearn": "Učte se slova v cizích jazycích",
+        "msgRevs": "Zkontrolujte si svůj pokrok se systémem SRS"
     },
     "signin": {
         "loginlabel": "Uživatelské jméno",
