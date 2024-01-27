@@ -1,6 +1,4 @@
 var repo
-const ennums = ['zero', 'one', 'two', 'three', 'four',
-    'five', 'six', 'seven', 'eight', 'nine', 'ten']
 
 const haveconj = { present: 'have', third: 'has', gerund: 'having', past: 'had' }
 
@@ -76,16 +74,16 @@ exports.English = class English {
         return await this[pattern[0]](n, v, ...(pattern[3]))
     }
     async tobe(n, vdesc) {
-        let rn = this.describenoun(...n)
+        let rn = await this.describenoun(...n)
         let rv = conj_tobe(vdesc.person, vdesc.singular, vdesc.tense)
         return this.getpronoun(vdesc.person, vdesc.singular) + ' ' + rv + ' ' + rn
     }
     async tohave(n, vdesc, p, s) {
-        return this.conjugateverb(vdesc, haveconj, p, s) + ' ' + this.describenoun(...n);
+        return this.conjugateverb(vdesc, haveconj, p, s) + ' ' + await this.describenoun(...n);
     };
     async dosth(n, vdesc, v) {
         let nv = await repo.getWordInfo('en', 'verb', v)
-        let rn = this.describenoun(...n);
+        let rn = await this.describenoun(...n);
         let rv = this.conjugateverb(vdesc, nv, vdesc.person, vdesc.singular);
         let advs = ''
         if (vdesc.adverbs && vdesc.adverbs.length > 0) {
@@ -93,7 +91,7 @@ exports.English = class English {
         }
         return rv + ' ' + rn + advs;
     }
-    describenoun(descriptions, noun) {
+    async describenoun(descriptions, noun) {
         let n = noun.word
         if (descriptions.plural) {
             n = this.nounplural(noun)
@@ -105,8 +103,9 @@ exports.English = class English {
             && !descriptions.plural && !descriptions.possession) {
             n = 'a ' + n
         }
-        if (descriptions.count) {
-            n = ennums[descriptions.count] + ' ' + n
+        if (descriptions.count || descriptions.count == 0) {
+            let num = (await repo.getWordInfo('en', 'numeral', descriptions.count + 146)).word
+            n = num + ' ' + n
         }
         if (descriptions.possession) {
             n = poss_pronouns(...(descriptions.possession)) + ' ' + n

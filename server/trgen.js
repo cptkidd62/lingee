@@ -1,7 +1,5 @@
 var repo
 
-const trnums = ['sıfır', 'bir', 'iki', 'üç', 'dört',
-    'beş', 'altı', 'yedi', 'sekiz', 'dokuz', 'on']
 const vowels = ['a', 'e', 'i', 'ı', 'o', 'ö', 'u', 'ü']
 const softcons = ['p', 'ç', 't', 'k']
 
@@ -297,7 +295,7 @@ exports.Turkish = class Turkish {
     async tobe(n, vdesc) {
         let rn = n[1]
         if (n[1] != 'var' && n[1] != '') {
-            rn = getpronoun(vdesc.person, vdesc.singular) + ' ' + this.describenoun(...n)
+            rn = getpronoun(vdesc.person, vdesc.singular) + ' ' + await this.describenoun(...n)
         }
         if (vdesc.tense.slice(0, 4) == 'pres') {
             return verbconj(rn, vdesc.person, vdesc.singular)
@@ -326,15 +324,15 @@ exports.Turkish = class Turkish {
         } else if (t == 'futuresimple') {
             c = await this.tobe([{}, ''], { person: 3, singular: true, tense: 'future' })
         }
-        return poss_pronouns(p, s) + ' ' + nounaddposs(this.describenoun(...n), p, s) + ' ' + c
+        return poss_pronouns(p, s) + ' ' + nounaddposs(await this.describenoun(...n), p, s) + ' ' + c
     }
     async dosth(n, vdesc, v) {
         let nv = await repo.getWordInfo('tr', 'verb', v)
-        let rn = this.cases[nv.case](this.describenoun(...n));
+        let rn = this.cases[nv.case](await this.describenoun(...n));
         let rv = this.conjugateverb(vdesc, nv, vdesc.person, vdesc.singular);
         return getpronoun(vdesc.person, vdesc.singular) + ' ' + rn + ' ' + rv;
     }
-    describenoun(descriptions, noun) { // ex. [trnounplural, trnounaccus], 'erkek'
+    async describenoun(descriptions, noun) { // ex. [trnounplural, trnounaccus], 'erkek'
         let n = noun
         if (descriptions.plural && !descriptions.count) {
             n = this.nounplural(n)
@@ -352,8 +350,9 @@ exports.Turkish = class Turkish {
         if (descriptions.adjectives && descriptions.adjectives.length > 0) {
             n = this.addadjectives(descriptions.adjectives, n)
         }
-        if (descriptions.count && descriptions.count != 1) {
-            n = trnums[descriptions.count] + ' ' + n
+        if (descriptions.count && descriptions.count != 1 || descriptions.count == 0) {
+            let num = (await repo.getWordInfo('tr', 'numeral', descriptions.count + 146)).word
+            n = num + ' ' + n
         }
         if (descriptions.possession) {
             n = poss_pronouns(...(descriptions.possession)) + ' ' + n

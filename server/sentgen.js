@@ -17,9 +17,25 @@ function getRandomNum(b, e) {
 }
 
 async function genRandomPattern(uid, noun, verb, adjective, adverb, numeral) {
-    let p, n, v, adj, adv, num, tense
+    let p, n, v, adj, adv, num, tense, pl
+    if (numeral) {
+        num = numeral - 146
+    } else {
+        num = getRandomNum(0, 4) ? undefined : getRandomElement([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    }
+    if (num == undefined) {
+        pl = getRandomNum(0, 2)
+    } else if (num == 1) {
+        pl = false
+    } else {
+        pl = true
+    }
     if (verb || adverb) {
         p = 'dosth'
+    } else if (num == 0) {
+        p = 'tohave'
+    } else if (numeral) {
+        p = getRandomElement(['tohave', 'dosth'])
     } else {
         p = getRandomElement(patterns)
     }
@@ -81,17 +97,12 @@ async function genRandomPattern(uid, noun, verb, adjective, adverb, numeral) {
             adj = getRandomElement(await repo.getSpeechPartIDs('adjective')).v_id
         }
     }
-    if (numeral) {
-        num = numeral
-    } else {
-        num = getRandomElement(await repo.getSpeechPartIDs('numeral')).v_id
-    }
     switch (p) {
         case 'tobe':
             return [p, [{
-                plural: false,
+                plural: pl,
                 adjectives: [adj],
-                count: undefined,
+                count: num,
                 definite: getRandomNum(0, 2),
                 possession: undefined,
                 case: undefined
@@ -104,9 +115,9 @@ async function genRandomPattern(uid, noun, verb, adjective, adverb, numeral) {
                 }, []]
         case 'tohave':
             return [p, [{
-                plural: getRandomNum(0, 2),
+                plural: pl,
                 adjectives: [adj],
-                count: undefined,
+                count: num,
                 definite: getRandomNum(0, 2),
                 possession: undefined,
                 case: undefined
@@ -117,9 +128,9 @@ async function genRandomPattern(uid, noun, verb, adjective, adverb, numeral) {
                 }, [getRandomNum(1, 4), getRandomNum(0, 2)]]
         case 'dosth':
             return [p, [{
-                plural: getRandomNum(0, 2),
+                plural: pl,
                 adjectives: [adj],
-                count: undefined,
+                count: num,
                 definite: getRandomNum(0, 2),
                 possession: undefined,
                 case: undefined

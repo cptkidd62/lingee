@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserAccount } from '../useraccount';
 import { UserService } from '../_services/user.service';
+import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
 import { TranslateService, TranslateModule } from "@ngx-translate/core";
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -29,6 +30,7 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 export class MyaccountComponent {
   myaccount: UserAccount = { id: -1, displayname: "", login: "" };
   userService: UserService = inject(UserService);
+  authService: AuthService = inject(AuthService);
   hide = true
 
   handset = false
@@ -38,6 +40,9 @@ export class MyaccountComponent {
   })
 
   constructor(private responsive: BreakpointObserver, private router: Router, private translate: TranslateService) {
+    if (!this.authService.isSignedIn()) {
+      this.router.navigate(['/'])
+    }
     this.userService.getUser().subscribe({
       next: account => this.myaccount = account,
       error: err => this.router.navigate(['/'])
