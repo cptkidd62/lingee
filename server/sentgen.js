@@ -21,7 +21,7 @@ async function genRandomPattern(uid, noun, verb, adjective, adverb, numeral) {
     if (numeral) {
         num = numeral - 146
     } else {
-        num = getRandomElement([undefined, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        num = getRandomNum(0, 4) ? undefined : getRandomElement([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     }
     if (num == undefined) {
         pl = getRandomNum(0, 2)
