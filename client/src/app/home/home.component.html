@@ -18,9 +18,9 @@
         <div class="home-tab">
             <mat-progress-bar *ngIf="topics.grammar.length == 0 && topics.lexical.length == 0" mode="query"
                 color="accent"></mat-progress-bar>
-            <h3>{{ "topics.lexical" | translate }}</h3>
+            <h2>{{ "topics.lexical" | translate }}</h2>
             <div *ngFor="let topic of topics.lexical">
-                <a href="/topics/lexical/{{this.lang}}/{{topic.tl_id}}">{{ "lexical." + topic.tl_id| translate}}</a>
+                <a mat-button href="/topics/lexical/{{this.lang}}/{{topic.tl_id}}">{{ "lexical." + topic.tl_id| translate}}</a>
             </div>
         </div>
     </mat-tab>
