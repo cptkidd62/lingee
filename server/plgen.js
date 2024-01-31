@@ -12,7 +12,7 @@ exports.Polish = class Polish {
         this.gptconn = new gpt.gptConnector()
     }
     async run(pattern) {
-        let en_v = await this.tr.run(pattern)
+        let en_v = await this.en.run(pattern)
         let usedwords = []
         let p = pattern[0]
         switch (p) {
