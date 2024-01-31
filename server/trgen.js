@@ -133,6 +133,7 @@ const verbcont = function (word) {
     if (vowels.includes(word.slice(-1))) {
         res = word.slice(0, -1);
     }
+    res = trchnglast(res)
     res += tr4vowel(res);
     return res + 'yor';
 }
@@ -141,6 +142,8 @@ const verbfuture = function (word) {
     let res = word
     if (vowels.includes(word.slice(-1))) {
         res += 'y';
+    } else {
+        res = trchnglast(res)
     }
     return res + v + 'c' + v + 'k';
 }
@@ -212,6 +215,8 @@ const verbaorist = function (word, _, _, aor) {
     let res = word
     if (vowels.includes(word.slice(-1))) {
         res = word.slice(0, -1)
+    } else {
+        res = trchnglast(res)
     }
     return res + aor + 'r'
 }
