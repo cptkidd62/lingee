@@ -27,7 +27,7 @@ exports.gptConnector = class gptConnector {
 
     async checkTranslation(sent_org, sent_trans, lang1, lang2) {
         let msg = ''
-        let format = '{ isCorrect: boolean, explanation: string }'
+        let format = '{ "isCorrect": boolean, "explanation": string }'
         switch (lang2) {
             case 'pl':
                 let lpl = ''
