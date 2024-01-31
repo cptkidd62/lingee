@@ -7,7 +7,7 @@ var repo
 patterns = ['tobe', 'tohave', 'dosth']
 tensessimple = ['pastsimple', 'pressimple', 'futuresimple']
 tensescont = ['pastcont', 'prescont']
-tenses = tensessimple.concat(tensescont)
+tenses = tensessimple
 
 function getRandomElement(array) {
     return array[Math.floor(Math.random() * array.length)];
@@ -45,7 +45,7 @@ async function genRandomPattern(uid, noun, verb, adjective, adverb, numeral) {
         adv = getRandomElement(await repo.getSpeechPartIDs('adverb')).v_id
     }
     if ([135, 138, 139].includes(adv)) {
-        tense = getRandomElement(['pastsimple', 'pastcont'])
+        tense = getRandomElement(['pastsimple'])
     } else if ([140, 141, 137].includes(adv)) {
         tense = 'futuresimple'
     } else {
@@ -156,6 +156,7 @@ exports.Generator = class Generator {
     }
     async getRandomSentence(lang1, lang2, uid, noun, verb, adj, adv, num) {
         let p = await genRandomPattern(uid, noun, verb, adj, adv, num)
+        console.log(p)
         return {
             original: await this.langs[lang1].run(p),
             translation: await this.langs[lang2].run(p)
