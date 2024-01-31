@@ -1,4 +1,5 @@
 const engen = require('./engen')
+const trgen = require('./trgen')
 const gpt = require('./gptconnector')
 
 var repo
@@ -7,10 +8,11 @@ exports.Polish = class Polish {
     constructor(dbrepo) {
         repo = dbrepo
         this.en = new engen.English()
+        this.tr = new trgen.Turkish()
         this.gptconn = new gpt.gptConnector()
     }
     async run(pattern) {
-        let en_v = await this.en.run(pattern)
+        let en_v = await this.tr.run(pattern)
         let usedwords = []
         let p = pattern[0]
         switch (p) {

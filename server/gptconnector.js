@@ -42,7 +42,7 @@ exports.gptConnector = class gptConnector {
                         lpl = 'czeski'
                         break
                 }
-                msg = `Czy \"${sent_org}\" to poprawne tłumaczenie zdania \"${sent_trans}\" na ${lpl}? Odpowiedz w formacie ${format}. Nie sprawdzaj sensu zdania ani nie bądź zbyt restrykcyjny względem kolejności słów, synonimów czy drobnych błędów.`
+                msg = `Czy \"${sent_org}.\" to poprawne tłumaczenie zdania \"${sent_trans}.\" na ${lpl}? Odpowiedz w formacie ${format}. Nie sprawdzaj sensu zdania ani nie bądź zbyt restrykcyjny względem kolejności słów, synonimów czy drobnych błędów.`
                 break
             case 'cs':
                 let lcs = ''
@@ -57,7 +57,7 @@ exports.gptConnector = class gptConnector {
                         lcs = 'polštiny'
                         break
                 }
-                msg = `Je \"${sent_org}\" spravný překlad věty \"${sent_trans}\" do ${lcs}? Odpověď ve formatě ${format}. Nekontroluj smyslu věty a nebuď příliš restriktivní vzhledem k sekvenci slov, synonymom nebo malým chybom.`
+                msg = `Je \"${sent_org}.\" spravný překlad věty \"${sent_trans}.\" do ${lcs}? Odpověď ve formatě ${format}. Nekontroluj smyslu věty a nebuď příliš restriktivní vzhledem k sekvenci slov, synonymom nebo malým chybom.`
                 break
             case 'en':
                 let len = ''
@@ -72,7 +72,7 @@ exports.gptConnector = class gptConnector {
                         len = 'Czech'
                         break
                 }
-                msg = `Is \"${sent_org}\" a correct translation of \"${sent_trans}\" to ${len}? Answer in format ${format}. Don't check the sense of this sentence nor be too strict with word order, synonyms and petty mistakes.`
+                msg = `Is \"${sent_org}.\" a correct translation of \"${sent_trans}.\" to ${len}? Answer in format ${format}. Don't check the sense of this sentence nor be too strict with word order, synonyms and petty mistakes.`
                 break
             case 'tr':
                 let ltr = ''
@@ -87,7 +87,7 @@ exports.gptConnector = class gptConnector {
                         ltr = 'çekçe'
                         break
                 }
-                msg = `\"${sent_org}\" \"${sent_trans}\"\'yin ${ltr}\'yeki doğru çevresi mi? Bu formatta cevap ver ${format}. Bu cümlenin anlamını kontrol etmeyin ve kelime sırası, eş anlamlılar ve küçük hatalar konusunda çok katı olmayın.`
+                msg = `\"${sent_org}.\" \"${sent_trans}.\"\'yin ${ltr}\'yeki doğru çevresi mi? Bu formatta cevap ver ${format}. Bu cümlenin anlamını kontrol etmeyin ve kelime sırası, eş anlamlılar ve küçük hatalar konusunda çok katı olmayın.`
                 break
         }
 
