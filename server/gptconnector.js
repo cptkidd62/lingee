@@ -22,6 +22,7 @@ exports.gptConnector = class gptConnector {
         });
         let res = response.choices[0].message.content
         res = res.replace(/[\"\.]/g, "")
+        res = res.toLowerCase()
         return res
     }
 
